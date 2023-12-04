@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sample Page</title>
+</head>
+<body>
+<h1>Mock Sample</h1>
+<ul>
+    <li th:each="sk : ${T(com.ServiceMatch.SM.mocks.SkillMockData).getMockSkills()}">
+        <span th:text="${sk.id}"></span> - <span th:text="${sk.name}"></span>
+        
+    </li>
+</ul>
+</body>
+</html>

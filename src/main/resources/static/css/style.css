@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+input::placeholder {
+    color: gainsboro !important;
+}
+
+.text-color {
+    color: #F56349;
+}
+
+.logo-color {
+    color: #FFFFFF;
+}
+
+.navbar {
+    background-color: #191A1F;
+}
+
+.navbar-brand {
+    margin-left: 150px;
+}
+
+.navbar-nav {
+    margin-right: 110px;
+}
+
+.nav-link.custom-link {
+    margin-right: 40px;
+    text-shadow: 1px 1px black;
+    color: aliceblue
+}
+
+
+.nav-link.custom-link.nanraja {
+    color: #F56349;
+}
+
+.nav-link.custom-link:hover {
+    color: #F56349;
+}
+
+.nav-link.custom-link.nanraja:hover {
+    color: #b14330;
+}
+
+#header {
+    background: linear-gradient(rgba(29, 30, 35, 0.6),
+        rgba(29, 30, 35, 0.6)),
+        url(/img/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    min-height: 70vh;
+    padding: 80px 0 0 0;
+}
+
+.titulo-h1 {
+    font-size: 50px;
+    text-shadow: 1px 1px black;
+}
+
+.descripcion-p {
+    font-size: 18px;
+    text-shadow: 1px 1px black;
+}
+
+
+.btnOrigin {
+    background: linear-gradient(90deg,
+        rgba(245, 99, 72, 1) 0%,
+        rgba(245, 140, 32, 1) 100%);
+    width: 15rem;
+}
+
+.btn-rojo {
+    background: linear-gradient(90deg,
+        rgba(255, 0, 0, 1) 0%,
+        rgba(255, 100, 100, 1) 100%);
+    width: 15rem;
+}
+
+
+
+.b-paginacion {
+    /*Estilos de los botones de la paginacion */
+    border-color: rgba(245, 140, 32, 1) !important;
+    color: white !important;
+    background-color: #212529 !important;
+}
+
+.num-paginacion {
+    /*estilo de los numeros de paginacion */
+    background-color: rgba(245, 140, 32, 1) !important;
+    border-color: #212529 !important;
+    border-radius: 2px !important;
+}
+
+.section-container {
+    background-color: #24272E;
+}
+
+.table-limit {
+    max-width: 45rem;
+}
+
+.card-img-top {
+    max-height: 200px;
+    object-fit: cover;
+}
+
+
+.carousel-control-prev.corousel-flecha {
+    left: -100px;
+}
+
+.carousel-control-next.corousel-flecha {
+    right: -100px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #24272E;
+}
+
+
+.mapa {
+    text-align: center;
+    background-color: #24272E;
+}
+
+.mapa-container {
+    padding: 25px 45px;
+}
+
+.group {
+    color: #F56349;
+}
+
+.footer-color {
+    background-color: #191A1F;
+}
+
+a.link-colors {
+    text-decoration: none;
+    color: #F56349;
+    font-size: 17px;
+}
+
+a.link-colors:hover {
+    color: #b14330;
+}
+
+
+.card.cardjobs {
+    background-color: rgb(255, 127, 0);
+}

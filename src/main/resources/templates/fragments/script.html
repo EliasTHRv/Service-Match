@@ -1,0 +1,34 @@
+<!-- SCRIPT PARA REGISTRO DE USUARIO PROVEEDOR -->
+<script>document.addEventListener('DOMContentLoaded', function () {
+    var roleSelect = document.getElementById('role');  // Asegúrate de que tengas un elemento con el id 'role'
+    var imagenDiv = document.getElementById('imagenDiv');
+    var skillsDiv = document.getElementById('skillsDiv');
+    var wapDiv = document.getElementById('wapDiv');
+
+    if (roleSelect) {
+      // Verificar el valor predeterminado al cargar la página
+      if (roleSelect.value === 'provider') {
+        imagenDiv.style.display = 'block';
+        skillsDiv.style.display = 'block';
+        wapDiv.style.display = 'block';
+      } else {
+        imagenDiv.style.display = 'none';
+        skillsDiv.style.display = 'none';
+        wapDiv.style.display = 'none';
+      }
+
+      // Agregar un listener para cambios en la selección
+      roleSelect.addEventListener('change', function () {
+        if (roleSelect.value === 'provider') {
+          imagenDiv.style.display = 'block';
+          skillsDiv.style.display = 'block';
+          wapDiv.style.display = 'block';
+        } else {
+          imagenDiv.style.display = 'none';
+          skillsDiv.style.display = 'none';
+          wapDiv.style.display = 'none';
+        }
+      });
+    }
+  });
+</script>

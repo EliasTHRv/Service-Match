@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+
+<head th:replace="@{/fragments/head} :: head"></head>
+
+<body class="bg-dark ">
+
+    <nav th:replace="@{/fragments/navbar} :: nav"></nav>
+    <main class="container justify-content-center">
+
+        <div class="container d-flex justify-content-center">
+            <form class="formulario" th:action="@{/skill/modify/__${skill.id}__}" method="POST">
+
+                <div class="row">
+
+                    <input hidden name="id" th:value="${id}">
+
+                    <label for="skillName" class="text-color">Actualizar nombre del oficio:</label>
+                    <input class="form-control" type="text" id="skillName" name="name" th:value="${skill.name}">
+                    <div class="justify-content-center d-flex">
+                        <div class="form-check text-white me-4">
+                            <input class="form-check-input" type="radio" name="active" id="active" value="true" checked>
+                            <label class="form-check-label" for="active">
+                                Alta
+                            </label>
+                        </div>
+                        <div class="form-check text-white">
+                            <input class="form-check-input" type="radio" name="active" id="active" value="false">
+                            <label class="form-check-label" for="active">
+                                Baja
+                            </label>
+                        </div>
+                    </div>
+                    <button class="btn btnOrigin btn-primary mt-3 botones" type="submit">
+                        Actualizar </button>
+            </form>
+        </div>
+        <!-- FRAGMENT MENSAJES DE ERROR O ÉXITO THYMELEAF RECIBIDOS DE CONTROLADOR -->
+        <div th:fragment="${/fragments/thmsg} :: div"></div>
+
+    </main>
+    <footer th:replace="@{/fragments/footer} :: footer"></footer>
+</body>
+
+</html>
