@@ -5,45 +5,28 @@
     <head th:replace="@{/fragments/head} :: head"></head>
 
     <body>
-
         <nav th:replace="@{/fragments/navbar} :: nav"></nav>
-
 
         <div class="container-fluid m-5 contenedor">
 
             <form class="formulario" action="/job/crearJobPrueba" method="POST" enctype="multipart/form-data">
-
-                <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >
-                    <div class="card-body">
-                        <h5 class="card-title">Error 👎</h5>
-                        <p class="card-text" th:text="${error}"></p>
-                    </div>
-                </div>
-                <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito" >
-                    <div class="card-body">
-                        <h5 class="card-title">Exito!</h5>
-                        <p class="card-text" th:text="${exito}"></p>
-                    </div>
-                </div>
-
+                <!<!-- manejo mensaje de errores  -->
+                <div th:replace="@{/fragments/thmsg} :: div"></div>
                 <!--Double cost, String description, Long idSkill, Long idUser, Long idProvider-->
-
                 <div class="form-group my-3">
-                    <label class="mb-2">Cargar Job prueba</label> 
-                    <input type="number" class="form-control" name="cost" placeholder="Costo ponderado">
+                    <label class="mb-2">Costo</label> 
+                    <input type="number" class="form-control" name="cost" placeholder="Costo ponderado" required="true">
                 </div>
                 <div class="form-group my-3">
-                    <input type="text" class="form-control" name="description" placeholder="Cargue una breve descripcion del trabajo">
+                    <label class="mb-2">Descripcion</label> 
+                    <input type="text" class="form-control" name="description" placeholder="Cargue una breve descripcion del trabajo" required="true">
                 </div>
-
-
-
 
                 <div class="form-group my-3">
 
-                    <select name="idSkill">
+                    <select name="idSkill" required="true">
 
-                        <option>Seleccionar Skill</option>
+                        <option value="" disabled selected>Seleccionar Skill</option>
 
                         <option th:each="skill : ${skills}"
                                 th:if="${skill.active}"
@@ -53,35 +36,26 @@
                     </select>
                 </div>
                 <div class="form-group my-3">
-                    <select name="idUser">  
-                        <option>Seleccionar Cliente</option>
+                    <select name="idUser" required="true">  
+                        <option value="" disabled selected >Seleccionar Cliente</option>
                         <option th:each="appUser : ${appUsers}"
                                 th:value="${appUser.id}" 
                                 th:text="${appUser.name}"
                                 />
                     </select>
                 </div>
-                
                 <div class="form-group my-3">
-                    <select name="idProvider">  
-                        <option>Seleccionar Proveedor</option>
+                    <select name="idProvider" required="true">  
+                        <option value="" disabled selected >Seleccionar Proveedor</option>
                         <option th:each="provider : ${providers}"
                                 th:value="${provider.id}" 
                                 th:text="${provider.name}"
                                 />
                     </select>
                 </div>
-                
-
                 <button type="submit" class="btn btn-primary mt-3 botones">Guardar</button>
             </form>
-
-
-            <section class=" text-center container">
-                <div class="row mt-3">
-                    <div class="divVolver">
-                        <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
-                    </div>
-                </div>
-            </section>
         </div>
+        <footer th:replace="@{/fragments/footer} :: footer"></footer>
+    </body>
+</html>
