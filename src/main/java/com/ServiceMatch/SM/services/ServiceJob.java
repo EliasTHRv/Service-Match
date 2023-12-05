@@ -1,5 +1,15 @@
 package com.ServiceMatch.SM.services;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.ServiceMatch.SM.entities.AppUser;
 import com.ServiceMatch.SM.entities.Job;
 import com.ServiceMatch.SM.entities.Provider;
@@ -10,13 +20,6 @@ import com.ServiceMatch.SM.repository.JobRepository;
 import com.ServiceMatch.SM.repository.ProviderRepository;
 import com.ServiceMatch.SM.repository.SkillRepository;
 import com.ServiceMatch.SM.repository.UserRepository;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class ServiceJob {
@@ -33,8 +36,8 @@ public class ServiceJob {
     @Autowired
     private ProviderRepository providerRepository;
 
-    
-    public void createJob(Double cost, String description, Long idSkill, Long idUser, Long idProvider) throws MyException {
+    public void createJob(Double cost, String description, Long idSkill, Long idUser, Long idProvider)
+            throws MyException {
 
         validate(cost, description, idSkill, idUser, idProvider);
 
@@ -83,21 +86,21 @@ public class ServiceJob {
         return jobs;
 
     }
-    
-    public List<Job> listByIdProvider(Long id){
-        
+
+    public List<Job> listByIdProvider(Long id) {
+
         List<Job> jobs = new ArrayList<>();
-        
+
         jobs = jobRepository.findByAppUser(id);
         return jobs;
     }
 
     @Transactional
 
-    public void modifyJob(Long id, String comment, Double cost,Long callification, String description, Long idSkill, Long idUser, Long idProvider) throws MyException {
+    public void modifyJob(Long id, String comment, Double cost, Long callification, String description, Long idSkill,
+            Long idUser, Long idProvider) throws MyException {
 
         validate(comment, cost, description, idSkill, idUser, idProvider);
-
 
         Optional<Job> responseJob = jobRepository.findById(id);
 
@@ -142,6 +145,27 @@ public class ServiceJob {
         jobRepository.save(job);
 
     }
+
+    // AQUÍ EMPIEZA PAULINA MÉTODO TEMPORAL PARA PODER PROBAR EL FRONT JOB_MODIFY
+    @Transactional
+    public void modifyJob(Long id, String description, Double cost) throws MyException {
+        validateDescription(description, cost);
+        Optional<Job> responseJob = jobRepository.findById(id);
+        if (responseJob.isPresent()) {
+            Job job = responseJob.get();
+            job.setDescription(description);
+            job.setCost(cost);
+            jobRepository.save(job);
+        } else {
+            throw new MyException("No se encontró el trabajo con ID: " + id);
+        }
+    }
+
+    // MÉTODO GET ONE
+    public Job getOne(Long id) {
+        return jobRepository.findById(id).get();
+    }
+    // AQUÍ TERMINA PAULINA
 
     public void updateJobStatus(Long id, JobStatusEnum status) throws MyException {
         Optional<Job> responseJob = jobRepository.findById(id);
@@ -192,7 +216,8 @@ public class ServiceJob {
 
     }
 
-    public void validate(Double cost, String description, Long idSkill, Long idUser, Long idProvider) throws MyException {
+    public void validate(Double cost, String description, Long idSkill, Long idUser, Long idProvider)
+            throws MyException {
 
         // Validación de cost
         if (cost == null || cost < 0) {
@@ -209,7 +234,8 @@ public class ServiceJob {
         }
     }
 
-    public void validate(String comment, Double cost, String description, Long idSkill, Long idUser, Long idProvider) throws MyException {
+    public void validate(String comment, Double cost, String description, Long idSkill, Long idUser, Long idProvider)
+            throws MyException {
 
         if (comment == null || comment.isEmpty()) {
             throw new MyException("El comentario no puede ser nulo o vacío");
@@ -227,6 +253,16 @@ public class ServiceJob {
         // Validación de IDs
         if (idUser == null || idProvider == null || idSkill == null) {
             throw new MyException("Los IDs no pueden ser nulos");
+        }
+    }
+
+    private void validateDescription(String description, Double cost) throws MyException {
+        // Validaciones para la descripción y costo
+        if (description == null || description.isEmpty()) {
+            throw new MyException("La descripción no puede ser nula o vacía");
+        }
+        if (cost == null || cost < 0) {
+            throw new MyException("El costo debe ser un número positivo");
         }
     }
 
