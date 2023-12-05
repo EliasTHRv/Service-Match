@@ -112,19 +112,28 @@ public class AppUserController {
             @RequestParam String role,
             Model model) {
         try {
-            switch (role) {
-                case "client" -> {
-                    whatsApp = (long) 0;
-                    serviceUser.registrar(name, email, password, password2, whatsApp);
+            if (name == null || name.isBlank() || email == null || email.isBlank() ||
+                    password == null || password.isBlank() || password2 == null || password2.isBlank() ||
+                    role == null || role.isBlank()) {
+                throw new MyException("Todos los campos marcados con * son obligatorios.");
+            }
+
+            if (!password.equals(password2)) {
+                throw new MyException("Las contraseñas no coinciden.");
+            }
+
+            if ("client".equals(role)) {
+                whatsApp = 0L;
+                serviceUser.registrar(name, email, password, password2, whatsApp);
+            } else if ("provider".equals(role)) {
+                List<Skill> listaSkills = new ArrayList<>();
+                for (Long skillId : skills) {
+                    listaSkills.add(serviceSkill.getOne(skillId));
                 }
-                case "provider" -> {
-                    List<Skill> listaSkills = new ArrayList<>();
-                    for (Long skillId : skills) {
-                        listaSkills.add(serviceSkill.getOne(skillId));
-                    }
-                    System.out.println(listaSkills);
-                    serviceProvider.registrar(archivo,name, email, password, password2, whatsApp, listaSkills);
-                }
+                System.out.println(listaSkills);
+                serviceProvider.registrar(archivo, name, email, password, password2, whatsApp, listaSkills);
+            } else {
+                throw new MyException("Rol no válido: " + role);
             }
             model.addAttribute("message", "User '" + name + "' saved successfully");
         } catch (MyException ex) {
