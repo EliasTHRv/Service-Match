@@ -160,5 +160,5 @@ public class UserService implements UserDetailsService {
     public List<AppUser> loadUserByRol(RolEnum rol) {
         return userRepository.findByRol(rol);
     }
-
+    
 }

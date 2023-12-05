@@ -50,7 +50,7 @@ public class AppUser implements Serializable {
 
     @Column(name = "whats_app", nullable = false)
     private Long whatsApp;
-
+    
     // @OneToOne
     // private Picture picture; Se presta a debate la forma de guardar/cargar imagen
 

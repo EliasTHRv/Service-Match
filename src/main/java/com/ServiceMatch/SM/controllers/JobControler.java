@@ -62,7 +62,7 @@ public class JobControler {
             @RequestParam(required = false) String description,
             Long idSkill, Long idUser,
             @RequestParam(required = false) Long idProvider, Model model) {
-
+        
         try {
             serviceJob.createJob(cost, description, idSkill, idUser, idProvider);
             model.addAttribute("exito", "El job fue creado correctamente!");
