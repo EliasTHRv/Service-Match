@@ -1,4 +1,4 @@
-package com.ServiceMatch.SM;
+package com.ServiceMatch.SM.seeds;
 
 import com.ServiceMatch.SM.entities.AppUser;
 
