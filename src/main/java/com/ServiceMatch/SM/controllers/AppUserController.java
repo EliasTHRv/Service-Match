@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ServiceMatch.SM.entities.AppUser;
 import com.ServiceMatch.SM.entities.Skill;
@@ -101,6 +102,7 @@ public class AppUserController {
     @PostMapping("/save")
     // Añadir el seteo de rol proveedor o cliente
     public String saveUser(
+            @RequestParam (required =false)MultipartFile archivo,
             @RequestParam String name,
             @RequestParam String email,
             @RequestParam String password,
@@ -121,7 +123,7 @@ public class AppUserController {
                         listaSkills.add(serviceSkill.getOne(skillId));
                     }
                     System.out.println(listaSkills);
-                    serviceProvider.registrar(name, email, password, password2, whatsApp, listaSkills);
+                    serviceProvider.registrar(archivo,name, email, password, password2, whatsApp, listaSkills);
                 }
             }
             model.addAttribute("message", "User '" + name + "' saved successfully");
