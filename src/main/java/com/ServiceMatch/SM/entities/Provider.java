@@ -22,14 +22,12 @@ public class Provider extends AppUser {
             inverseJoinColumns = @JoinColumn(name = "skill_id"))
     private List<Skill> skills;
 
+    @OneToOne
+    private Image imagen;
+
     @Override
     public String toString() {
         // Llamar al toString de la superclase y agregar los detalles específicos de Provider
         return "Provider{Skills=" + skills + "', superclassDetails='" + super.toString() + "'}";
     }
-}
-    @OneToOne
-    private Image imagen;
-
-
 }

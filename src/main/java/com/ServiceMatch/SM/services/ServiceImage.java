@@ -13,11 +13,11 @@ import com.ServiceMatch.SM.repository.ImageRepository;
 
 @Service
 public class ServiceImage {
-    
+
     @Autowired
     private ImageRepository imagenRepository ;
 
-    
+
     @Transactional
     public Image guardarImagen(MultipartFile archivo) throws MyException{
 
@@ -29,7 +29,6 @@ public class ServiceImage {
                 imagen.setContenido(archivo.getBytes());
                 return imagenRepository.save(imagen);
             } catch (Exception e) {
-                
 
             }
 
@@ -41,7 +40,6 @@ public class ServiceImage {
 
     @Transactional
     public Image actualizar(MultipartFile archivo, Long idImagen) throws MyException {
-       
         if(archivo !=null){
             try {
                 Image imagen= new Image();
@@ -60,15 +58,14 @@ public class ServiceImage {
                 imagen.setContenido(archivo.getBytes());
                 return imagenRepository.save(imagen);
             } catch (Exception e) {
-                
 
             }
 
         }
 
         return null;
-       
-        
+
+
     }
 
 

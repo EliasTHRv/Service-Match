@@ -8,5 +8,4 @@ import com.ServiceMatch.SM.entities.Image;
 
 @Repository
 public interface ImageRepository  extends JpaRepository<Image,Long>{
-    
 }

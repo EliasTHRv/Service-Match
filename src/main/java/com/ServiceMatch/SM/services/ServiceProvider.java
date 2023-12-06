@@ -29,7 +29,7 @@ public class ServiceProvider implements UserDetailsService {
     @Autowired
     private ProviderRepository providerRepository;
 
-    @Autowired 
+    @Autowired
     private ServiceImage serviceImage;
 
     // agregar nuevas skills a provedor
@@ -59,9 +59,9 @@ public class ServiceProvider implements UserDetailsService {
         provider.setSkills(skills);
 
         provider.setRol(RolEnum.PROVEEDOR);
-
         Image imagen= serviceImage.guardarImagen(archivo);
         provider.setImagen(imagen);
+
 
         providerRepository.save(provider);
     }
@@ -90,16 +90,12 @@ public class ServiceProvider implements UserDetailsService {
             provider.setPassword(password);
             provider.setEmail(mail);
             provider.setWhatsApp(whatsApp);
-
             Long idImagen=null;
             if(provider.getImagen() !=null){
                 idImagen=provider.getImagen().getId();
             }
-
             Image imagen=serviceImage.actualizar(archivo, idImagen);
-
             provider.setImagen(imagen);
-
             providerRepository.save(provider);
         }
     }
