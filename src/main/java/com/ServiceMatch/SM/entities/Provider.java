@@ -1,11 +1,8 @@
 package com.ServiceMatch.SM.entities;
 
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -20,6 +17,9 @@ public class Provider extends AppUser {
             joinColumns = @JoinColumn(name = "provider_id"),
             inverseJoinColumns = @JoinColumn(name = "skill_id"))
     private List<Skill> skills;
+
+    @OneToOne
+    private Image imagen;
 
     @Override
     public String toString() {

@@ -21,6 +21,7 @@ import com.ServiceMatch.SM.exceptions.MyException;
 import com.ServiceMatch.SM.services.ServiceProvider;
 import com.ServiceMatch.SM.services.ServiceSkill;
 import com.ServiceMatch.SM.services.UserService;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/user")
@@ -101,6 +102,7 @@ public class AppUserController {
     @PostMapping("/save")
     // Añadir el seteo de rol proveedor o cliente
     public String saveUser(
+            @RequestParam (required =false) MultipartFile archivo,
             @RequestParam String name,
             @RequestParam String email,
             @RequestParam String password,
@@ -129,7 +131,7 @@ public class AppUserController {
                     listaSkills.add(serviceSkill.getOne(skillId));
                 }
                 System.out.println(listaSkills);
-                serviceProvider.registrar(name, email, password, password2, whatsApp, listaSkills);
+                serviceProvider.registrar(archivo,name, email, password, password2, whatsApp, listaSkills);
             } else {
                 throw new MyException("Rol no válido: " + role);
             }
