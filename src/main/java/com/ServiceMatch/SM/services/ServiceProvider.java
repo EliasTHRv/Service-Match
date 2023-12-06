@@ -1,5 +1,6 @@
 package com.ServiceMatch.SM.services;
 
+import com.ServiceMatch.SM.entities.Image;
 import com.ServiceMatch.SM.entities.Provider;
 import com.ServiceMatch.SM.entities.Skill;
 import com.ServiceMatch.SM.enums.RolEnum;
@@ -20,12 +21,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ServiceProvider implements UserDetailsService {
 
     @Autowired
     private ProviderRepository providerRepository;
+
+    @Autowired
+    private ServiceImage serviceImage;
 
     // agregar nuevas skills a provedor
     public void addSkill(long idProvider, long idSkill) {
@@ -38,10 +43,10 @@ public class ServiceProvider implements UserDetailsService {
     // agregar select todas las propiedades
 
     @Transactional
-    public void registrar(String name, String email, String password, String password2, Long whatsapp, List<Skill>skills)
+    public void registrar(MultipartFile archivo, String name, String email, String password, String password2, Long whatsapp, List<Skill>skills)
             throws MyException {
 
-        validar(name, email, password, password2, whatsapp);
+        validar(name, email, password, password2, whatsapp, skills);
 
         Provider provider = new Provider();
 
@@ -54,6 +59,9 @@ public class ServiceProvider implements UserDetailsService {
         provider.setSkills(skills);
 
         provider.setRol(RolEnum.PROVEEDOR);
+        Image imagen= serviceImage.guardarImagen(archivo);
+        provider.setImagen(imagen);
+
 
         providerRepository.save(provider);
     }
@@ -73,7 +81,7 @@ public class ServiceProvider implements UserDetailsService {
     }
 
     @Transactional
-    public void modifyProvider(Long id, String name, String password, String mail, Long whatsApp) {
+    public void modifyProvider(MultipartFile archivo, Long id, String name, String password, String mail, Long whatsApp) throws MyException {
         Optional<Provider> result = providerRepository.findById(id);
         Provider provider = new Provider();
         if (result.isPresent()) {
@@ -82,6 +90,12 @@ public class ServiceProvider implements UserDetailsService {
             provider.setPassword(password);
             provider.setEmail(mail);
             provider.setWhatsApp(whatsApp);
+            Long idImagen=null;
+            if(provider.getImagen() !=null){
+                idImagen=provider.getImagen().getId();
+            }
+            Image imagen=serviceImage.actualizar(archivo, idImagen);
+            provider.setImagen(imagen);
             providerRepository.save(provider);
         }
     }
@@ -91,7 +105,7 @@ public class ServiceProvider implements UserDetailsService {
         return providerRepository.findAll(pageable);
     }
 
-    private void validar(String name, String email, String password, String password2, Long whatsapp)
+    private void validar(String name, String email, String password, String password2, Long whatsapp, List<Skill> skills)
             throws MyException {
 
         if (name == null || name.isEmpty()) {
@@ -114,7 +128,10 @@ public class ServiceProvider implements UserDetailsService {
         if (whatsapp == null) {
             throw new MyException("El WhatsApp no puede ser nulo.");
         }
-
+        if (!skills.isEmpty()) {
+            throw new MyException("La lista Oficio no puede ser nula.");
+        }
+        
     }
 
     @Override
