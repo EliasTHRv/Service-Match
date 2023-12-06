@@ -1,8 +1,12 @@
 package com.ServiceMatch.SM.entities;
 
 import java.util.List;
-import javax.persistence.*;
-
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

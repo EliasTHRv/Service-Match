@@ -1,6 +1,5 @@
 package com.ServiceMatch.SM.services;
 
-
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -31,7 +30,6 @@ public class ServiceImage {
                 return imagenRepository.save(imagen);
             } catch (Exception e) {
 
-
             }
 
         }
@@ -42,7 +40,6 @@ public class ServiceImage {
 
     @Transactional
     public Image actualizar(MultipartFile archivo, Long idImagen) throws MyException {
-
         if(archivo !=null){
             try {
                 Image imagen= new Image();
@@ -61,7 +58,6 @@ public class ServiceImage {
                 imagen.setContenido(archivo.getBytes());
                 return imagenRepository.save(imagen);
             } catch (Exception e) {
-
 
             }
 

@@ -62,6 +62,7 @@ public class ServiceProvider implements UserDetailsService {
         Image imagen= serviceImage.guardarImagen(archivo);
         provider.setImagen(imagen);
 
+
         providerRepository.save(provider);
     }
 
@@ -80,8 +81,7 @@ public class ServiceProvider implements UserDetailsService {
     }
 
     @Transactional
-    public void modifyProvider(MultipartFile archivo,Long id, String name, String password, String mail, Long whatsApp)
-            throws MyException{
+    public void modifyProvider(MultipartFile archivo, Long id, String name, String password, String mail, Long whatsApp) throws MyException {
         Optional<Provider> result = providerRepository.findById(id);
         Provider provider = new Provider();
         if (result.isPresent()) {
