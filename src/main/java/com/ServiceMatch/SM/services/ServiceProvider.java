@@ -46,7 +46,7 @@ public class ServiceProvider implements UserDetailsService {
     public void registrar(MultipartFile archivo, String name, String email, String password, String password2, Long whatsapp, List<Skill>skills)
             throws MyException {
 
-        validar(name, email, password, password2, whatsapp);
+        validar(name, email, password, password2, whatsapp, skills);
 
         Provider provider = new Provider();
 
@@ -105,7 +105,7 @@ public class ServiceProvider implements UserDetailsService {
         return providerRepository.findAll(pageable);
     }
 
-    private void validar(String name, String email, String password, String password2, Long whatsapp)
+    private void validar(String name, String email, String password, String password2, Long whatsapp, List<Skill> skills)
             throws MyException {
 
         if (name == null || name.isEmpty()) {
@@ -128,7 +128,10 @@ public class ServiceProvider implements UserDetailsService {
         if (whatsapp == null) {
             throw new MyException("El WhatsApp no puede ser nulo.");
         }
-
+        if (!skills.isEmpty()) {
+            throw new MyException("La lista Oficio no puede ser nula.");
+        }
+        
     }
 
     @Override
