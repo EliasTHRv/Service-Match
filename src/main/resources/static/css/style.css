@@ -112,6 +112,9 @@ input::placeholder {
 .table-limit {
     max-width: 45rem;
 }
+.border-card{
+    box-shadow: 0 0 8px rgba(245, 140, 32, 1) !important;
+  }
 @keyframes slideInLeft {
     from {
       transform: translateX(-100%);
