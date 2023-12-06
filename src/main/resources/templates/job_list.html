@@ -7,17 +7,18 @@
 
     <nav th:replace="@{/fragments/navbar} :: nav"></nav>
 
-    <div class="container-fluid m-5 contenedor bg-dark">
+    <div class="container bg-dark">
 
-        <div class="container">
+        <div class="container dg">
             <div class="row">
                 <div class="col-md-4 mb-4" th:each="job : ${jobs}">
-                    <div class="card cardjobs">
+                    <div class="card table-limit bg-dark border-card" style="color: white;">
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${job.description}"></h5>
+                            <h5 class="card-title" th:text="${job.description.toUpperCase}"></h5>
 <!--                            <p class="card-text">Costo: <span th:text="${job.cost}"></span></p>-->
                             <p class="card-text">Oficio requerido: <span th:text="${job.skill.name}"></span></p>
                             <p class="card-text">Usuario: <span th:text="${job.appUser.name}"></span></p>
+                            <p class="card-text">Precio: USD $ <span th:text="${job.cost}"></span></p>
                             <p class="card-text" sec:authorize="hasRole('PROVEEDOR')">Proveedor: <span th:text="${job.provider.name}"></span></p>
                             <p class="card-text">Comentario: <span th:text="${job.comment}"></span></p>
                             <p class="card-text">Calificación: <span th:text="${job.callification}"></span></p>
