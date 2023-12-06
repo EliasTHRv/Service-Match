@@ -14,15 +14,15 @@
                 <div class="col-md-4 mb-4" th:each="job : ${jobs}">
                     <div class="card table-limit bg-dark border-card" style="color: white;">
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${job.description.toUpperCase}"></h5>
+                            <h5 class="card-title d-flex justify-content-center" th:text="${job.description.toUpperCase}"></h5>
 <!--                            <p class="card-text">Costo: <span th:text="${job.cost}"></span></p>-->
-                            <p class="card-text">Oficio requerido: <span th:text="${job.skill.name}"></span></p>
-                            <p class="card-text">Usuario: <span th:text="${job.appUser.name}"></span></p>
-                            <p class="card-text">Precio: USD $ <span th:text="${job.cost}"></span></p>
-                            <p class="card-text" sec:authorize="hasRole('PROVEEDOR')">Proveedor: <span th:text="${job.provider.name}"></span></p>
-                            <p class="card-text">Comentario: <span th:text="${job.comment}"></span></p>
-                            <p class="card-text">Calificación: <span th:text="${job.callification}"></span></p>
-                            <p class="card-text">Estado: <span th:text="${job.jobStatus}"></span></p>
+                            <p class="card-text" style="font-weight: bold;">Oficio requerido: <span th:text="${job.skill.name}" style="font-weight: normal;"></span></p>
+                            <p class="card-text"style="font-weight: bold;">Usuario: <span th:text="${job.appUser.name}"style="font-weight: normal;"></span></p>
+                            <p class="card-text"style="font-weight: bold;">Precio: USD $ <span th:text="${job.cost}"style="font-weight: normal;"></span></p>
+                            <p class="card-text" sec:authorize="hasRole('PROVEEDOR')"style="font-weight: bold;">Proveedor: <span th:text="${job.provider.name}"style="font-weight: normal;"></span></p>
+                            <p class="card-text"style="font-weight: bold;">Comentario: <span th:text="${job.comment}"style="font-weight: normal;"></span></p>
+                            <p class="card-text"style="font-weight: bold;">Calificación: <span th:text="${job.callification}"style="font-weight: normal;"></span></p>
+                            <p class="card-text"style="font-weight: bold;">Estado: <span th:text="${job.jobStatus}"style="font-weight: normal;"></span></p>
                             <div class="d-flex justify-content-between">
                                 <form th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).PENDING}"
                                     th:action="@{/job/list/provider/{id}/accept/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
