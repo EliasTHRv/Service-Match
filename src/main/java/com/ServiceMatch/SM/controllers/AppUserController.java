@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ServiceMatch.SM.entities.AppUser;
 import com.ServiceMatch.SM.entities.Skill;
@@ -21,6 +22,7 @@ import com.ServiceMatch.SM.exceptions.MyException;
 import com.ServiceMatch.SM.services.ServiceProvider;
 import com.ServiceMatch.SM.services.ServiceSkill;
 import com.ServiceMatch.SM.services.UserService;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/user")
@@ -101,29 +103,18 @@ public class AppUserController {
     @PostMapping("/save")
     // Añadir el seteo de rol proveedor o cliente
     public String saveUser(
+            @RequestParam (required =false) MultipartFile archivo,
             @RequestParam String name,
             @RequestParam String email,
             @RequestParam String password,
             @RequestParam String password2,
             @RequestParam(required = false) Long whatsApp,
-            @RequestParam(required = false) Set<Long> skills,
+            @RequestParam(required = false) List<Skill> skills,
             @RequestParam String role,
             Model model) {
         try {
-            switch (role) {
-                case "client" -> {
-                    whatsApp = (long) 0;
-                    serviceUser.registrar(name, email, password, password2, whatsApp);
-                }
-                case "provider" -> {
-                    List<Skill> listaSkills = new ArrayList<>();
-                    for (Long skillId : skills) {
-                        listaSkills.add(serviceSkill.getOne(skillId));
-                    }
-                    System.out.println(listaSkills);
-                    serviceProvider.registrar(name, email, password, password2, whatsApp, listaSkills);
-                }
-            }
+           
+           serviceProvider.registrar(archivo, name, email, password, password2, whatsApp, skills);
             model.addAttribute("message", "User '" + name + "' saved successfully");
         } catch (MyException ex) {
             // En caso de excepción (por ejemplo, validación fallida), agrega un mensaje de
