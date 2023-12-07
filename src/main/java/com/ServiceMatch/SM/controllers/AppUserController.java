@@ -121,7 +121,7 @@ public class AppUserController {
             Model model) {
         try {
             if(role.equals("client")){
-                serviceUser.registrar(name,email,password,password2,whatsApp);
+                serviceUser.registrar(name,email,password,password2);
                 return "redirect:/user/list";
             }
             serviceProvider.registrar(archivo, name, email, password, password2, whatsApp, skills);
