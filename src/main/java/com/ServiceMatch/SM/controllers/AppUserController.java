@@ -1,9 +1,10 @@
 package com.ServiceMatch.SM.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
+import com.ServiceMatch.SM.entities.Provider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ServiceMatch.SM.entities.AppUser;
 import com.ServiceMatch.SM.entities.Skill;
@@ -21,17 +23,20 @@ import com.ServiceMatch.SM.exceptions.MyException;
 import com.ServiceMatch.SM.services.ServiceProvider;
 import com.ServiceMatch.SM.services.ServiceSkill;
 import com.ServiceMatch.SM.services.UserService;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/user")
 public class AppUserController {
 
     @Autowired
-    UserService serviceUser;
-    @Autowired
     ServiceSkill serviceSkill;
     @Autowired
     ServiceProvider serviceProvider;
+
+    @Autowired
+    UserService serviceUser;
 
     @GetMapping("/list") // http://localhost:8080/user/list/id
     public String listUsers(Model model, @RequestParam(defaultValue = "0") int page) {
@@ -39,6 +44,7 @@ public class AppUserController {
         // Se guarda la lista de usuarios en "users" en formato de página (10 por
         // página)
         Page<AppUser> users = serviceUser.getPageOfUsers(page, 10);
+        AppUser p = new AppUser();
         // Se inyectan al modelo todos los usuarios "userList"
         model.addAttribute("userList", users.getContent());
         // Se agrega información de paginación al modelo
@@ -57,9 +63,12 @@ public class AppUserController {
     }
 
     @PostMapping("/modify/{id}")
-    public String modify(@PathVariable Long id, String name, boolean active, ModelMap model) {
-
+    public String modify(@PathVariable Long id, String name, boolean active, MultipartFile archivo, ModelMap model) {
+        Optional<Provider> esProvider = serviceProvider.getProviderById(id);
         try {
+            if(esProvider.isPresent()){
+                serviceProvider.modifyProvider(archivo,id,name);
+            }
             serviceUser.updateUser(id, name, active);
             return "redirect:../list";
 
@@ -75,7 +84,7 @@ public class AppUserController {
         try {
             active = true;
             serviceUser.restoreUser(id, active);
-            ;
+            
             return "redirect:../list";
 
         } catch (Exception e) {
@@ -100,15 +109,17 @@ public class AppUserController {
 
     @PostMapping("/save")
     public String saveUser(
+            @RequestParam (required =false) MultipartFile archivo,
             @RequestParam String name,
             @RequestParam String email,
             @RequestParam String password,
             @RequestParam String password2,
             @RequestParam(required = false) Long whatsApp,
-            @RequestParam(required = false) Set<Long> skills,
+            @RequestParam(required = false) List<Skill> skills,
             @RequestParam String role,
             Model model) {
         try {
+<<<<<<< HEAD
             if (name == null || name.isBlank() || email == null || email.isBlank() ||
                     password == null || password.isBlank() || password2 == null || password2.isBlank() ||
                     role == null || role.isBlank()) {
@@ -133,16 +144,52 @@ public class AppUserController {
                 throw new MyException("Rol no válido: " + role);
             }
 
+=======
+            if(role.equals("client")){
+                serviceUser.registrar(name,email,password,password2);
+                return "redirect:/user/list";
+            }
+            serviceProvider.registrar(archivo, name, email, password, password2, whatsApp, skills);
+>>>>>>> Develop
             model.addAttribute("message", "User '" + name + "' saved successfully");
         } catch (MyException ex) {
-            // En caso de excepción (por ejemplo, validación fallida), agrega un mensaje de
-            // error al modelo
             model.addAttribute("error", ex.getMessage());
-            // Devuelve el nombre de la plantilla HTML para mostrar el formulario de
-            // registro con el mensaje de error
             return "register.html";
         }
-        // Redirige a la URL "/user/list" después de guardar exitosamente
         return "redirect:/user/list";
     }
+@GetMapping("/providers")
+public String providerList(@RequestParam(name = "skill", required = false) String skill, ModelMap model) {
+    List<Skill> skills = serviceSkill.getSkills();
+    model.addAttribute("skills", skills);
+
+    if (skill != null) {
+        List<AppUser> providers = serviceUser.loadUserBySkyll(skill);
+        model.addAttribute("providers", providers);
+        model.addAttribute("selectedSkill", skill);
+        
+       
+    } else {
+        // Asegúrate de agregar selectedSkill al modelo con un valor predeterminado
+        model.addAttribute("selectedSkill", ""); // O cualquier valor predeterminado que desees
+    }
+
+    return "provider_list.html";
+}
+
+
+@GetMapping("/providers/{skill}")
+public String userProviderList(@RequestParam String skill, ModelMap model,RedirectAttributes redirectAttributes) {
+    List<AppUser> providers = serviceUser.loadUserBySkyll(skill);
+    model.addAttribute("providers", providers);
+
+    model.addAttribute("selectedSkill", skill);
+    
+     redirectAttributes.addAttribute("skill", skill);
+        
+         return "redirect:/user/providers";
+   
+    
+}
+    
 }

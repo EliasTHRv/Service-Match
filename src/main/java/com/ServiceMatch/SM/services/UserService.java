@@ -30,14 +30,13 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Transactional
-    public void registrar(String name, String email, String password, String password2, Long whatsapp) throws MyException {
+    public void registrar(String name, String email, String password, String password2) throws MyException {
 
-        validar(name, email, password, password2, whatsapp);
+        validar(name, email, password, password2);
 
         AppUser appUser = new AppUser();
 
         appUser.setName(name);
-        appUser.setWhatsApp(whatsapp);
 
         appUser.setEmail(email);
 
@@ -79,7 +78,7 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void modifyUser(Long id, String name, String password, String mail, Long whatsApp) throws MyException {
-        validar(name, mail, password, password, whatsApp);
+        validar(name, mail, password, password);
         Optional<AppUser> result = userRepository.findById(id);
         AppUser user = new AppUser();
         if (result.isPresent()) {
@@ -87,7 +86,6 @@ public class UserService implements UserDetailsService {
             user.setName(name);
             user.setPassword(password);
             user.setEmail(mail);
-            user.setWhatsApp(whatsApp);
             userRepository.save(user);
         }
     }
@@ -109,7 +107,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll(pageable);
     }
 
-    private void validar(String name, String email, String password, String password2, Long whatsapp)
+    private void validar(String name, String email, String password, String password2)
             throws MyException {
 
         if (name == null || name.isEmpty()) {
@@ -128,9 +126,6 @@ public class UserService implements UserDetailsService {
         if (!password2.equals(password)) {
             throw new MyException("Las contraseñas ingresadas no coinciden");
 
-        }
-        if (whatsapp == null) {
-            throw new MyException("El WhatsApp no puede ser nulo.");
         }
 
     }
@@ -160,5 +155,9 @@ public class UserService implements UserDetailsService {
     public List<AppUser> loadUserByRol(RolEnum rol) {
         return userRepository.findByRol(rol);
     }
+     public List<AppUser> loadUserBySkyll(String skill){
+          
+          return userRepository.findProvidersBySkill(skill);
+      }
     
 }

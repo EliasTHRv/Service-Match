@@ -8,9 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.JoinColumn;
 
 import lombok.Data;
 
@@ -25,8 +23,11 @@ public class Skill implements Serializable {
     private String name;
     private boolean active;
 
-    @ManyToMany
-    @JoinTable(name = "provider_skill", joinColumns = @JoinColumn(name = "skill_id"), inverseJoinColumns = @JoinColumn(name = "provider_id"))
+    @ManyToMany(mappedBy = "skills")
     private List<Provider> providers;
 
+    @Override
+    public String toString() {
+        return "Skill{id=" + id + ", skillName='" + name + ", active='" + active + "'}";
+    }
 }

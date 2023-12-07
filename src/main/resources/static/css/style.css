@@ -112,6 +112,9 @@ input::placeholder {
 .table-limit {
     max-width: 45rem;
 }
+.border-card{
+    box-shadow: 0 0 8px rgba(245, 140, 32, 1) !important;
+  }
 @keyframes slideInLeft {
     from {
       transform: translateX(-100%);
@@ -192,3 +195,77 @@ a.link-colors:hover {
 .card.cardjobs {
     background-color: rgb(255, 127, 0);
 }
+
+.bodyRegistrarOficio{
+    background: linear-gradient(rgba(29, 30, 35, 0.6),
+        rgba(29, 30, 35, 0.6)),
+        url(images/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    min-height: 70vh;
+    padding: 80px 0 0 0;
+}
+
+.formularioRegistrarOficio {
+    padding: 50px;
+    height: 330px;
+    position: static;
+}
+
+.bodyCreateJob {
+    background: linear-gradient(rgba(29, 30, 35, 0.3),
+            rgba(29, 30, 35, 0.3)),
+        url(registerUsers/imagesRegisterUsers/derechos-trabajadores-turnos.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.formularioCreateJob {
+    padding: 30px;
+    height: 600px;
+    position: static;
+}
+
+.bodyActualizarOficio{
+    background: linear-gradient(rgba(29, 30, 35, 0.6),
+        rgba(29, 30, 35, 0.6)),
+        url(images/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    min-height: 70vh;
+    padding: 80px 0 0 0;
+}
+
+
+.formularioActualizarOficio {
+    padding: 50px;
+    height: 350px;
+    position: static;
+}
+
+.bodyActualizarNombreUsuario{
+    background: linear-gradient(rgba(29, 30, 35, 0.6),
+        rgba(29, 30, 35, 0.6)),
+        url(images/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    min-height: 70vh;
+    padding: 80px 0 0 0;
+}
+
+.formularioActualizarNombreUser {
+    padding: 50px;
+    height: 350px;
+    position: static;
+}
+
