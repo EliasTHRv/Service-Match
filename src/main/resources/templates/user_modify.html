@@ -11,8 +11,6 @@
         <div class="container d-flex justify-content-center">
             <form class="formulario" th:action="@{/user/modify/__${user.id}__}" method="POST">
 
-                <div class="row">
-
                     <input hidden name="id" th:value="${id}">
 
                     <label for="name" class="text-color">Actualizar nombre del Usuario:</label>
@@ -25,14 +23,22 @@
                             </label>
                         </div>
                         <div class="form-check text-white">
-                            <input class="form-check-input" type="radio" name="active" id="active" value="false">
-                            <label class="form-check-label" for="active">
+                            <input class="form-check-input" type="radio" name="active" id="inactive" value="false">
+                            <label class="form-check-label" for="inactive">
                                 Baja
                             </label>
                         </div>
+                        <div th:if="${user.imagen != null}">
+                            <img  th:src="@{'/mostrar-imagen/' + ${user.id}}" th:alt="FOO"
+                                  style="width: 200px; height: 200px;" />
+                        </div>
+                        <div th:if="${user.imagen == null}" class="card-img-top img-fluid">
+                            <img th:src="@{../../img/no-profile.png}"  alt="Foto default">
+                        </div>
+
+                        <button class="btn btnOrigin btn-primary mt-3 botones" type="submit">
+                            Actualizar </button>
                     </div>
-                    <button class="btn btnOrigin btn-primary mt-3 botones" type="submit">
-                        Actualizar </button>
             </form>
         </div>
 
