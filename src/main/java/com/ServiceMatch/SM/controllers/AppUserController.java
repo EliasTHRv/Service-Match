@@ -2,8 +2,10 @@ package com.ServiceMatch.SM.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
+import com.ServiceMatch.SM.entities.Provider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -59,9 +61,12 @@ public class AppUserController {
     }
 
     @PostMapping("/modify/{id}")
-    public String modify(@PathVariable Long id, String name, boolean active, ModelMap model) {
-
+    public String modify(@PathVariable Long id, String name, boolean active, MultipartFile archivo, ModelMap model) {
+        Optional<Provider> esProvider = serviceProvider.getProviderById(id);
         try {
+            if(esProvider.isPresent()){
+                serviceProvider.modifyProvider(archivo,id,name);
+            }
             serviceUser.updateUser(id, name, active);
             return "redirect:../list";
 
