@@ -1,8 +1,7 @@
 package com.ServiceMatch.SM.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +21,8 @@ import com.ServiceMatch.SM.exceptions.MyException;
 import com.ServiceMatch.SM.services.ServiceProvider;
 import com.ServiceMatch.SM.services.ServiceSkill;
 import com.ServiceMatch.SM.services.UserService;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/user")
@@ -77,7 +78,7 @@ public class AppUserController {
         try {
             active = true;
             serviceUser.restoreUser(id, active);
-            ;
+            
             return "redirect:../list";
 
         } catch (Exception e) {
@@ -125,4 +126,38 @@ public class AppUserController {
         }
         return "redirect:/user/list";
     }
+@GetMapping("/providers")
+public String providerList(@RequestParam(name = "skill", required = false) String skill, ModelMap model) {
+    List<Skill> skills = serviceSkill.getSkills();
+    model.addAttribute("skills", skills);
+
+    if (skill != null) {
+        List<AppUser> providers = serviceUser.loadUserBySkyll(skill);
+        model.addAttribute("providers", providers);
+        model.addAttribute("selectedSkill", skill);
+        
+       
+    } else {
+        // Asegúrate de agregar selectedSkill al modelo con un valor predeterminado
+        model.addAttribute("selectedSkill", ""); // O cualquier valor predeterminado que desees
+    }
+
+    return "provider_list.html";
+}
+
+
+@GetMapping("/providers/{skill}")
+public String userProviderList(@RequestParam String skill, ModelMap model,RedirectAttributes redirectAttributes) {
+    List<AppUser> providers = serviceUser.loadUserBySkyll(skill);
+    model.addAttribute("providers", providers);
+
+    model.addAttribute("selectedSkill", skill);
+    
+     redirectAttributes.addAttribute("skill", skill);
+        
+         return "redirect:/user/providers";
+   
+    
+}
+    
 }
