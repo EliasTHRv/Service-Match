@@ -160,5 +160,9 @@ public class UserService implements UserDetailsService {
     public List<AppUser> loadUserByRol(RolEnum rol) {
         return userRepository.findByRol(rol);
     }
+     public List<AppUser> loadUserBySkyll(String skill){
+          
+          return userRepository.findProvidersBySkill(skill);
+      }
     
 }

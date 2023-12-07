@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.Table;
 import javax.persistence.InheritanceType;
-// import javax.persistence.OneToOne;
 import com.ServiceMatch.SM.enums.RolEnum;
 
 import lombok.Data;
@@ -51,7 +50,4 @@ public class AppUser implements Serializable {
     @Column(name = "whats_app", nullable = false)
     private Long whatsApp;
     
-    // @OneToOne
-    // private Picture picture; Se presta a debate la forma de guardar/cargar imagen
-
 }

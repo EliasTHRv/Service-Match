@@ -40,8 +40,6 @@ public class ServiceProvider implements UserDetailsService {
         // save
     }
 
-    // agregar select todas las propiedades
-
     @Transactional
     public void registrar(MultipartFile archivo, String name, String email, String password, String password2, Long whatsapp, List<Skill>skills)
             throws MyException {
