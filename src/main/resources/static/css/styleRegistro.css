@@ -38,3 +38,14 @@ body {
 input::placeholder {
     color: gainsboro !important;
 }
+img {
+    max-width: 100%;
+    width: 100%;
+    display: block;
+    /* opcional */
+    -o-object-fit: cover;
+    object-fit: cover;
+    /* opcional */
+    -o-object-position: center center;
+    object-position: center center;
+  }
