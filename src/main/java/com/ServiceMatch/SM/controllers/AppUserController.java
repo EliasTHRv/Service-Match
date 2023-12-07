@@ -29,11 +29,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AppUserController {
 
     @Autowired
-    UserService serviceUser;
-    @Autowired
     ServiceSkill serviceSkill;
     @Autowired
     ServiceProvider serviceProvider;
+
+    @Autowired
+    UserService serviceUser;
 
     @GetMapping("/list") // http://localhost:8080/user/list/id
     public String listUsers(Model model, @RequestParam(defaultValue = "0") int page) {
@@ -113,18 +114,16 @@ public class AppUserController {
             @RequestParam String role,
             Model model) {
         try {
-           
-           serviceProvider.registrar(archivo, name, email, password, password2, whatsApp, skills);
+            if(role.equals("client")){
+                serviceUser.registrar(name,email,password,password2,whatsApp);
+                return "redirect:/user/list";
+            }
+            serviceProvider.registrar(archivo, name, email, password, password2, whatsApp, skills);
             model.addAttribute("message", "User '" + name + "' saved successfully");
         } catch (MyException ex) {
-            // En caso de excepción (por ejemplo, validación fallida), agrega un mensaje de
-            // error al modelo
             model.addAttribute("error", ex.getMessage());
-            // Devuelve el nombre de la plantilla HTML para mostrar el formulario de
-            // registro con el mensaje de error
             return "register.html";
         }
-        // Redirige a la URL "/user/list" después de guardar exitosamente
         return "redirect:/user/list";
     }
 @GetMapping("/providers")
