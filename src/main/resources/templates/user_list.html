@@ -22,11 +22,11 @@
                         <th scope="col">Nombre</th>
                         <th scope="col">Correo</th>
                         <th scope="col">Rol</th>
+                        <th scope="col">Imagen</th>
                         <th scope="col">Acciones</th>
                         <th scope="col">
                             <div class="d-flex justify-content-center">
                                 Estado
-
                             </div>
                         </th>
                     </tr>
@@ -37,8 +37,13 @@
                         <td th:text="${user.name}"></td>
                         <td th:text="${user.email}"></td>
                         <td th:text="${user.rol}"></td>
-                        <!-- dtype,registration_date,whats_app me dan error al traerlos -->
                         <td>
+                            <a th:if="${user.rol == T(com.ServiceMatch.SM.enums.RolEnum).PROVEEDOR}"
+                               class="btn btn-success btn-sm"
+                               th:href="@{/mostrar-imagen/__${user.id}__}" target="_blank">Ver</a>
+                        </td>
+                         <!-- dtype,registration_date,whats_app me dan error al traerlos -->
+                         <td>
                             <!--Si está dado de baja: Boton para RESTAURAR-->
                             <a th:if="${!(user.active)}" class="btn btn-secondary btn-sm"
                                 th:href="@{/user/restore/__${user.id}__}">Restaurar</a>
@@ -62,6 +67,7 @@
                                 <i class="fa-regular fa-circle-xmark fa-2x" style="color: #f56349;"></i>
                             </div>
                         </td>
+
 
                     </tr>
 
