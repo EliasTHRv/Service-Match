@@ -128,7 +128,7 @@ public class ServiceProvider implements UserDetailsService {
         if (whatsapp == null) {
             throw new MyException("El WhatsApp no puede ser nulo.");
         }
-        if (!skills.isEmpty()) {
+        if (skills.isEmpty()) {
             throw new MyException("La lista Oficio no puede ser nula.");
         }
         
