@@ -32,13 +32,6 @@ public class ServiceProvider implements UserDetailsService {
     @Autowired
     private ServiceImage serviceImage;
 
-    // agregar nuevas skills a provedor
-    public void addSkill(long idProvider, long idSkill) {
-        // get privider by id
-        // get skill by id
-        // add skill to provider array array
-        // save
-    }
 
     @Transactional
     public void registrar(MultipartFile archivo, String name, String email, String password, String password2, Long whatsapp, List<Skill>skills)
@@ -59,13 +52,15 @@ public class ServiceProvider implements UserDetailsService {
         provider.setRol(RolEnum.PROVEEDOR);
         Image imagen= serviceImage.guardarImagen(archivo);
         provider.setImagen(imagen);
-
-
         providerRepository.save(provider);
     }
 
     public List<Provider> getProvider() {
         return providerRepository.findAll();
+    }
+
+    public Optional<Provider> getProviderById(Long id) {
+        return providerRepository.findById(id);
     }
 
     @Transactional
@@ -79,15 +74,12 @@ public class ServiceProvider implements UserDetailsService {
     }
 
     @Transactional
-    public void modifyProvider(MultipartFile archivo, Long id, String name, String password, String mail, Long whatsApp) throws MyException {
+    public void modifyProvider(MultipartFile archivo, Long id, String name) throws MyException {
         Optional<Provider> result = providerRepository.findById(id);
         Provider provider = new Provider();
         if (result.isPresent()) {
             provider = result.get();
             provider.setName(name);
-            provider.setPassword(password);
-            provider.setEmail(mail);
-            provider.setWhatsApp(whatsApp);
             Long idImagen=null;
             if(provider.getImagen() !=null){
                 idImagen=provider.getImagen().getId();
