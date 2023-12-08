@@ -3,10 +3,10 @@
 
   <div class="container-fluid ">
 
-    <a th:href="@{/}" class="navbar-brand logo-color fs-4"> <span class="text-color">Match</span> <img
-        th:src="@{../img/alicates.png}" alt="" class="icono" width="30em" th:href="@{/}"> Service </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarS"
-      aria-controls="navbarS" aria-expanded="false" aria-label="Toggle navigation">
+    <a th:href="@{/}" class="navbar-brand logo-color fs-4"> <span class="text-color">Match</span> <img th:src="@{../img/alicates.png}" alt="" class="icono"
+        width="30em" th:href="@{/}"> Service </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarS" aria-controls="navbarS" aria-expanded="false"
+      aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span> </button>
 
     <div class="collapse navbar-collapse" id="navbarS">
@@ -34,8 +34,7 @@
         </li>
         <!-- SI EL USUARIO ESTÁ LOGUEADO PUEDE EDITAR SU PERFIL Y CERRAR SESIÓN -->
         <li class="nav-item dropdown" th:if="${session.usuariosession != null}">
-          <a class="nav-link dropdown-toggle nav-link custom-link fs-5" href="#" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">Perfil </a>
+          <a class="nav-link dropdown-toggle nav-link custom-link fs-5" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Perfil </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Editar Perfil</a></li>
             <li>
@@ -46,8 +45,7 @@
         </li>
         <!-- SI EL USUARIO  NO ESTÁ LOGUEADO PUEDE REGISTRARSE -->
         <li class="nav-item">
-          <a class="nav-link custom-link nanraja fs-5" th:if="${session.usuariosession == null}"
-            th:href="@{/user/registration}">Registrarse</a>
+          <a class="nav-link custom-link nanraja fs-5" th:if="${session.usuariosession == null}" th:href="@{/user/registration}">Registrarse</a>
         </li>
       </ul>
     </div>
