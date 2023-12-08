@@ -2,7 +2,6 @@ package com.ServiceMatch.SM.controllers;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import com.ServiceMatch.SM.entities.Provider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ import com.ServiceMatch.SM.exceptions.MyException;
 import com.ServiceMatch.SM.services.ServiceProvider;
 import com.ServiceMatch.SM.services.ServiceSkill;
 import com.ServiceMatch.SM.services.UserService;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -66,8 +64,8 @@ public class AppUserController {
     public String modify(@PathVariable Long id, String name, boolean active, MultipartFile archivo, ModelMap model) {
         Optional<Provider> esProvider = serviceProvider.getProviderById(id);
         try {
-            if(esProvider.isPresent()){
-                serviceProvider.modifyProvider(archivo,id,name);
+            if (esProvider.isPresent()) {
+                serviceProvider.modifyProvider(archivo, id, name);
             }
             serviceUser.updateUser(id, name, active);
             return "redirect:../list";
@@ -84,7 +82,7 @@ public class AppUserController {
         try {
             active = true;
             serviceUser.restoreUser(id, active);
-            
+
             return "redirect:../list";
 
         } catch (Exception e) {
@@ -109,7 +107,7 @@ public class AppUserController {
 
     @PostMapping("/save")
     public String saveUser(
-            @RequestParam (required =false) MultipartFile archivo,
+            @RequestParam(required = false) MultipartFile archivo,
             @RequestParam String name,
             @RequestParam String email,
             @RequestParam String password,
@@ -119,38 +117,11 @@ public class AppUserController {
             @RequestParam String role,
             Model model) {
         try {
-<<<<<<< HEAD
-            if (name == null || name.isBlank() || email == null || email.isBlank() ||
-                    password == null || password.isBlank() || password2 == null || password2.isBlank() ||
-                    role == null || role.isBlank()) {
-                throw new MyException("Todos los campos marcados con * son obligatorios.");
-            }
-
-            if (!password.equals(password2)) {
-                throw new MyException("Las contraseñas no coinciden.");
-            }
-
-            if ("client".equals(role)) {
-                whatsApp = 0L;
-                serviceUser.registrar(name, email, password, password2, whatsApp);
-            } else if ("provider".equals(role)) {
-                List<Skill> listaSkills = new ArrayList<>();
-                for (Long skillId : skills) {
-                    listaSkills.add(serviceSkill.getOne(skillId));
-                }
-                System.out.println(listaSkills);
-                serviceProvider.registrar(name, email, password, password2, whatsApp, listaSkills);
-            } else {
-                throw new MyException("Rol no válido: " + role);
-            }
-
-=======
-            if(role.equals("client")){
-                serviceUser.registrar(name,email,password,password2);
+            if (role.equals("client")) {
+                serviceUser.registrar(name, email, password, password2);
                 return "redirect:/user/list";
             }
             serviceProvider.registrar(archivo, name, email, password, password2, whatsApp, skills);
->>>>>>> Develop
             model.addAttribute("message", "User '" + name + "' saved successfully");
         } catch (MyException ex) {
             model.addAttribute("error", ex.getMessage());
@@ -158,38 +129,36 @@ public class AppUserController {
         }
         return "redirect:/user/list";
     }
-@GetMapping("/providers")
-public String providerList(@RequestParam(name = "skill", required = false) String skill, ModelMap model) {
-    List<Skill> skills = serviceSkill.getSkills();
-    model.addAttribute("skills", skills);
 
-    if (skill != null) {
-        List<AppUser> providers = serviceUser.loadUserBySkyll(skill);
-        model.addAttribute("providers", providers);
-        model.addAttribute("selectedSkill", skill);
-        
-       
-    } else {
-        // Asegúrate de agregar selectedSkill al modelo con un valor predeterminado
-        model.addAttribute("selectedSkill", ""); // O cualquier valor predeterminado que desees
+    @GetMapping("/providers")
+    public String providerList(@RequestParam(name = "skill", required = false) String skill, ModelMap model) {
+        List<Skill> skills = serviceSkill.getSkills();
+        model.addAttribute("skills", skills);
+
+        if (skill != null) {
+            List<AppUser> providers = serviceUser.loadUserBySkyll(skill);
+            model.addAttribute("providers", providers);
+            model.addAttribute("selectedSkill", skill);
+
+        } else {
+            // Asegúrate de agregar selectedSkill al modelo con un valor predeterminado
+            model.addAttribute("selectedSkill", ""); // O cualquier valor predeterminado que desees
+        }
+
+        return "provider_list.html";
     }
 
-    return "provider_list.html";
-}
+    @GetMapping("/providers/{skill}")
+    public String userProviderList(@RequestParam String skill, ModelMap model, RedirectAttributes redirectAttributes) {
+        List<AppUser> providers = serviceUser.loadUserBySkyll(skill);
+        model.addAttribute("providers", providers);
 
+        model.addAttribute("selectedSkill", skill);
 
-@GetMapping("/providers/{skill}")
-public String userProviderList(@RequestParam String skill, ModelMap model,RedirectAttributes redirectAttributes) {
-    List<AppUser> providers = serviceUser.loadUserBySkyll(skill);
-    model.addAttribute("providers", providers);
+        redirectAttributes.addAttribute("skill", skill);
 
-    model.addAttribute("selectedSkill", skill);
-    
-     redirectAttributes.addAttribute("skill", skill);
-        
-         return "redirect:/user/providers";
-   
-    
-}
-    
+        return "redirect:/user/providers";
+
+    }
+
 }

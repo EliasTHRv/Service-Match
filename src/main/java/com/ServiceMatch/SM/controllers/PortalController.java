@@ -20,7 +20,6 @@ public class PortalController {
         if (error != null) {
             model.put("error", "Usuario o Contraseña inválidos");
         }
-
         return "login.html";
     }
 
