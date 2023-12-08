@@ -13,19 +13,18 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item"><a th:href="@{/}" class="nav-link custom-link fs-5">Inicio</a></li>
         <!-- SI EL USUARIO ESTÁ LOGUEADO Y ES ADMIN PUEDE VER LA LISTA DE SERVICIOS -->
-        <li th:if="${session.usuariosession != null}" sec:authorize="hasAuthority('ADMINISTRADOR')">
+        <li th:if="${session.usuariosession != null}" sec:authorize="hasRole('ADMINISTRADOR')">
           <a th:href="@{/skill/list}" class="nav-link custom-link fs-5">Servicios</a>
         </li>
         <!-- SI EL USUARIO ESTA LOGUEADO SE MUESTRAN LOS TRABAJOS -->
         <li class="nav-item" th:if="${session.usuariosession != null}">
-          <a th:href="@{/user/list}" class="nav-link custom-link fs-5">Trabajos</a>
-        </li>
-        <!-- SI EL USUARIO ESTA LOGUEADO Y ES UN ADMIN SE MUESTRAN LOS USUARIOS -->
-        <li class="nav-item" th:if="${session.usuariosession != null}" sec:authorize="hasAuthority('ADMINISTRADOR')">
+          <a th:href="@{/job/list/provider/{usariosession.id}}" name="id" class="nav-link custom-link fs-5">Trabajos</a>
+          <!-- SI EL USUARIO ESTA LOGUEADO Y ES UN ADMIN SE MUESTRAN LOS USUARIOS -->
+        <li class="nav-item" th:if="${session.usuariosession != null}" sec:authorize="hasRole('ADMINISTRADOR')">
           <a th:href="@{/user/list}" class="nav-link custom-link fs-5">Usuarios</a>
         </li>
         <!-- SI EL USUARIO ESTA LOGUEADO Y ES UN ADMIN SE MUESTRAN LOS COMENTARIOS -->
-        <li class="nav-item" th:if="${session.usuariosession != null}" sec:authorize="hasAuthority('ADMINISTRADOR')">
+        <li class="nav-item" th:if="${session.usuariosession != null}" sec:authorize="hasRole('ADMINISTRADOR')">
           <a th:href="@{/user/list}" class="nav-link custom-link fs-5">Comentarios</a>
         </li>
         <!-- SI EL USUARIO NO ESTÁ LOGUEADO APARECE EL LOGIN INGRESAR -->
