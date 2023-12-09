@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import com.ServiceMatch.SM.entities.Provider;
+import com.ServiceMatch.SM.repository.ProviderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +18,13 @@ public class ServiceImage {
 
     @Autowired
     private ImageRepository imagenRepository ;
+    @Autowired
+    private ProviderRepository providerRepository ;
+
+
+    public Optional<Provider> getProviderById(Long id) {
+        return providerRepository.findById(id);
+    }
 
 
     @Transactional

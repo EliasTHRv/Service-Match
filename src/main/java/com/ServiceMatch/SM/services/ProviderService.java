@@ -1,5 +1,6 @@
 package com.ServiceMatch.SM.services;
 
+import com.ServiceMatch.SM.entities.AppUser;
 import com.ServiceMatch.SM.entities.Image;
 import com.ServiceMatch.SM.entities.Provider;
 import com.ServiceMatch.SM.entities.Skill;
@@ -24,7 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class ServiceProvider implements UserDetailsService {
+public class ProviderService implements UserDetailsService {
 
     @Autowired
     private ProviderRepository providerRepository;
@@ -47,9 +48,10 @@ public class ServiceProvider implements UserDetailsService {
         provider.setEmail(email);
 
         provider.setPassword(new BCryptPasswordEncoder().encode(password));
-        provider.setSkills(skills);
+       //TODO
+      //  provider.setSkills(skills);
 
-        provider.setRol(RolEnum.PROVEEDOR);
+        provider.setRol("PROVEEDOR");
         Image imagen= serviceImage.guardarImagen(archivo);
         provider.setImagen(imagen);
         providerRepository.save(provider);
@@ -140,13 +142,25 @@ public class ServiceProvider implements UserDetailsService {
             return null;
         }
 
-}
-    
-      public List<Provider> loadUserByRol(RolEnum rol) {
-    return providerRepository.findByRol(rol);
-}
+    }
+        
 
 
+
+    public List<Provider> findAll() {
+        return providerRepository.findAll();
+    }
+
+    public Optional<Provider> findById(Long id) {
+        return providerRepository.findById(id);
+    }
+//FIXME
+//    public List<AppUser> loadBySkill(String skill) {
+//        return providerRepository.findBySkill(skill);
+//    }
+//TODO
+    public void registrar(Provider user) {
+    }
 }
 
 

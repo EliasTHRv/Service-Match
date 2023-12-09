@@ -47,19 +47,16 @@ public class Job implements Serializable {
     @Column(name = "job_status", nullable = false)
     @Enumerated(EnumType.STRING)
     JobStatusEnum jobStatus;
+//TODO FIXME
+//    @OneToOne
+//    Skill skill;
 
     @OneToOne
-    Skill skill;
-
-    @OneToOne
-    AppUser appUser;
+    ClientUser clientUser;
 
     @OneToOne
     Provider provider;
-    
-    
 
-    
 
 }
 

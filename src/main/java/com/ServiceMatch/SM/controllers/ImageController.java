@@ -1,8 +1,7 @@
 package com.ServiceMatch.SM.controllers;
 
 import com.ServiceMatch.SM.entities.Image;
-import com.ServiceMatch.SM.entities.Provider;
-import com.ServiceMatch.SM.services.ImageService;
+import com.ServiceMatch.SM.services.ServiceImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
@@ -24,7 +23,7 @@ import static java.nio.file.Files.readAllBytes;
 public class ImageController {
 
     @Autowired
-    private ImageService imageService; // Suponiendo que tienes un servicio para manejar las imágenes
+    private ServiceImage imageService; // Suponiendo que tienes un servicio para manejar las imágenes
 
     @GetMapping("/mostrar-imagen/{id}")
     public ResponseEntity<byte[]> mostrarImagen(@PathVariable Long id) {

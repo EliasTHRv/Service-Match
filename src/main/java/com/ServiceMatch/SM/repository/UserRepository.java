@@ -16,11 +16,13 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 
   @Query("SELECT a FROM AppUser a WHERE a.rol = :rol")
   public List<AppUser> findByRol(@Param("rol") RolEnum rol);
-  
-  
-  @Query("SELECT DISTINCT au FROM AppUser au " +
-           "INNER JOIN au.skills s " +
-           "WHERE au.rol = 'PROVEEDOR' AND s.name = :skill")
-    List<AppUser> findProvidersBySkill(@Param("skill") String skill);
+
+  //FIXME
+  //AND s.name = :skill"
+  // "INNER JOIN au.skills s " +
+  //
+//  @Query("SELECT DISTINCT au FROM AppUser au " +
+//           "WHERE au.rol = 'PROVEEDOR' ")
+//    List<AppUser> findProvidersBySkill(@Param("skill") String skill);
 
 }

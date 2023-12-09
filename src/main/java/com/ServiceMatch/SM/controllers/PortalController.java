@@ -26,7 +26,7 @@ public class PortalController {
 
     @GetMapping("/register")
     public String register() {
-        return "register.html";
+        return "registerOLD.html";
     }
 
 }
