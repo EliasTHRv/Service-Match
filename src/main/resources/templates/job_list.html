@@ -19,23 +19,23 @@
                             <p class="card-text" style="font-weight: bold;">Oficio requerido: <span th:text="${job.skill.name}" style="font-weight: normal;"></span></p>
                             <p class="card-text"style="font-weight: bold;">Usuario: <span th:text="${job.appUser.name}"style="font-weight: normal;"></span></p>
                             <p class="card-text"style="font-weight: bold;">Precio: USD $ <span th:text="${job.cost}"style="font-weight: normal;"></span></p>
-                            <p class="card-text" sec:authorize="hasRole('PROVEEDOR')"style="font-weight: bold;">Proveedor: <span th:text="${job.provider.name}"style="font-weight: normal;"></span></p>
+                            <p class="card-text" sec:authorize="hasRole('PROVEEDOR')"style="font-weight: bold;">Proveedor: <span th:text="${job.providerUser.name}"style="font-weight: normal;"></span></p>
                             <p class="card-text"style="font-weight: bold;">Comentario: <span th:text="${job.comment}"style="font-weight: normal;"></span></p>
                             <p class="card-text"style="font-weight: bold;">Calificación: <span th:text="${job.callification}"style="font-weight: normal;"></span></p>
                             <p class="card-text"style="font-weight: bold;">Estado: <span th:text="${job.jobStatus}"style="font-weight: normal;"></span></p>
                             <div class="d-flex justify-content-between">
                                 <form th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).PENDING}"
-                                    th:action="@{/job/list/provider/{id}/accept/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
+                                    th:action="@{/job/list/providerUser/{id}/accept/{idJob}(id=${job.providerUser.id}, idJob=${job.id})}" method="post">
                                     <button type="submit" class="btn btn-success btn-md">Aceptar</button>
                                 </form>
 
                                 <form th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).PENDING}"
-                                    th:action="@{/job/list/provider/{id}/refused/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
+                                    th:action="@{/job/list/providerUser/{id}/refused/{idJob}(id=${job.providerUser.id}, idJob=${job.id})}" method="post">
                                     <button type="submit" class="btn btn-danger btn-md">Rechazar</button>
                                 </form>
 
                                 <form th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).ACCEPTED}"
-                                    th:action="@{/job/list/provider/{id}/end/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
+                                    th:action="@{/job/list/providerUser/{id}/end/{idJob}(id=${job.providerUser.id}, idJob=${job.id})}" method="post">
                                     <button type="submit" class="btn btn-warning btn-md">Finalizar</button>
                                 </form>
                             </div>

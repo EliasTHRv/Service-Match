@@ -1,10 +1,8 @@
 package com.ServiceMatch.SM.services;
 
-import com.ServiceMatch.SM.entities.AppUser;
 import com.ServiceMatch.SM.entities.Image;
-import com.ServiceMatch.SM.entities.Provider;
+import com.ServiceMatch.SM.entities.ProviderUser;
 import com.ServiceMatch.SM.entities.Skill;
-import com.ServiceMatch.SM.enums.RolEnum;
 import com.ServiceMatch.SM.exceptions.MyException;
 import com.ServiceMatch.SM.repository.ProviderRepository;
 import java.util.ArrayList;
@@ -25,14 +23,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class ProviderService implements UserDetailsService {
-
+public class ProviderService {
     @Autowired
     private ProviderRepository providerRepository;
 
     @Autowired
     private ServiceImage serviceImage;
-
 
     @Transactional
     public void registrar(MultipartFile archivo, String name, String email, String password, String password2, Long whatsapp, List<Skill>skills)
@@ -40,62 +36,58 @@ public class ProviderService implements UserDetailsService {
 
         validar(name, email, password, password2, whatsapp, skills);
 
-        Provider provider = new Provider();
+        ProviderUser providerUser = new ProviderUser();
 
-        provider.setName(name);
-        provider.setWhatsApp(whatsapp);
+        providerUser.setName(name);
+        providerUser.setWhatsApp(whatsapp);
 
-        provider.setEmail(email);
+        providerUser.setEmail(email);
 
-        provider.setPassword(new BCryptPasswordEncoder().encode(password));
+        providerUser.setPassword(new BCryptPasswordEncoder().encode(password));
        //TODO
       //  provider.setSkills(skills);
 
-        provider.setRol("PROVEEDOR");
+        providerUser.setRol("PROVEEDOR");
         Image imagen= serviceImage.guardarImagen(archivo);
-        provider.setImagen(imagen);
-        providerRepository.save(provider);
+        providerUser.setImagen(imagen);
+        providerRepository.save(providerUser);
     }
 
-    public List<Provider> getProvider() {
+    public List<ProviderUser> getProvider() {
         return providerRepository.findAll();
     }
 
-    public Optional<Provider> getProviderById(Long id) {
+    public Optional<ProviderUser> getProviderById(Long id) {
         return providerRepository.findById(id);
     }
 
     @Transactional
     public void deleteProvider(Long id) {
-        Optional<Provider> result = providerRepository.findById(id);
-        Provider provider = new Provider();
+        Optional<ProviderUser> result = providerRepository.findById(id);
+        ProviderUser providerUser = new ProviderUser();
         if (result.isPresent()) {
-            provider = result.get();
-            providerRepository.delete(provider);
+            providerUser = result.get();
+            providerRepository.delete(providerUser);
         }
     }
 
     @Transactional
     public void modifyProvider(MultipartFile archivo, Long id, String name) throws MyException {
-        Optional<Provider> result = providerRepository.findById(id);
-        Provider provider = new Provider();
+        Optional<ProviderUser> result = providerRepository.findById(id);
+        ProviderUser providerUser = new ProviderUser();
         if (result.isPresent()) {
-            provider = result.get();
-            provider.setName(name);
+            providerUser = result.get();
+            providerUser.setName(name);
             Long idImagen=null;
-            if(provider.getImagen() !=null){
-                idImagen=provider.getImagen().getId();
+            if(providerUser.getImagen() !=null){
+                idImagen= providerUser.getImagen().getId();
             }
             Image imagen=serviceImage.actualizar(archivo, idImagen);
-            provider.setImagen(imagen);
-            providerRepository.save(provider);
+            providerUser.setImagen(imagen);
+            providerRepository.save(providerUser);
         }
     }
 
-    public Page<Provider> getPageOfUsers(int page, int size) {
-        PageRequest pageable = PageRequest.of(page, size);
-        return providerRepository.findAll(pageable);
-    }
 
     private void validar(String name, String email, String password, String password2, Long whatsapp, List<Skill> skills)
             throws MyException {
@@ -109,7 +101,7 @@ public class ProviderService implements UserDetailsService {
 
         }
 
-        if (password == null || password.isEmpty() || password.length() <= 5) {
+        if (password == null || password.length() <= 5) {
             throw new MyException("La contraseña no puede estar vacia, y debe tener mas de 5 digitos");
         }
 
@@ -126,32 +118,13 @@ public class ProviderService implements UserDetailsService {
         
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        Provider provider = providerRepository.findByName(name);
-
-        if (provider != null) {
-            List<GrantedAuthority> permissions = new ArrayList<>();
-
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE " + provider.getRol().toString());
-
-            permissions.add(p);
-            return new User(provider.getEmail(), provider.getPassword(), permissions);
-
-        } else {
-            return null;
-        }
-
-    }
-        
 
 
-
-    public List<Provider> findAll() {
+    public List<ProviderUser> findAll() {
         return providerRepository.findAll();
     }
 
-    public Optional<Provider> findById(Long id) {
+    public Optional<ProviderUser> findById(Long id) {
         return providerRepository.findById(id);
     }
 //FIXME
@@ -159,7 +132,7 @@ public class ProviderService implements UserDetailsService {
 //        return providerRepository.findBySkill(skill);
 //    }
 //TODO
-    public void registrar(Provider user) {
+    public void registrar(ProviderUser user) {
     }
 }
 

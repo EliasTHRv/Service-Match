@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (roleSelect) {
       // Verificar el valor predeterminado al cargar la página
-      if (roleSelect.value === 'provider') {
+      if (roleSelect.value === 'providerUser') {
         imagenDiv.style.display = 'block';
         skillsDiv.style.display = 'block';
         wapDiv.style.display = 'block';
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // Agregar un listener para cambios en la selección
       roleSelect.addEventListener('change', function () {
-        if (roleSelect.value === 'provider') {
+        if (roleSelect.value === 'providerUser') {
           imagenDiv.style.display = 'block';
           skillsDiv.style.display = 'block';
           wapDiv.style.display = 'block';
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var tipoUsuario = document.getElementById('role').value;
 
         // Si el tipo de usuario es "proveedor" y no hay habilidades seleccionadas, mostrar mensaje de error
-        if (tipoUsuario === 'provider') {
+        if (tipoUsuario === 'providerUser') {
             var checkboxes = document.getElementsByName('skills');
             var contadorSeleccionados = 0;
 

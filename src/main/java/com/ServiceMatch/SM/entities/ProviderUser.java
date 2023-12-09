@@ -1,6 +1,5 @@
 package com.ServiceMatch.SM.entities;
 
-import java.util.List;
 import javax.persistence.*;
 
 import lombok.Data;
@@ -9,7 +8,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Provider extends AppUser {
+public class ProviderUser extends AppUser {
     @OneToOne
     private Image imagen;
     @Column(name = "whats_app", nullable = true)

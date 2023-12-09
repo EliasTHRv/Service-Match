@@ -58,7 +58,7 @@
             <div class="form-group mx-sm-4 text-white pt-4 fw-semibold text-center">
               <select name="idProvider" required="true" class="form-control mb-4 bg-dark text-white">
                 <option value="" disabled selected>Seleccionar Proveedor</option>
-                <option th:each="provider : ${providers}" th:value="${provider.id}" th:text="${provider.name}" />
+                <option th:each="providerUser : ${providers}" th:value="${providerUser.id}" th:text="${providerUser.name}" />
               </select>
             </div>
             <div class="form-group mx-sm-4 text-rigth pt-2 text-center">
@@ -114,9 +114,9 @@
                 <div class="form-group my-3">
                     <select name="idProvider" required="true">  
                         <option value="" disabled selected >Seleccionar Proveedor</option>
-                        <option th:each="provider : ${providers}"
-                                th:value="${provider.id}" 
-                                th:text="${provider.name}"
+                        <option th:each="providerUser : ${providers}"
+                                th:value="${providerUser.id}"
+                                th:text="${providerUser.name}"
                                 />
                     </select>
                 </div>

@@ -1,20 +1,16 @@
 package com.ServiceMatch.SM.controllers;
 
-import com.ServiceMatch.SM.entities.AppUser;
-import com.ServiceMatch.SM.entities.Provider;
+import com.ServiceMatch.SM.entities.ProviderUser;
 import com.ServiceMatch.SM.entities.Skill;
 import com.ServiceMatch.SM.exceptions.MyException;
 import com.ServiceMatch.SM.services.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/provider")
@@ -23,7 +19,7 @@ public class ProviderController {
     private ProviderService providerService;
 
     @GetMapping
-    public List<Provider> findAll() {
+    public List<ProviderUser> findAll() {
         return providerService.findAll();
     }
 

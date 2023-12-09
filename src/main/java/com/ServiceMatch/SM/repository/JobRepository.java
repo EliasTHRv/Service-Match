@@ -29,11 +29,11 @@ public List<Job> findByCostGreaterThan(@Param("cost") Double cost);
 public List<Job> findByJobStatus(@Param("jobStatus") RolEnum jobStatus);
     
 
-
+//FIXME
 //@Query("SELECT j FROM Job j WHERE j.skill = :skillName")
 //public List<Job> findByJobSkill (@Param("skillName") String skillName );
 //
-
-@Query("SELECT j FROM Job j WHERE j.provider.id = :id")
-public List<Job> findByAppUser(@Param("id") Long id);
+//FIXME
+//@Query("SELECT j FROM Job j WHERE j.provider.id = :id")
+//public List<Job> findByAppUser(@Param("id") Long id);
 }

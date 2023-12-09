@@ -55,7 +55,7 @@ public class Job implements Serializable {
     ClientUser clientUser;
 
     @OneToOne
-    Provider provider;
+    ProviderUser providerUser;
 
 
 }

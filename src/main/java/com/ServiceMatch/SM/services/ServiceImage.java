@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import com.ServiceMatch.SM.entities.Provider;
+import com.ServiceMatch.SM.entities.ProviderUser;
 import com.ServiceMatch.SM.repository.ProviderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class ServiceImage {
     private ProviderRepository providerRepository ;
 
 
-    public Optional<Provider> getProviderById(Long id) {
+    public Optional<ProviderUser> getProviderById(Long id) {
         return providerRepository.findById(id);
     }
 

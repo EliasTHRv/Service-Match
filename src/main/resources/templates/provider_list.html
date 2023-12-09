@@ -29,12 +29,12 @@
                     </thead>
 
                     <tbody>
-                        <tr th:each="provider : ${providers}">
-                            <td th:text="${provider.id}"></td>
-                            <td th:text="${provider.name}"></td>
-                            <td th:text="${provider.whatsApp}"></td>
+                        <tr th:each="providerUser : ${providers}">
+                            <td th:text="${providerUser.id}"></td>
+                            <td th:text="${providerUser.name}"></td>
+                            <td th:text="${providerUser.whatsApp}"></td>
                             <td>
-                                <a th:href="@{/provider/{id}(id=${provider.id})}" class="card-link">Ver Proveedor</a>
+                                <a th:href="@{/providerUser/{id}(id=${providerUser.id})}" class="card-link">Ver Proveedor</a>
                             </td>
                         </tr>
                     </tbody>

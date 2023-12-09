@@ -48,17 +48,18 @@ public class ClientController {
 //        clienteRepository.deleteById(id);
 //        return ResponseEntity.noContent().build();
 //    }
-
-    @PostMapping("/save")
-    public String save(@RequestParam String name, @RequestParam String email,
-                           @RequestParam String password, @RequestParam String password2, Model model) {
-        try {
-            clientService.registrar(name, email, password, password2);
-            return "redirect:/user/list";
-        } catch (MyException ex) {
-            model.addAttribute("error", ex.getMessage());
-            return "registerOLD.html";
-        }
-    }
+// FIXME
+//
+//    @PostMapping("/save")
+//    public String save(@RequestParam String name, @RequestParam String email,
+//                           @RequestParam String password, @RequestParam String password2, Model model) {
+//        try {
+//            //clientService.registrar(name, email, password, password2);
+//            return "redirect:/user/list";
+//        } catch (MyException ex) {
+//            model.addAttribute("error", ex.getMessage());
+//            return "registerOLD.html";
+//        }
+//    }
 }
 
