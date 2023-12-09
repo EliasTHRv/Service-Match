@@ -22,9 +22,9 @@ public class Skill implements Serializable {
     private Long id;
     private String name;
     private boolean active;
-//TODO FIXME
-//    @ManyToMany(mappedBy = "skills")
-//    private List<Provider> providers;
+
+    @ManyToMany(mappedBy = "skills")
+    private List<ProviderUser> providers;
 
     @Override
     public String toString() {

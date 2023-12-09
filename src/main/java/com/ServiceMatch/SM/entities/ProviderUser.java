@@ -37,17 +37,16 @@ public class ProviderUser extends AppUser {
             e.printStackTrace();
         }
     }
-//FIXME volver a colocar
-//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    @JoinTable(
-//            name = "provider_skill",
-//            joinColumns = @JoinColumn(name = "provider_id"),
-//            inverseJoinColumns = @JoinColumn(name = "skill_id"))
-//
-//    @Override
-//    public String toString() {
-//        // Llamar al toString de la superclase y agregar los detalles específicos de Provider
-//        return "Provider{Skills=, superclassDetails='" + super.toString() + "'}";
-//    }
+   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+   @JoinTable(
+           name = "provider_skill",
+           joinColumns = @JoinColumn(name = "provider_id"),
+           inverseJoinColumns = @JoinColumn(name = "skill_id"))
+
+   @Override
+   public String toString() {
+       // Llamar al toString de la superclase y agregar los detalles específicos de Provider
+       return "Provider{Skills=, superclassDetails='" + super.toString() + "'}";
+   }
 
 }
