@@ -1,8 +1,6 @@
 package com.ServiceMatch.SM.entities;
 
-
 import com.ServiceMatch.SM.enums.RolEnum;
-
 import javax.persistence.*;
 
 @Entity

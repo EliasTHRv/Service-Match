@@ -2,17 +2,53 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Registro de Usuario</title>
+    <script type="text/javascript">
+        // Función para mostrar el formulario de cliente por defecto al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            var clientForm = document.getElementById('clientForm');
+            var providerForm = document.getElementById('providerForm');
+
+            clientForm.style.display = 'block';
+            providerForm.style.display = 'none';
+        });
+
+        function showForm(type) {
+            var clientForm = document.getElementById('clientForm');
+            var providerForm = document.getElementById('providerForm');
+
+            if (type === 'client') {
+                clientForm.style.display = 'block';
+                providerForm.style.display = 'none';
+            } else if (type === 'provider') {
+                clientForm.style.display = 'none';
+                providerForm.style.display = 'block';
+            }
+        }
+    </script>
 </head>
 <body>
 
 <h1>Registro de Usuario</h1>
 
-<form action="/registration/client" method="post" th:object="${clientUser}">
+<select onchange="showForm(this.value)">
+    <option value="client" selected>Cliente</option>
+    <option value="provider">Proveedor</option>
+</select>
+
+<form id="clientForm" action="/registration/client" method="post" th:object="${clientUser}">
     <!-- Campos específicos para ClientUser -->
     <input type="text" th:field="*{name}" placeholder="Nombre" />
     <input type="text" th:field="*{email}" placeholder="Email" />
     <input type="password" th:field="*{password}" placeholder="Contraseña" />
     <input type="submit" value="Registrar como Cliente" />
+</form>
+
+<form id="providerForm" action="/registration/provider" method="post" style="display: none;" th:object="${providerUser}">
+    <!-- Campos específicos para ProviderUser -->
+    <input type="text" th:field="*{name}" placeholder="Nombre" />
+    <input type="text" th:field="*{email}" placeholder="Email" />
+    <input type="password" th:field="*{password}" placeholder="Contraseña" />
+    <input type="submit" value="Registrar como Proveedor" />
 </form>
 
 </body>
