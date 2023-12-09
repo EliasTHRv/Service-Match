@@ -7,11 +7,13 @@ import com.ServiceMatch.SM.services.ClientService;
 import com.ServiceMatch.SM.services.ProviderService;
 import com.ServiceMatch.SM.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/user")
 public class AppUserController {
     @Autowired
@@ -21,17 +23,15 @@ public class AppUserController {
     @Autowired
     ClientService clientService;
 
-
-    //FIXME
-//    @GetMapping("/list")
-//    public String listUsers(Model model, @RequestParam(defaultValue = "0") int page) {
-//        Page<AppUser> users = clientService.getPageOfUsers(page, 10);
-//        AppUser p = new AppUser();
-//        model.addAttribute("userList", users.getContent());
-//        model.addAttribute("currentPage", page);
-//        model.addAttribute("totalPages", users.getTotalPages());
-//        return "user_list.html";
-//    }
+    @GetMapping("/list")
+    public String listUsers(Model model, @RequestParam(defaultValue = "0") int page) {
+        Page<AppUser> users = userService.getPageOfUsers(page, 10);
+        AppUser p = new AppUser();
+        model.addAttribute("userList", users.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", users.getTotalPages());
+        return "user_list.html";
+    }
 
     @GetMapping("/restore/{id}") // http://localhost:8080/user/restore/id
     public String restoreSkill(@PathVariable Long id) {
@@ -54,20 +54,19 @@ public class AppUserController {
 
     @GetMapping("/modify/{id}") // http://localhost:8080/user/modify/id
     public String modifyUser(@PathVariable Long id, ModelMap model) {
-        model.put("user", userService.getOne(id));
-        return "provider_modify.html";
+        //model.put("user", userService.getOne(id));
+        return "provider_vistaprueba.html";
     }
 
 
-    @GetMapping("/register")
-    public String mostrarFormularioRegistro(Model model) {
-        model.addAttribute("usuario", new AppUser());
-        return "register";
+    @GetMapping("/registration")
+    public String showUserRegistrationForm(ModelMap model) {
+        model.addAttribute("user", new AppUser());
+        return "registration.html";
     }
 
-
-    @PostMapping("/register")
-    public String registrarUsuario(@ModelAttribute AppUser user) {
+    @PostMapping("/registration")
+    public String registration(@ModelAttribute AppUser user) {
         if (user instanceof ClientUser) {
             clientService.registrar((ClientUser) user);
         } else if (user instanceof ProviderUser) {

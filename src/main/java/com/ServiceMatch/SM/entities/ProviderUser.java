@@ -2,13 +2,18 @@ package com.ServiceMatch.SM.entities;
 
 import javax.persistence.*;
 
+import com.ServiceMatch.SM.enums.RolEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
+@DiscriminatorValue("PROVEEDOR")
 public class ProviderUser extends AppUser {
+    public ProviderUser() {
+        this.setRolEnum(RolEnum.PROVEEDOR);
+    }
     @OneToOne
     private Image imagen;
     @Column(name = "whats_app", nullable = true)

@@ -11,8 +11,9 @@ import lombok.Data;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "rol", discriminatorType = DiscriminatorType.STRING, columnDefinition = "VARCHAR(255) DEFAULT 'DEFAULT_ROLE'")
+@DiscriminatorColumn(name = "rol", discriminatorType = DiscriminatorType.STRING, columnDefinition = "VARCHAR(255) DEFAULT 'USUARIO'")
 @Data
+@DiscriminatorValue("USUARIO")
 public class AppUser implements Serializable {
 
     @Id

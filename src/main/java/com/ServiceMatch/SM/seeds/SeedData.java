@@ -1,9 +1,6 @@
 package com.ServiceMatch.SM.seeds;
 
-import com.ServiceMatch.SM.entities.AppUser;
-import com.ServiceMatch.SM.entities.ClientUser;
-import com.ServiceMatch.SM.entities.ProviderUser;
-import com.ServiceMatch.SM.entities.Skill;
+import com.ServiceMatch.SM.entities.*;
 import com.ServiceMatch.SM.repository.SkillRepository;
 import com.ServiceMatch.SM.repository.UserRepository;
 
@@ -52,9 +49,8 @@ public class SeedData implements ApplicationRunner {
             skillRepository.save(skill);
 
             // Encripta usando BCryptPasswordEncoder
-            String encryptedPassword = passwordEncoder.encode("admin123");
-            AppUser adminUser = new AppUser();
-            adminUser.setRol(RolEnum.ADMINISTRADOR.toString());
+            String encryptedPassword = passwordEncoder.encode("12341234");
+            AdminUser adminUser = new AdminUser();
             adminUser.setRegistrationDate(new Date());
             adminUser.setName("Admin");
             adminUser.setActive(true);
@@ -63,29 +59,28 @@ public class SeedData implements ApplicationRunner {
             userRepository.save(adminUser);
 
             ProviderUser provider = new ProviderUser();
-            provider.setRol(RolEnum.PROVEEDOR.toString());
             provider.setRegistrationDate(new Date());
-            provider.setName("Provider1");
+            provider.setName("DMDM");
             provider.setActive(true);
             provider.setPassword(encryptedPassword);
-            provider.setEmail("Mail@gmail.com");
+            provider.setEmail("saurionx2005@gmail.com");
             provider.setWhatsApp(1234567890L);
             //FIXME
             //provider.setSkills(skills);
             userRepository.save(provider);
 
-
-            ProviderUser provider2 = new ProviderUser();
-            provider2.setRol(RolEnum.PROVEEDOR.toString());
-            provider2.setRegistrationDate(new Date());
-            provider2.setName("Provider2");
-            provider2.setActive(true);
-            provider2.setPassword(encryptedPassword);
-            provider2.setEmail("Mail2@gmail.com");
-            provider2.setWhatsApp(1234567890L);
-            //FIXME
-            //provider2.setSkills(skills);
-            userRepository.save(provider2);
+//
+//            ProviderUser provider2 = new ProviderUser();
+//            provider2.setRol(RolEnum.PROVEEDOR.toString());
+//            provider2.setRegistrationDate(new Date());
+//            provider2.setName("Provider2");
+//            provider2.setActive(true);
+//            provider2.setPassword(encryptedPassword);
+//            provider2.setEmail("Mail2@gmail.com");
+//            provider2.setWhatsApp(1234567890L);
+//            //FIXME
+//            //provider2.setSkills(skills);
+//            userRepository.save(provider2);
 
             ClientUser adminUser2 = new ClientUser();
             adminUser2.setRol(RolEnum.USUARIO.toString());
