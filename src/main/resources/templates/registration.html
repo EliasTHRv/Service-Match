@@ -7,22 +7,12 @@
 
 <h1>Registro de Usuario</h1>
 
-<form action="/registro/cliente" method="post" th:object="${clientUser}">
+<form action="/registration/client" method="post" th:object="${clientUser}">
     <!-- Campos específicos para ClientUser -->
     <input type="text" th:field="*{name}" placeholder="Nombre" />
     <input type="text" th:field="*{email}" placeholder="Email" />
-    <!-- Agrega aquí otros campos específicos para los usuarios tipo cliente -->
     <input type="password" th:field="*{password}" placeholder="Contraseña" />
     <input type="submit" value="Registrar como Cliente" />
-</form>
-
-<form action="/registro/proveedor" method="post" th:object="${providerUser}">
-    <!-- Campos específicos para ProviderUser -->
-    <input type="text" th:field="*{name}" placeholder="Nombre" />
-    <input type="text" th:field="*{email}" placeholder="Email" />
-    <!-- Agrega aquí otros campos específicos para los usuarios tipo proveedor -->
-    <input type="password" th:field="*{password}" placeholder="Contraseña" />
-    <input type="submit" value="Registrar como Proveedor" />
 </form>
 
 </body>

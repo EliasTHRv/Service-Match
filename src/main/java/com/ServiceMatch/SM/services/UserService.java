@@ -43,48 +43,21 @@ public class UserService implements UserDetailsService {
         PageRequest pageable = PageRequest.of(page, size);
         return userRepository.findAll(pageable);
     }
-    @Transactional
-    public void registrar(String name, String email, String password, String password2) throws MyException {
+//FIXME
+//    @Transactional
+//    public void modifyUser(Long id, String name, String password, String mail, Long whatsApp) throws MyException {
+//        validar(name, mail, password, password);
+//        Optional<AppUser> result = userRepository.findById(id);
+//        AppUser user = new AppUser();
+//        if (result.isPresent()) {
+//            user = result.get();
+//            user.setName(name);
+//            user.setPassword(password);
+//            user.setEmail(mail);
+//            userRepository.save(user);
+//        }
+//    }
 
-        validar(name, email, password, password2);
-
-        AppUser appUser = new AppUser();
-
-        appUser.setName(name);
-
-        appUser.setEmail(email);
-
-        appUser.setPassword(new BCryptPasswordEncoder().encode(password));
-
-        appUser.setRol("USUARIO");
-
-        userRepository.save(appUser);
-
-    }
-
-
-    private void validar(String name, String email, String password, String password2)
-            throws MyException {
-
-        if (name == null || name.isEmpty()) {
-            throw new MyException("El nombre no puede ser nulo o estar vacio");
-        }
-
-        if (email == null || email.isEmpty()) {
-            throw new MyException("El email no puede ser nulo o estar vacio");
-
-        }
-
-        if (password == null || password.isEmpty() || password.length() <= 5) {
-            throw new MyException("La contraseña no puede estar vacia, y debe tener mas de 5 digitos");
-        }
-
-        if (!password2.equals(password)) {
-            throw new MyException("Las contraseñas ingresadas no coinciden");
-
-        }
-
-    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -112,20 +85,6 @@ public class UserService implements UserDetailsService {
         if (result.isPresent()) {
             user = result.get();
             user.setActive(active);
-            userRepository.save(user);
-        }
-    }
-
-    @Transactional
-    public void modifyUser(Long id, String name, String password, String mail, Long whatsApp) throws MyException {
-        validar(name, mail, password, password);
-        Optional<AppUser> result = userRepository.findById(id);
-        AppUser user = new AppUser();
-        if (result.isPresent()) {
-            user = result.get();
-            user.setName(name);
-            user.setPassword(password);
-            user.setEmail(mail);
             userRepository.save(user);
         }
     }
@@ -161,7 +120,4 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public void registrar(ClientUser clientUser) {
-
-    }
 }
