@@ -3,6 +3,7 @@ package com.ServiceMatch.SM.controllers;
 import com.ServiceMatch.SM.entities.ClientUser;
 import com.ServiceMatch.SM.entities.ProviderUser;
 import com.ServiceMatch.SM.enums.RolEnum;
+import com.ServiceMatch.SM.exceptions.MyException;
 import com.ServiceMatch.SM.services.ClientService;
 import com.ServiceMatch.SM.services.ProviderService;
 import com.ServiceMatch.SM.services.UserService;
@@ -29,9 +30,15 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration/client")
-    public String processClientRegistration(@ModelAttribute("clientUser") ClientUser clientUser) {
+    public String processClientRegistration(@ModelAttribute("clientUser") ClientUser clientUser,
+                                            Model model) {
         clientUser.setRolEnum(RolEnum.USUARIO);
-        clientService.registrar(clientUser);
+        try {
+            clientService.registrar(clientUser);
+        } catch (MyException ex) {
+            model.addAttribute("error", ex.getMessage());
+            return "redirect:/error";
+        }
         return "registration";
     }
 
