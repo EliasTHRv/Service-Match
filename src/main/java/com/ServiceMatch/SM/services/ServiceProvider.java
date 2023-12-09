@@ -1,6 +1,7 @@
 package com.ServiceMatch.SM.services;
 
 import com.ServiceMatch.SM.entities.Image;
+import com.ServiceMatch.SM.entities.Job;
 import com.ServiceMatch.SM.entities.Provider;
 import com.ServiceMatch.SM.entities.Skill;
 import com.ServiceMatch.SM.enums.RolEnum;
@@ -151,6 +152,11 @@ public class ServiceProvider implements UserDetailsService {
         }
 
 }
+     public Provider getOne(Long id) {
+        return providerRepository.findById(id).get();
+    }
+    
+   
     
       public List<Provider> loadUserByRol(RolEnum rol) {
     return providerRepository.findByRol(rol);

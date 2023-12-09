@@ -21,8 +21,7 @@
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>WhathApp</th>
-<!--                            <th>Callification</th>-->
-<!--                            <th>Foto</th>-->
+
                             <th>Ver mas </th>
 
                         </tr>
@@ -34,7 +33,8 @@
                             <td th:text="${provider.name}"></td>
                             <td th:text="${provider.whatsApp}"></td>
                             <td>
-                                <a th:href="@{/provider/{id}(id=${provider.id})}" class="card-link">Ver Proveedor</a>
+                             
+                                <a th:href="@{/user/providers/details/{id}(id=${provider.id})}" class="card-link">Ver Proveedor</a>
                             </td>
                         </tr>
                     </tbody>

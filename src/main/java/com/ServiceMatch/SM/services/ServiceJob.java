@@ -215,6 +215,18 @@ public class ServiceJob {
         }
 
     }
+    
+    
+    public List<Job> listJobByProvider(Long idProvider){
+        
+        List<Job> jobs= new ArrayList<>();
+        
+        
+        jobs= providerRepository.findByProvider(idProvider);
+        
+        
+        return jobs;
+    }
 
     public void validate(Double cost, String description, Long idSkill, Long idUser, Long idProvider)
             throws MyException {
