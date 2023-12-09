@@ -57,6 +57,5 @@ public class RegistrationController {
         providerUser.setRolEnum(RolEnum.PROVEEDOR);
         providerService.registrar(providerUser);
         return "redirect:/user/list";
-;
     }
 }

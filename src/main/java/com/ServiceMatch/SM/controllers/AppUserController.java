@@ -44,13 +44,6 @@ public class AppUserController {
 
         }
     }
-//
-//    @GetMapping("/registration") // http://localhost:8080/user/registration
-//    public String showUserRegistrationForm(Model model) {
-//        List<Skill> skills = serviceSkill.getSkills();
-//        model.addAttribute("skillsRegistro", skills);
-//        return "registerOLD.html";
-//    }
 
     @GetMapping("/modify/{id}") // http://localhost:8080/user/modify/id
     public String modifyUser(@PathVariable Long id, ModelMap model) {

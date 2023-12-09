@@ -60,6 +60,14 @@ public class ProviderService {
 
 
     }
+//FIXME
+    public List<ProviderUser> loadBySkill(String skill) {
+        return null;
+    }
+
+    public void update(Long id, String name, boolean active) throws  MyException {
+       throw  new MyException("Implementar");
+    }
 }
 
 
