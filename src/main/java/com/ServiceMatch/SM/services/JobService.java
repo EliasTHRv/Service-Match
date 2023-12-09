@@ -7,20 +7,13 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import com.ServiceMatch.SM.entities.ProviderUser;
+import com.ServiceMatch.SM.entities.*;
+import com.ServiceMatch.SM.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ServiceMatch.SM.entities.AppUser;
-import com.ServiceMatch.SM.entities.Job;
-import com.ServiceMatch.SM.entities.Provider;
-import com.ServiceMatch.SM.entities.Skill;
 import com.ServiceMatch.SM.enums.JobStatusEnum;
 import com.ServiceMatch.SM.exceptions.MyException;
-import com.ServiceMatch.SM.repository.JobRepository;
-import com.ServiceMatch.SM.repository.ProviderRepository;
-import com.ServiceMatch.SM.repository.SkillRepository;
-import com.ServiceMatch.SM.repository.UserRepository;
 
 @Service
 public class JobService {
@@ -32,10 +25,11 @@ public class JobService {
     private SkillRepository skillRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private ClientRepository clientRepository;
 
     @Autowired
     private ProviderRepository providerRepository;
+
 
     public void createJob(Double cost, String description, Long idSkill, Long idUser, Long idProvider)
             throws MyException {
@@ -43,11 +37,11 @@ public class JobService {
         validate(cost, description, idSkill, idUser, idProvider);
 
         Optional<Skill> responseSkill = skillRepository.findById(idSkill);
-        Optional<AppUser> responseUser = userRepository.findById(idUser);
+        Optional<ClientUser> responseUser = clientRepository.findById(idUser);
         Optional<ProviderUser> responseProvider = providerRepository.findById(idProvider);
 
         Skill skill = new Skill();
-        AppUser appUser = new AppUser();
+        ClientUser appUser = new ClientUser();
         ProviderUser provider = new ProviderUser();
 
         if (responseSkill.isPresent()) {
@@ -71,7 +65,7 @@ public class JobService {
         job.setCost(cost);
         job.setDescription(description);
         job.setJobStatus(JobStatusEnum.PENDING);
-        job.setProvider(provider);
+        job.setProviderUser(provider);
         job.setClientUser(appUser);
         job.setSkill(skill);
 
@@ -89,11 +83,7 @@ public class JobService {
     }
 
     public List<Job> listByIdProvider(Long id) {
-
-        List<Job> jobs = new ArrayList<>();
-
-        jobs = jobRepository.findByAppUser(id);
-        return jobs;
+        return jobRepository.findByProviderId(id);
     }
 
     @Transactional
@@ -106,12 +96,12 @@ public class JobService {
         Optional<Job> responseJob = jobRepository.findById(id);
 
         Optional<Skill> responseSkill = skillRepository.findById(idSkill);
-        Optional<AppUser> responseUser = userRepository.findById(idUser);
+        Optional<ClientUser> responseUser = clientRepository.findById(idUser);
         Optional<ProviderUser> responseProvider = providerRepository.findById(idProvider);
 
         Skill skill = new Skill();
-        AppUser appUser = new AppUser();
-        ProviderUser provider = new ProviderUser();
+        ClientUser clientUser = new ClientUser();
+        ProviderUser providerUser = new ProviderUser();
         Job job = new Job();
 
         if (responseJob.isPresent()) {
@@ -126,21 +116,21 @@ public class JobService {
 
         if (responseUser.isPresent()) {
 
-            appUser = responseUser.get();
+            clientUser = responseUser.get();
         }
 
         if (responseProvider.isPresent()) {
 
-            provider = responseProvider.get();
+            providerUser = responseProvider.get();
 
         }
 
-        job.setClientUser(appUser);
+        job.setClientUser(clientUser);
         job.setCallification(callification);
         job.setComment(comment);
         job.setCost(cost);
         job.setDescription(description);
-        job.setProvider(provider);
+        job.setProvider(providerUser);
         job.setSkill(skill);
 
         jobRepository.save(job);

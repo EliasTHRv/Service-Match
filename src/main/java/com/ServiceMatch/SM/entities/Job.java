@@ -47,9 +47,9 @@ public class Job implements Serializable {
     @Column(name = "job_status", nullable = false)
     @Enumerated(EnumType.STRING)
     JobStatusEnum jobStatus;
-//TODO FIXME
-//    @OneToOne
-//    Skill skill;
+
+    @OneToOne
+    Skill skill;
 
     @OneToOne
     ClientUser clientUser;
@@ -58,6 +58,8 @@ public class Job implements Serializable {
     ProviderUser providerUser;
 
 
+    public void setProvider(ProviderUser providerUser) {
+    }
 }
 
     
