@@ -22,28 +22,28 @@ public class ProviderController {
     public List<ProviderUser> findAll() {
         return providerService.findAll();
     }
-
-    @PostMapping("/save")
-    public String saveUser(
-            @RequestParam(required = false) MultipartFile archivo,
-            @RequestParam String name,
-            @RequestParam String email,
-            @RequestParam String password,
-            @RequestParam String password2,
-            @RequestParam(required = false) Long whatsApp,
-            @RequestParam(required = false) List<Skill> skills,
-            @RequestParam String role,
-            Model model) {
-        //Proveedor
-        try {
-            providerService.registrar(archivo, name, email, password, password2, whatsApp, skills);
-        } catch (MyException ex) {
-            model.addAttribute("error", ex.getMessage());
-            return "registerOLD.html";
-        }
-        model.addAttribute("message", "User '" + name + "' saved successfully");
-        return "redirect:/user/list";
-    }
+//TODO REMOVE ME
+//    @PostMapping("/save")
+//    public String saveUser(
+//            @RequestParam(required = false) MultipartFile archivo,
+//            @RequestParam String name,
+//            @RequestParam String email,
+//            @RequestParam String password,
+//            @RequestParam String password2,
+//            @RequestParam(required = false) Long whatsApp,
+//            @RequestParam(required = false) List<Skill> skills,
+//            @RequestParam String role,
+//            Model model) {
+//        //Proveedor
+//        try {
+//            providerService.registrar(archivo, name, email, password, password2, whatsApp, skills);
+//        } catch (MyException ex) {
+//            model.addAttribute("error", ex.getMessage());
+//            return "registerOLD.html";
+//        }
+//        model.addAttribute("message", "User '" + name + "' saved successfully");
+//        return "redirect:/user/list";
+//    }
 //TODO AGAIN
 //    @PostMapping("/modify/{id}")
 //    public String modify(@PathVariable Long id, String name, boolean active, MultipartFile archivo, ModelMap model) {

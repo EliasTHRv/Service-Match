@@ -14,7 +14,7 @@ import com.ServiceMatch.SM.exceptions.MyException;
 import com.ServiceMatch.SM.repository.ImageRepository;
 
 @Service
-public class ServiceImage {
+public class ImageService {
 
     @Autowired
     private ImageRepository imagenRepository ;

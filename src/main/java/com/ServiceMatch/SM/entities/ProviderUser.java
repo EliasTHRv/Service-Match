@@ -5,19 +5,39 @@ import javax.persistence.*;
 import com.ServiceMatch.SM.enums.RolEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = false)
 @DiscriminatorValue("PROVEEDOR")
 public class ProviderUser extends AppUser {
     public ProviderUser() {
         this.setRolEnum(RolEnum.PROVEEDOR);
     }
-    @OneToOne
-    private Image imagen;
+    @Transient
+    private MultipartFile imagenFile;
+
+    @Lob
+    @Column(name = "imagen", columnDefinition = "BLOB")
+    private byte[] imagen;
+
     @Column(name = "whats_app", nullable = true)
     private Long whatsApp;
+
+    public void setImagenFile(MultipartFile imagenFile) {
+        this.imagenFile = imagenFile;
+        try {
+            if (imagenFile != null && !imagenFile.isEmpty()) {
+                this.imagen = imagenFile.getBytes();
+            }
+        } catch (IOException e) {
+            // Manejar la excepción apropiadamente
+            e.printStackTrace();
+        }
+    }
+//FIXME volver a colocar
 //    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 //    @JoinTable(
 //            name = "provider_skill",

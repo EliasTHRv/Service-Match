@@ -1,59 +1,57 @@
 <!-- SCRIPT PARA REGISTRO DE USUARIO PROVEEDOR -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    var roleSelect = document.getElementById('role');  // Asegúrate de que tengas un elemento con el id 'role'
-    var imagenDiv = document.getElementById('imagenDiv');
-    var skillsDiv = document.getElementById('skillsDiv');
-    var wapDiv = document.getElementById('wapDiv');
+    document.addEventListener('DOMContentLoaded', function () {
+        var roleSelect = document.getElementById('role');
+        var imagenDiv = document.getElementById('imagenDiv');
+        var skillsDiv = document.getElementById('skillsDiv');
+        var wapDiv = document.getElementById('wapDiv');
 
-    if (roleSelect) {
-      // Verificar el valor predeterminado al cargar la página
-      if (roleSelect.value === 'providerUser') {
-        imagenDiv.style.display = 'block';
-        skillsDiv.style.display = 'block';
-        wapDiv.style.display = 'block';
-      } else {
-        imagenDiv.style.display = 'none';
-        skillsDiv.style.display = 'none';
-        wapDiv.style.display = 'none';
-      }
+        if (roleSelect) {
+          // Verificar el valor predeterminado al cargar la página
+          toggleFieldVisibility(roleSelect.value);
 
-      // Agregar un listener para cambios en la selección
-      roleSelect.addEventListener('change', function () {
-        if (roleSelect.value === 'providerUser') {
-          imagenDiv.style.display = 'block';
-          skillsDiv.style.display = 'block';
-          wapDiv.style.display = 'block';
-        } else {
-          imagenDiv.style.display = 'none';
-          skillsDiv.style.display = 'none';
-          wapDiv.style.display = 'none';
+          // Agregar un listener para cambios en la selección
+          roleSelect.addEventListener('change', function () {
+            toggleFieldVisibility(roleSelect.value);
+          });
         }
-      });
+    });
+
+    function toggleFieldVisibility(value) {
+        var imagenDiv = document.getElementById('imagenDiv');
+        var skillsDiv = document.getElementById('skillsDiv');
+        var wapDiv = document.getElementById('wapDiv');
+
+        if (value === 'providerUser') {
+            imagenDiv.style.display = 'block';
+            skillsDiv.style.display = 'block';
+            wapDiv.style.display = 'block';
+        } else {
+            imagenDiv.style.display = 'none';
+            skillsDiv.style.display = 'none';
+            wapDiv.style.display = 'none';
+        }
     }
-  });
-  
-  function previewImage(event) {
-    var input = event.target;
-    var preview = document.getElementById('preview');
 
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
+    function previewImage(event) {
+        var input = event.target;
+        var preview = document.getElementById('preview');
 
-      reader.onload = function (e) {
-          preview.src = e.target.result;
-          preview.style.display = 'block';
-      }
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
-      reader.readAsDataURL(input.files[0]);
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
 
+            reader.readAsDataURL(input.files[0]);
+        }
     }
-  }
-  function validarFormulario() {
-        // Obtener el valor seleccionado en el campo de tipo de usuario
+
+    function validarFormulario() {
         var tipoUsuario = document.getElementById('role').value;
 
-        // Si el tipo de usuario es "proveedor" y no hay habilidades seleccionadas, mostrar mensaje de error
         if (tipoUsuario === 'providerUser') {
             var checkboxes = document.getElementsByName('skills');
             var contadorSeleccionados = 0;
@@ -70,17 +68,11 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        // Si no hay errores, permitir que el formulario se envíe
         return true;
     }
 
     function mostrarMensajeError(mensaje) {
-        // Mostrar el mensaje de error en un elemento específico (puedes ajustar según tu estructura HTML)
         var mensajeErrorElemento = document.getElementById('mensajeError');
         mensajeErrorElemento.innerText = mensaje;
-
-        // Puedes agregar estilos adicionales o animaciones aquí si lo deseas
     }
-
-
 </script>

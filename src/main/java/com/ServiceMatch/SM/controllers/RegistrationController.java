@@ -13,6 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 public class RegistrationController {
@@ -43,7 +47,13 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration/provider")
-    public String processProviderRegistration(@ModelAttribute("providerUser") ProviderUser providerUser) {
+    public String processProviderRegistration(@ModelAttribute("providerUser") ProviderUser providerUser) throws MyException{
+        MultipartFile imagenFile = providerUser.getImagenFile();
+        // Procesar el archivo solo si se ha proporcionado
+        if (imagenFile != null && !imagenFile.isEmpty()) {
+            providerUser.setImagenFile(imagenFile); // Asignar el archivo cargado a la entidad ProviderUser
+        }
+
         providerUser.setRolEnum(RolEnum.PROVEEDOR);
         providerService.registrar(providerUser);
         return "registration";

@@ -1,7 +1,9 @@
 package com.ServiceMatch.SM.controllers;
 
 import com.ServiceMatch.SM.entities.Image;
-import com.ServiceMatch.SM.services.ServiceImage;
+import com.ServiceMatch.SM.entities.ProviderUser;
+import com.ServiceMatch.SM.services.ImageService;
+import com.ServiceMatch.SM.services.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.util.Optional;
 
 import static java.nio.file.Files.readAllBytes;
 
@@ -23,35 +26,19 @@ import static java.nio.file.Files.readAllBytes;
 public class ImageController {
 
     @Autowired
-    private ServiceImage imageService; // Suponiendo que tienes un servicio para manejar las imágenes
-
+    private ProviderService providerService;
     @GetMapping("/mostrar-imagen/{id}")
     public ResponseEntity<byte[]> mostrarImagen(@PathVariable Long id) {
-        final Image[] m = {new Image()};
-        imageService.getProviderById(id).ifPresent(p -> m[0] = p.getImagen());
-        if (m[0] == null) {
-            try {
-                ClassPathResource imageFile = new ClassPathResource("img/trabajador11.jpg");
-                InputStream inputStream = imageFile.getInputStream();
-
-                byte[] imageBytes = readAllBytes((Path) inputStream);
-
-                return ResponseEntity.status(HttpStatus.OK)
-                        .contentType(MediaType.IMAGE_JPEG)
-                        .body(imageBytes);
-            } catch (IOException e) {
-                // Handle exception if the default image loading fails
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
+        Optional<ProviderUser> providerOptional = providerService.getProviderById(id);
+        if (providerOptional.isPresent()) {
+            ProviderUser provider = providerOptional.get();
+            byte[] imagen = provider.getImagen();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);
+            return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-        byte[] imagenBytes = m[0].getContenido();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_JPEG);
-
-        return new ResponseEntity<>(imagenBytes, headers, HttpStatus.OK);
-
-
     }
+
 }

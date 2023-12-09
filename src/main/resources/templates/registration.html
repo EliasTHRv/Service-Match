@@ -43,8 +43,9 @@
     <input type="submit" value="Registrar como Cliente"/>
 </form>
 
-<form id="providerForm" action="/registration/provider" enctype="multipart/form-data"
-      onsubmit="return validarFormulario()" method="post" style="display: none;" th:object="${providerUser}">
+<form id="providerForm" action="/registration/provider"
+      method="post" style="display: none;" th:object="${providerUser}"
+      enctype="multipart/form-data">
     <!-- Campos específicos para ProviderUser -->
     <input type="text" th:field="*{name}" placeholder="Nombre"/>
     <input type="text" th:field="*{email}" placeholder="Email"/>
@@ -52,15 +53,28 @@
     <input type="number" name="whatsApp" class="form-control bg-dark text-white fw-semibold"
            placeholder="WhatsApp">
     <label for="image" class="mb-2 fw-semibold fs-5">Foto de Perfil</label>
-    <input type="file" accept="image/*" id="image" name="archivo" class="form-control bg-dark text-white"
+    <input type="file" accept="image/*"
+           th:field="*{imagenFile}" id="image" name="imagen" class="form-control bg-dark text-white"
            onchange="previewImage(event)">
     <img id="preview" src="" alt="Image Preview" style="max-width: 200px; max-height: 200px; display: none;">
-
     <input type="submit" value="Registrar como Proveedor"/>
 </form>
 <!-- FRAGMENT MENSAJES DE ERROR O ÉXITO THYMELEAF RECIBIDOS DE CONTROLADOR -->
 <div th:fragment="${/fragments/thmsg} :: div"></div>
-<script th:replace="@{/fragments/script} :: script"></script>
 </body>
+<script type="text/javascript">
+    function previewImage(event) {
+        var reader = new FileReader();
+        var imgElement = document.getElementById('preview');
 
+        reader.onload = function() {
+            if (reader.readyState === 2) {
+                imgElement.src = reader.result;
+                imgElement.style.display = 'block';
+            }
+        };
+
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 </html>
