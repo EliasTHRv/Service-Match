@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-
+//Aqui se maneja el proceso de registración a la app
+//usa registration.html 
 @Controller
 public class RegistrationController {
     @Autowired
@@ -43,19 +44,19 @@ public class RegistrationController {
             model.addAttribute("error", ex.getMessage());
             return "redirect:/error";
         }
-        return "registration";
+        return "redirect:/user/list";
     }
 
     @PostMapping("/registration/provider")
     public String processProviderRegistration(@ModelAttribute("providerUser") ProviderUser providerUser) throws MyException{
         MultipartFile imagenFile = providerUser.getImagenFile();
-        // Procesar el archivo solo si se ha proporcionado
         if (imagenFile != null && !imagenFile.isEmpty()) {
-            providerUser.setImagenFile(imagenFile); // Asignar el archivo cargado a la entidad ProviderUser
+            providerUser.setImagenFile(imagenFile); 
         }
-
+        
         providerUser.setRolEnum(RolEnum.PROVEEDOR);
         providerService.registrar(providerUser);
-        return "registration";
+        return "redirect:/user/list";
+;
     }
 }
