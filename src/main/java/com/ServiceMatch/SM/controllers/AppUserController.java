@@ -57,25 +57,5 @@ public class AppUserController {
         //model.put("user", userService.getOne(id));
         return "provider_vistaprueba.html";
     }
-
-
-    @GetMapping("/registration")
-    public String showUserRegistrationForm(ModelMap model) {
-        model.addAttribute("user", new AppUser());
-        return "registration.html";
-    }
-
-    @PostMapping("/registration")
-    public String registration(@ModelAttribute AppUser user) {
-        if (user instanceof ClientUser) {
-            clientService.registrar((ClientUser) user);
-        } else if (user instanceof ProviderUser) {
-            providerService.registrar((ProviderUser) user);
-        } else {
-            return "redirect:/error";
-        }
-        return "redirect:/inicio";
-    }
-
 }
 

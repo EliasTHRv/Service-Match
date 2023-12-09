@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.ServiceMatch.SM.entities.ClientUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -160,4 +161,7 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public void registrar(ClientUser clientUser) {
+
+    }
 }

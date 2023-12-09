@@ -47,7 +47,11 @@ public class ErrorsController implements ErrorController {
   }
 
   private int getErrorCode(HttpServletRequest httpRequest) {
-    return (Integer) httpRequest.getAttribute("javax.servlet.error.status_code");
+    var g = httpRequest.getAttribute("javax.servlet.error.status_code");
+    if(g!=null){
+      return (Integer) g;
+    }
+    return  500;
   }
 
   public String getErrorPath() {
