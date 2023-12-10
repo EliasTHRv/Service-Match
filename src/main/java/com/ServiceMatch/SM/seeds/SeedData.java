@@ -43,9 +43,8 @@ public class SeedData implements ApplicationRunner {
     @Override
     @Transactional
     public void run(ApplicationArguments args) throws Exception {
-        // Verificar si ya existen usuarios en la base de datos
 
-        if (userRepository.count() == 0) {
+        if (userRepository.count() != 0) {
             return;
         }
 

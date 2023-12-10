@@ -25,6 +25,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
 @Service
 public class UserService implements UserDetailsService {
 
@@ -38,26 +39,10 @@ public class UserService implements UserDetailsService {
     }
 
 
-
     public Page<AppUser> getPageOfUsers(int page, int size) {
         PageRequest pageable = PageRequest.of(page, size);
         return userRepository.findAll(pageable);
     }
-//FIXME
-//    @Transactional
-//    public void modifyUser(Long id, String name, String password, String mail, Long whatsApp) throws MyException {
-//        validar(name, mail, password, password);
-//        Optional<AppUser> result = userRepository.findById(id);
-//        AppUser user = new AppUser();
-//        if (result.isPresent()) {
-//            user = result.get();
-//            user.setName(name);
-//            user.setPassword(password);
-//            user.setEmail(mail);
-//            userRepository.save(user);
-//        }
-//    }
-
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -110,6 +95,7 @@ public class UserService implements UserDetailsService {
     public List<AppUser> loadUserByRol(RolEnum rol) {
         return userRepository.findByRol(rol);
     }
+
     @Transactional
     public void deleteUser(Long id) {
         Optional<AppUser> result = userRepository.findById(id);

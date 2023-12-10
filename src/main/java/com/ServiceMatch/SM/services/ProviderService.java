@@ -60,7 +60,6 @@ public class ProviderService {
 
 
     }
-//FIXME
     public List<ProviderUser> loadBySkill(String skill) {
         return null;
     }
