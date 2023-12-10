@@ -6,6 +6,10 @@ import com.ServiceMatch.SM.entities.Skill;
 import com.ServiceMatch.SM.exceptions.MyException;
 import com.ServiceMatch.SM.services.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -64,5 +68,20 @@ public class ProviderController {
        return "redirect:/user/providers";
 
    }
+
+    //Get Image by Provider ID
+    @GetMapping(value = "/{providerId}/image")
+    public ResponseEntity<byte[]> getProviderImage(@PathVariable Long providerId) {
+        Optional<ProviderUser> productOptional = providerService.getProviderById(providerId);
+        if (productOptional.isPresent()) {
+            ProviderUser pu = productOptional.get();
+            byte[] imageBytes = java.util.Base64.getDecoder().decode(pu.getImagen());
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);
+            return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(new byte[0], HttpStatus.NOT_FOUND);
+        }
+    }
 
 }
