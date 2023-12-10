@@ -37,25 +37,19 @@ public class ProviderController {
         model.addAttribute("providerUser", providerUser);
         return "provider_modify";
     }
-    //FIX ME
-    //ESTO TIENE QUE IR COMO OBJETO
-   @PostMapping("/modify/{id}")
-   public String modify(@PathVariable Long id, String name, boolean active, MultipartFile archivo, ModelMap model) {
-       Optional<ProviderUser> esProvider = providerService.getProviderById(id);
-       try {
-           //FIXME aqui debe actualizar la imagen
-//           if (esProvider.isPresent()) {
-//               providerService.modify(archivo, id, name);
-//           }
-           providerService.update(id, name, active);
-           return "redirect:../list";
 
-       } catch (MyException ex) {
-           model.put("error", ex.getMessage());
-           return "provider_modifyOLD.html";
-       }
+    @PostMapping("/modify")
+    public String guardarProveedorEditado(ModelMap model,
+                                          @ModelAttribute("providerUser") ProviderUser providerUser) {
+        try {
+            providerService.save(providerUser);
+            return "redirect:/user/list";
+        } catch (MyException ex) {
+            model.put("error", ex.getMessage());
+            return "provider_modify.html";
+        }
+    }
 
-   }
 
    @GetMapping("/providers/{skill}")
    public String userProviderList(@RequestParam String skill, ModelMap model, RedirectAttributes redirectAttributes) {

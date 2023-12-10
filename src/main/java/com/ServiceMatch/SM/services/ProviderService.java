@@ -69,6 +69,14 @@ public class ProviderService {
     public void update(Long id, String name, boolean active) throws  MyException {
        throw  new MyException("Implementar");
     }
+    public void save(ProviderUser providerUser) throws MyException {
+        validar(providerUser);
+        //TODO
+        //Update de propiedades que no se ven.
+        providerRepository.save(providerUser);
+
+    }
+
 }
 
 
