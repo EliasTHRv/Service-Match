@@ -98,6 +98,15 @@ select::placeholder {
     width: 15rem;
 }
 
+.btnbuscar {
+    background: linear-gradient(90deg,
+            rgba(245, 99, 72, 1) 0%,
+            rgba(245, 140, 32, 1) 100%);
+    color: white !important;
+    width: 7rem;
+
+}
+
 .btn-rojo {
     background: linear-gradient(90deg,
             rgba(255, 0, 0, 1) 0%,
