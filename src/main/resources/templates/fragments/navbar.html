@@ -3,7 +3,7 @@
 
   <div class="container-fluid ">
 
-    <a th:href="@{/}" class="navbar-brand logo-color fs-4"> <span class="text-color">Match</span> <img th:src="@{../img/alicates.png}" alt="" class="icono"
+    <a th:href="@{/}" class="navbar-brand logo-color fs-4"> <span class="text-color">Match</span> <img th:src="@{../../img/alicates.png}" alt="" class="icono"
         width="30em" th:href="@{/}"> Service </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarS" aria-controls="navbarS" aria-expanded="false"
       aria-label="Toggle navigation">
@@ -12,9 +12,12 @@
     <div class="collapse navbar-collapse" id="navbarS">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item"><a th:href="@{/}" class="nav-link custom-link fs-5">Inicio</a></li>
-        <!-- SI EL USUARIO ESTÁ LOGUEADO Y ES ADMIN PUEDE VER LA LISTA DE SERVICIOS -->
+        <!-- SI EL USUARIO ESTÁ LOGUEADO PUEDE VER LA LISTA DE SERVICIOS -->
         <li th:if="${session.usuariosession != null}" sec:authorize="hasRole('ADMINISTRADOR')">
           <a th:href="@{/skill/list}" class="nav-link custom-link fs-5">Servicios</a>
+        </li>
+        <li th:if="${session.usuariosession != null}">
+          <a th:href="@{/user/providers}" class="nav-link custom-link fs-5">Buscar Proveedores</a>
         </li>
         <!-- SI EL USUARIO ESTA LOGUEADO SE MUESTRAN LOS TRABAJOS -->
         <li class="nav-item" th:if="${session.usuariosession != null}">

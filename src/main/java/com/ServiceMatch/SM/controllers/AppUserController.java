@@ -3,7 +3,6 @@ package com.ServiceMatch.SM.controllers;
 import java.util.List;
 import java.util.Optional;
 
-import com.ServiceMatch.SM.entities.Provider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -15,14 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ServiceMatch.SM.entities.AppUser;
+import com.ServiceMatch.SM.entities.Provider;
 import com.ServiceMatch.SM.entities.Skill;
 import com.ServiceMatch.SM.exceptions.MyException;
 import com.ServiceMatch.SM.services.ServiceProvider;
 import com.ServiceMatch.SM.services.ServiceSkill;
 import com.ServiceMatch.SM.services.UserService;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/user")
@@ -161,4 +161,11 @@ public class AppUserController {
 
     }
 
+    // METODO DE PRUEBA
+    // @GetMapping("/provider/{id}")
+    // public String userProvider(@RequestParam Long id, ModelMap model) {
+    // AppUser provider = serviceUser.getOne(id);
+    // model.addAttribute("provider", provider);
+    // return "provider_vistaprueba.html";
+    // }
 }
