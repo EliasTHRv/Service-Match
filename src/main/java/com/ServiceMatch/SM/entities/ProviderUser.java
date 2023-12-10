@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,7 +19,6 @@ public class ProviderUser extends AppUser {
     }
     @Transient
     private MultipartFile imagenFile;
-
     @Lob
     @Column(name = "imagen", columnDefinition = "BLOB")
     private byte[] imagen;
@@ -33,17 +33,16 @@ public class ProviderUser extends AppUser {
                 this.imagen = imagenFile.getBytes();
             }
         } catch (IOException e) {
-            // Manejar la excepción apropiadamente
             e.printStackTrace();
         }
     }
-   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-   @JoinTable(
-           name = "provider_skill",
-           joinColumns = @JoinColumn(name = "provider_id"),
-           inverseJoinColumns = @JoinColumn(name = "skill_id"))
-
-   @Override
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "provider_skill",
+            joinColumns = @JoinColumn(name = "provider_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id"))
+    private List<Skill> skills;
+    @Override
    public String toString() {
        // Llamar al toString de la superclase y agregar los detalles específicos de Provider
        return "Provider{Skills=, superclassDetails='" + super.toString() + "'}";

@@ -24,7 +24,7 @@ public class Skill implements Serializable {
     private boolean active;
 
     @ManyToMany(mappedBy = "skills")
-    private List<ProviderUser> providers;
+    private List<ProviderUser> provider;
 
     @Override
     public String toString() {

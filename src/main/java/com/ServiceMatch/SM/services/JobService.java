@@ -41,7 +41,7 @@ public class JobService {
         Optional<ProviderUser> responseProvider = providerRepository.findById(idProvider);
 
         Skill skill = new Skill();
-        ClientUser appUser = new ClientUser();
+        ClientUser clientUser = new ClientUser();
         ProviderUser provider = new ProviderUser();
 
         if (responseSkill.isPresent()) {
@@ -51,7 +51,7 @@ public class JobService {
 
         if (responseUser.isPresent()) {
 
-            appUser = responseUser.get();
+            clientUser = responseUser.get();
         }
 
         if (responseProvider.isPresent()) {
@@ -65,8 +65,8 @@ public class JobService {
         job.setCost(cost);
         job.setDescription(description);
         job.setJobStatus(JobStatusEnum.PENDING);
-        job.setProviderUser(provider);
-        job.setClientUser(appUser);
+        job.setProvider(provider);
+        job.setClientUser(clientUser);
         job.setSkill(skill);
 
         jobRepository.save(job);

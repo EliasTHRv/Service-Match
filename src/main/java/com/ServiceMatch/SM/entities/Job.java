@@ -36,7 +36,7 @@ public class Job implements Serializable {
     @Column(name = "end_date", nullable = true)
 
     @Temporal(TemporalType.DATE)
-    Date endDate;   
+    Date endDate;
 
     @Column(nullable = false)
     Double cost;
@@ -55,16 +55,15 @@ public class Job implements Serializable {
     ClientUser clientUser;
 
     @OneToOne
-    ProviderUser providerUser;
+    ProviderUser provider;
 
-
-    public void setProvider(ProviderUser providerUser) {
+    @Override
+    public String toString() {
+        return "";
     }
-}
 
-    
-    
-    
+
+}
     
 
 
