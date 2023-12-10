@@ -75,7 +75,7 @@ public class ProviderController {
         Optional<ProviderUser> productOptional = providerService.getProviderById(providerId);
         if (productOptional.isPresent()) {
             ProviderUser pu = productOptional.get();
-            byte[] imageBytes = java.util.Base64.getDecoder().decode(pu.getImagen());
+            byte[] imageBytes = pu.getImagen();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.IMAGE_JPEG);
             return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);

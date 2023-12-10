@@ -16,7 +16,7 @@
         <input type="password" th:field="*{password}" placeholder="Contraseña"/>
         <input type="number" name="whatsApp" class="form-control bg-dark text-white fw-semibold"
                placeholder="WhatsApp">
-        <img th:if="${providerUser.imagen != null}" th:src="@{/{providerId}/image(providerId=${id})}" class="img-thumbnail" alt="Provider Image">
+        <img th:if="${providerUser.imagen != null}" th:src="@{/provider/{providerId}/image(providerId=${id})}" class="img-thumbnail" alt="Provider Image">
 
         <input type="file" accept="image/*"
                th:field="*{imagenFile}" id="image" name="imagen" class="form-control bg-dark text-white"
