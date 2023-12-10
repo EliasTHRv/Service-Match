@@ -27,7 +27,7 @@ public class ClientController {
     public String guardarClienteEditado(@ModelAttribute("clientUser") ClientUser clientUser) {
         try {
             clientService.save(clientUser);
-            return "redirect:/index";
+            return "redirect:/user/list";
         } catch (MyException e) {
             throw new RuntimeException(e);
         }

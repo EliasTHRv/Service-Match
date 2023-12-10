@@ -1,5 +1,6 @@
 package com.ServiceMatch.SM.services;
 
+import com.ServiceMatch.SM.entities.ClientUser;
 import com.ServiceMatch.SM.entities.ProviderUser;
 import com.ServiceMatch.SM.exceptions.MyException;
 import com.ServiceMatch.SM.repository.ProviderRepository;
@@ -36,9 +37,10 @@ public class ProviderService {
         return providerRepository.findAll();
     }
 
-    public Optional<ProviderUser> findById(Long id) {
-        return providerRepository.findById(id);
+    public ProviderUser getOne(Long id){
+        return providerRepository.findById(id).get();
     }
+
 
     public void registrar(ProviderUser pu) throws MyException {
         validar(pu);

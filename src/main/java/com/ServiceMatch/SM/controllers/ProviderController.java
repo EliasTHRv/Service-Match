@@ -1,5 +1,6 @@
 package com.ServiceMatch.SM.controllers;
 
+import com.ServiceMatch.SM.entities.ClientUser;
 import com.ServiceMatch.SM.entities.ProviderUser;
 import com.ServiceMatch.SM.entities.Skill;
 import com.ServiceMatch.SM.exceptions.MyException;
@@ -26,6 +27,14 @@ public class ProviderController {
         return providerService.findAll();
     }
 
+    @GetMapping("/modify/{id}")
+    public String mostrarFormularioEdicion(@PathVariable Long id, Model model) {
+        ProviderUser providerUser = providerService.getOne(id);
+        model.addAttribute("providerUser", providerUser);
+        return "provider_modify";
+    }
+    //FIX ME
+    //ESTO TIENE QUE IR COMO OBJETO
    @PostMapping("/modify/{id}")
    public String modify(@PathVariable Long id, String name, boolean active, MultipartFile archivo, ModelMap model) {
        Optional<ProviderUser> esProvider = providerService.getProviderById(id);
@@ -39,7 +48,7 @@ public class ProviderController {
 
        } catch (MyException ex) {
            model.put("error", ex.getMessage());
-           return "provider_modify.html";
+           return "provider_modifyOLD.html";
        }
 
    }

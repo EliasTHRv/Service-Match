@@ -22,7 +22,6 @@
                         <th scope="col">Nombre</th>
                         <th scope="col">Correo</th>
                         <th scope="col">Rol</th>
-                        <th scope="col">Imagen</th>
                         <th scope="col">Acciones</th>
                         <th scope="col">
                             <div class="d-flex justify-content-center">
@@ -37,20 +36,18 @@
                         <td th:text="${user.name}"></td>
                         <td th:text="${user.email}"></td>
                         <td th:text="${user.rol}"></td>
-                        <td>
-                            <a th:if="${user.rol == T(com.ServiceMatch.SM.enums.RolEnum).PROVEEDOR}"
-                               class="btn btn-success btn-sm"
-                               th:href="@{/mostrar-imagen/__${user.id}__}" target="_blank">Ver</a>
-                        </td>
+
                          <!-- dtype,registration_date,whats_app me dan error al traerlos -->
                          <td>
                             <!--Si está dado de baja: Boton para RESTAURAR-->
                             <a th:if="${!(user.active)}" class="btn btn-secondary btn-sm"
                                 th:href="@{/user/restore/__${user.id}__}">Restaurar</a>
                             <!--Si está dado de alta: Boton para EDITAR-->
-                            <a th:if="${user.active}" class="btn btn-success btn-sm"
-                                th:href="@{/user/modify/__${user.id}__}">Editar</a>
-                            <a class="btn btn-rojo btn-sm"
+                            <a th:if="${user.rol == 'USUARIO'}" class="btn btn-success btn-sm"
+                                th:href="@{/client/modify/__${user.id}__}">Editar</a>
+                             <a th:if="${user.rol =='PROVEEDOR'}" class="btn btn-success btn-sm"
+                                th:href="@{/provider/modify/__${user.id}__}">Editar</a>
+                             <a class="btn btn-rojo btn-sm"
                                 th:href="@{/user/delete/__${user.id}__}">Eliminar</a>
                         </td>
                         <td th:if="${user.active}"
