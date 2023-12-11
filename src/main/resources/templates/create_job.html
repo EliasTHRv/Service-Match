@@ -12,7 +12,7 @@
     <main class="container flex-grow-1">
       <div class="row justify-content-center pt-5 mt-5 m-1">
         <div class="col-10 col-md-8 col-sm-11 col-xl-5 col-lg-6 formularioCreateJob bg-color">
-          <div class="form-group text-center">
+          <div class="form-group text-center mb-2">
             <a class="logo-color fs-4 text-decoration-none">
               <span class="text-color">Match</span>
               <img src="images/alicates.png" alt="" class="icono" width="30em">
@@ -22,8 +22,8 @@
           
   
           <form class="" action="/job/crearJobPrueba" method="POST" enctype="multipart/form-data">
-            <div class="form-group text-center pt-0">
-              <h1 class="text-white">CREATE JOB</h1>
+            <div class="form-group text-center pt-0 mb-5">
+              <h1 class="text-white fs-1">CREATE JOB</h1>
             </div>
             <!-- manejo mensaje de errores -->
             <div th:replace="@{/fragments/thmsg} :: div"></div>
@@ -31,12 +31,12 @@
             <div class="form-group mx-sm-4 text-rigth pt-4 text-center">
               <!-- <label class="mb-2">Costo</label> -->
               <input type="number" class="form-control bg-dark  text-white fw-semibold" name="cost"
-                placeholder="Costo ponderado" required="true">
+                placeholder="Costo ponderado" required="true" autocomplete="off">
             </div>
             <div class="form-group mx-sm-4 pt-4 mb-2">
               <!-- <label class="mb-2">Descripcion</label> -->
               <input type="text" class="form-control bg-dark text-white fw-semibold" name="description"
-                placeholder="Cargue una breve descripcion del trabajo" required="true">
+                placeholder="Cargue una breve descripcion del trabajo" required="true" autocomplete="off">
             </div>
   
             <div class="form-group mx-sm-4 text-white pt-4 fw-semibold text-center">

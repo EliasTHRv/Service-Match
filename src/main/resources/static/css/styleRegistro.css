@@ -8,7 +8,7 @@
     list-style: none;
 }
 
-body {
+.bodyRegister {
     background: linear-gradient(rgba(29, 30, 35, 0.3),
             rgba(29, 30, 35, 0.3)),
         url(imagesRegisterUsers/derechos-trabajadores-turnos.jpg);
@@ -17,9 +17,10 @@ body {
     background-attachment: fixed;
 }
 
-.formulario {
+
+.formularioRegisterPrincipal {
     padding: 50px;
-    height: 740px;
+    height: 550px;
     position: static;
 }
 
