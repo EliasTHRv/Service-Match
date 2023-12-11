@@ -267,8 +267,15 @@ public class ServiceJob {
     }
 
     // CENSURA DE COMENTARIOS
-    public void censorComment(String id) {
+    public void censorComment(Long id) {
         // completar la lógica necesaria
+        Optional<Job> result = jobRepository.findById(id);
+        Job job = new Job();
+        if (result.isPresent()) {
+            job = result.get();
+            job.setComment("Este comentario ha sido censurado por contener lenguaje no apropiado");
+            jobRepository.save(job);
+        }
     }
 
 }

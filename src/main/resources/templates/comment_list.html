@@ -34,6 +34,7 @@
             <td th:text="${job.provider.id}"></td>
             <td th:text="${job.provider.name}"></td>
             <td>
+              <!-- COMPLETAR LA LÓGICA PARA QUE UNA VEZ CENSURADO EL BOTON NO SIGA APARECIENDO-->
               <a class="btn btn-danger btn-sm" th:href="@{/job/comment/censor/__${job.id}__}"
                 value="Este comentario ha sido censurado por contener lenguaje no apropiado." name="censura">Censurar</a>
               <!-- <a class="btn btn-secondary btn-sm" th:href="@{/comment/restore/__${comment}__}">Restaurar</a> -->

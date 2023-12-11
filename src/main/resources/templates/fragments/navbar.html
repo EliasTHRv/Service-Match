@@ -29,7 +29,7 @@
         </li>
         <!-- SI EL USUARIO ESTA LOGUEADO Y ES UN ADMIN SE MUESTRAN LOS COMENTARIOS -->
         <li class="nav-item" th:if="${session.usuariosession != null}" sec:authorize="hasRole('ADMINISTRADOR')">
-          <a th:href="@{/user/list}" class="nav-link custom-link fs-5">Comentarios</a>
+          <a th:href="@{/job/comment/list}" class="nav-link custom-link fs-5">Comentarios</a>
         </li>
         <!-- SI EL USUARIO NO ESTÁ LOGUEADO APARECE EL LOGIN INGRESAR -->
         <li class="nav-item" th:if="${session.usuariosession == null}">

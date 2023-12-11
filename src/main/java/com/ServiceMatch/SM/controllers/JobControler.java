@@ -179,13 +179,15 @@ public class JobControler {
     // MÉTODO PARA LISTAR COMENTARIOS DE JOBS
     @GetMapping("/comment/list") // http://localhost:8080/user/list/id
     public String listComments(Model model) {
+        // completar lógica para que sólo traiga los jobs que tienen comentarios
         List<Job> jobs = serviceJob.listJobs();
         model.addAttribute("jobs", jobs);
         return "comment_list.html";
     }
 
+    // MÉTODO PARA CENSURAR COMENTARIOS
     @GetMapping("/comment/censor/{id}")
-    public String eliminarResenia(@PathVariable String id, ModelMap model) {
+    public String eliminarResenia(@PathVariable Long id, ModelMap model) {
         try {
             // SERVICE JOB FALTA DEFINIR LA LÓGICA RESTANTE
             serviceJob.censorComment(id);
