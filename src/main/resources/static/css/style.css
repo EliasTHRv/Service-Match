@@ -9,7 +9,23 @@
 }
 
 input::placeholder {
-    color: gainsboro !important;
+    color: white !important;
+    opacity: 0.8 !important;
+}
+
+textarea::placeholder {
+    color: white !important;
+    opacity: 0.8 !important;
+}
+
+option::placeholder {
+    color: white !important;
+    opacity: 0.8 !important;
+}
+
+select::placeholder {
+    color: white !important;
+    opacity: 0.8 !important;
 }
 
 .text-color {
@@ -53,7 +69,7 @@ input::placeholder {
 
 #header {
     background: linear-gradient(rgba(29, 30, 35, 0.6),
-        rgba(29, 30, 35, 0.6)),
+            rgba(29, 30, 35, 0.6)),
         url(/img/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
     background-position: top center;
     background-repeat: no-repeat;
@@ -77,18 +93,30 @@ input::placeholder {
 
 .btnOrigin {
     background: linear-gradient(90deg,
-        rgba(245, 99, 72, 1) 0%,
-        rgba(245, 140, 32, 1) 100%);
+            rgba(245, 99, 72, 1) 0%,
+            rgba(245, 140, 32, 1) 100%);
     width: 15rem;
+}
+
+.btnbuscar {
+    background: linear-gradient(90deg,
+            rgba(245, 99, 72, 1) 0%,
+            rgba(245, 140, 32, 1) 100%);
+    color: white !important;
+    width: 7rem;
+
 }
 
 .btn-rojo {
     background: linear-gradient(90deg,
-        rgba(255, 0, 0, 1) 0%,
-        rgba(255, 100, 100, 1) 100%);
+            rgba(255, 0, 0, 1) 0%,
+            rgba(255, 100, 100, 1) 100%);
     width: 15rem;
 }
 
+.custom-dropdown-hover:hover {
+    background-color: #343a40 !important;
+}
 
 
 .b-paginacion {
@@ -112,37 +140,42 @@ input::placeholder {
 .table-limit {
     max-width: 45rem;
 }
-.border-card{
+
+.border-card {
     box-shadow: 0 0 8px rgba(245, 140, 32, 1) !important;
-  }
+}
+
 @keyframes slideInLeft {
     from {
-      transform: translateX(-100%);
-      opacity: 0;
+        transform: translateX(-100%);
+        opacity: 0;
     }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
 
-  .text-slide-left {
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.text-slide-left {
     animation: slideInLeft 3s forwards;
-  }
-  @keyframes slideInTop {
-    from {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
+}
 
-  .text-slide-top {
+@keyframes slideInTop {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.text-slide-top {
     animation: slideInTop 2s forwards;
-  }
+}
 
 .card-img-top {
     max-height: 200px;
@@ -196,9 +229,9 @@ a.link-colors:hover {
     background-color: rgb(255, 127, 0);
 }
 
-.bodyRegistrarOficio{
+.bodyRegistrarOficio {
     background: linear-gradient(rgba(29, 30, 35, 0.6),
-        rgba(29, 30, 35, 0.6)),
+            rgba(29, 30, 35, 0.6)),
         url(images/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
     background-position: top center;
     background-repeat: no-repeat;
@@ -230,9 +263,9 @@ a.link-colors:hover {
     position: static;
 }
 
-.bodyActualizarOficio{
+.bodyActualizarOficio {
     background: linear-gradient(rgba(29, 30, 35, 0.6),
-        rgba(29, 30, 35, 0.6)),
+            rgba(29, 30, 35, 0.6)),
         url(images/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
     background-position: top center;
     background-repeat: no-repeat;
@@ -250,9 +283,9 @@ a.link-colors:hover {
     position: static;
 }
 
-.bodyActualizarNombreUsuario{
+.bodyActualizarNombreUsuario {
     background: linear-gradient(rgba(29, 30, 35, 0.6),
-        rgba(29, 30, 35, 0.6)),
+            rgba(29, 30, 35, 0.6)),
         url(images/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
     background-position: top center;
     background-repeat: no-repeat;
@@ -308,6 +341,7 @@ a.link-colors:hover {
     height: 740px;
     position: static;
 }
+
 
 
 

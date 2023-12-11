@@ -62,7 +62,7 @@ public class JobControler {
             @RequestParam(required = false) String description,
             Long idSkill, Long idUser,
             @RequestParam(required = false) Long idProvider, Model model) {
-        
+
         try {
             serviceJob.createJob(cost, description, idSkill, idUser, idProvider);
             model.addAttribute("exito", "El job fue creado correctamente!");
@@ -73,6 +73,40 @@ public class JobControler {
 
         return "create_job.html";
     }
+    // ADAPTAR EL METODO REQUEST JOB PARA QUE EL CLIENTE SOLICITE EL TRABAJO YA QUE
+    // ES QUIEN LO CREA Y DESCARTAR CREARJOBPRUBEA
+    // DEBE TRAER EL ID DEL CLIENTE LOGUEADO, EL ID DEL PROVEEDOR QUE SELECCIONÓ EN
+    // PROVIDER_LIST Y SÓLO DEBE SETEAR LA DESCRIPCIÓN
+    // @GetMapping("/requestJob") // http://localhost:8080/job/requestJob
+    // public String requestJob(Model model) {
+
+    // List<Skill> skills = serviceSkill.getSkills();
+    // List<AppUser> appUsers = userService.loadUserByRol(RolEnum.USUARIO);
+    // List<Provider> providers = serviceProvider.loadUserByRol(RolEnum.PROVEEDOR);
+
+    // model.addAttribute("skills", skills);
+    // model.addAttribute("appUsers", appUsers);
+    // model.addAttribute("providers", providers);
+
+    // return "create_job.html";
+    // }
+    // @PostMapping("/requestJob")
+    // public String requestJob(
+    // @RequestParam(required = false) Double cost,
+    // @RequestParam(required = false) String description,
+    // Long idSkill, Long idUser,
+    // @RequestParam(required = false) Long idProvider, Model model) {
+
+    // try {
+    // serviceJob.createJob(cost, description, idSkill, idUser, idProvider);
+    // model.addAttribute("exito", "El job fue creado correctamente!");
+
+    // } catch (MyException ex) {
+    // model.addAttribute("error", ex.getMessage());
+    // }
+
+    // return "create_job.html";
+    // }
 
     @GetMapping("/list/provider/{id}")
     public String jobListPrueba(@PathVariable Long id, Model model) {
@@ -139,6 +173,29 @@ public class JobControler {
         } catch (MyException ex) {
             model.put("error", "Error al actualizar el job: " + ex.getMessage());
             return "forward:/job/list/provider/{id}"; // Reenvía a la misma vista con mensajes de error
+        }
+    }
+
+    // MÉTODO PARA LISTAR COMENTARIOS DE JOBS
+    @GetMapping("/comment/list") // http://localhost:8080/user/list/id
+    public String listComments(Model model) {
+        // completar lógica para que sólo traiga los jobs que tienen comentarios
+        List<Job> jobs = serviceJob.listJobs();
+        model.addAttribute("jobs", jobs);
+        return "comment_list.html";
+    }
+
+    // MÉTODO PARA CENSURAR COMENTARIOS
+    @GetMapping("/comment/censor/{id}")
+    public String eliminarResenia(@PathVariable Long id, ModelMap model) {
+        try {
+            // SERVICE JOB FALTA DEFINIR LA LÓGICA RESTANTE
+            serviceJob.censorComment(id);
+            model.put("exito", "Comentario censurado con exito");
+            return "redirect:/job/comment/list";
+        } catch (Exception e) {
+            model.put("error", e.getMessage());
+            return "redirect:/job/comment/list";
         }
     }
 
