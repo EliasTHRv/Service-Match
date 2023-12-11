@@ -72,7 +72,7 @@ public class ProviderService {
     public void save(ProviderUser providerUser) throws MyException {
         validar(providerUser);
         //TODO
-        //Update de propiedades que no se ven.
+        //Update de propiedades que no se ven ejemplo password.
         providerRepository.save(providerUser);
 
     }

@@ -26,11 +26,6 @@ public class ProviderController {
     @Autowired
     private ProviderService providerService;
 
-    @GetMapping
-    public List<ProviderUser> findAll() {
-        return providerService.findAll();
-    }
-
     @GetMapping("/modify/{id}")
     public String mostrarFormularioEdicion(@PathVariable Long id, Model model) {
         ProviderUser providerUser = providerService.getOne(id);

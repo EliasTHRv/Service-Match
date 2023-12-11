@@ -1,18 +1,31 @@
-<!-- formulario-edicion-cliente.html -->
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Cliente</title>
-</head>
-<body>
-    <h1>Editar Cliente</h1>
-    <form id="clientForm" action="/client/modify" method="post" th:object="${clientUser}">
-        <input type="hidden" th:field="*{id}" />
-        <input type="text" th:field="*{name}" placeholder="Nombre"/>
-        <input type="text" th:field="*{email}" placeholder="Email"/>
-        <input type="password" th:field="*{password}" placeholder="Contraseña"/>
-        <input type="submit" value="Guardar"/>
-    </form>
-</body>
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+
+<head th:replace="@{/fragments/head} :: head"></head>
+
+    <body class="d-flex flex-column min-vh-100 bodyActualizarNombreUsuario">
+
+        <nav th:replace="@{/fragments/navbar} :: nav"></nav>
+        <main class="container flex-grow-1 fondo-main">
+            <div class="row justify-content-center pt-5 mt-5 m-1">
+                <div class="col-10 col-md-8 col-sm-11 col-xl-5 col-lg-6 formularioActualizarNombreUser bg-color">
+                    <div class="form-group text-center mb-3 mt-4">
+                        <a class="logo-color fs-4 text-decoration-none">
+                            <span class="text-color">Match</span>
+                            <img src="images/alicates.png" alt="" class="icono" width="30em">
+                            Service
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <h1>Editar Cliente</h1>
+        <form id="clientForm" action="/client/modify" method="post" th:object="${clientUser}">
+            <input type="hidden" th:field="*{id}"/>
+            <input type="text" th:field="*{name}" placeholder="Nombre"/>
+            <input type="text" th:field="*{email}" placeholder="Email"/>
+            <input type="password" th:field="*{password}" placeholder="Contraseña"/>
+            <input type="submit" value="Guardar"/>
+        </form>
+    </body>
 </html>

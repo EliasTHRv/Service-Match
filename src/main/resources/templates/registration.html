@@ -1,80 +1,95 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Registro de Usuario</title>
-    <script type="text/javascript">
-        // Función para mostrar el formulario de cliente por defecto al cargar la página
-        document.addEventListener('DOMContentLoaded', function() {
-            var clientForm = document.getElementById('clientForm');
-            var providerForm = document.getElementById('providerForm');
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
 
-            clientForm.style.display = 'block';
-            providerForm.style.display = 'none';
-        });
+<head th:replace="@{/fragments/head} :: head"></head>
 
-        function showForm(type) {
-            var clientForm = document.getElementById('clientForm');
-            var providerForm = document.getElementById('providerForm');
+<body class="d-flex flex-column min-vh-100 bodyActualizarNombreUsuario">
 
-            if (type === 'client') {
-                clientForm.style.display = 'block';
-                providerForm.style.display = 'none';
-            } else if (type === 'provider') {
-                clientForm.style.display = 'none';
-                providerForm.style.display = 'block';
-            }
-        }
-    </script>
-</head>
-<body>
+<nav th:replace="@{/fragments/navbar} :: nav"></nav>
+<main class="container flex-grow-1 fondo-main">
+    <div class="row justify-content-center pt-5 mt-5 m-1">
+        <div class="col-10 col-md-8 col-sm-11 col-xl-5 col-lg-6 formularioActualizarNombreUser bg-color">
+            <div class="form-group text-center mb-3 mt-4">
+                <a class="logo-color fs-4 text-decoration-none"></a>
+                    <span class="text-color">Match</span>
+                    <img src="images/alicates.png" alt="" class="icono" width="30em">
+                    <h1>Registro de Usuario</h1>
 
-<h1>Registro de Usuario</h1>
+                    <select onchange="showForm(this.value)">
+                        <option value="client" selected>Cliente</option>
+                        <option value="provider">Proveedor</option>
+                    </select>
 
-<select onchange="showForm(this.value)">
-    <option value="client" selected>Cliente</option>
-    <option value="provider">Proveedor</option>
-</select>
+                    <form id="clientForm" action="/registration/client" method="post" th:object="${clientUser}">
+                        <!-- Campos específicos para ClientUser -->
+                        <input type="text" th:field="*{name}" placeholder="Nombre"/>
+                        <input type="text" th:field="*{email}" placeholder="Email"/>
+                        <input type="password" th:field="*{password}" placeholder="Contraseña"/>
+                        <input type="submit" value="Registrar como Cliente"/>
+                    </form>
 
-<form id="clientForm" action="/registration/client" method="post" th:object="${clientUser}">
-    <!-- Campos específicos para ClientUser -->
-    <input type="text" th:field="*{name}" placeholder="Nombre"/>
-    <input type="text" th:field="*{email}" placeholder="Email"/>
-    <input type="password" th:field="*{password}" placeholder="Contraseña"/>
-    <input type="submit" value="Registrar como Cliente"/>
-</form>
+                    <form id="providerForm" action="/registration/provider"
+                          method="post" style="display: none;" th:object="${providerUser}"
+                          enctype="multipart/form-data">
+                        <!-- Campos específicos para ProviderUser -->
+                        <input type="text" th:field="*{name}" placeholder="Nombre"/>
+                        <input type="text" th:field="*{email}" placeholder="Email"/>
+                        <input type="password" th:field="*{password}" placeholder="Contraseña"/>
+                        <input type="number" name="whatsApp" class="form-control bg-dark text-white fw-semibold"
+                               placeholder="WhatsApp">
+                        <label for="image" class="mb-2 fw-semibold fs-5">Foto de Perfil</label>
+                        <input type="file" accept="image/*"
+                               th:field="*{imagenFile}" id="image" name="imagen" class="form-control bg-dark text-white"
+                               onchange="previewImage(event)">
+                        <img id="preview" src="" alt="Image Preview" style="max-width: 200px; max-height: 200px; display: none;">
+                        <input type="submit" value="Registrar como Proveedor"/>
+                    </form>
 
-<form id="providerForm" action="/registration/provider"
-      method="post" style="display: none;" th:object="${providerUser}"
-      enctype="multipart/form-data">
-    <!-- Campos específicos para ProviderUser -->
-    <input type="text" th:field="*{name}" placeholder="Nombre"/>
-    <input type="text" th:field="*{email}" placeholder="Email"/>
-    <input type="password" th:field="*{password}" placeholder="Contraseña"/>
-    <input type="number" name="whatsApp" class="form-control bg-dark text-white fw-semibold"
-           placeholder="WhatsApp">
-    <label for="image" class="mb-2 fw-semibold fs-5">Foto de Perfil</label>
-    <input type="file" accept="image/*"
-           th:field="*{imagenFile}" id="image" name="imagen" class="form-control bg-dark text-white"
-           onchange="previewImage(event)">
-    <img id="preview" src="" alt="Image Preview" style="max-width: 200px; max-height: 200px; display: none;">
-    <input type="submit" value="Registrar como Proveedor"/>
-</form>
+            </div>
+        </div>
+    </div>
+</main>
+
+
 <!-- FRAGMENT MENSAJES DE ERROR O ÉXITO THYMELEAF RECIBIDOS DE CONTROLADOR -->
 <div th:fragment="${/fragments/thmsg} :: div"></div>
-</body>
+
 <script type="text/javascript">
-    function previewImage(event) {
-        var reader = new FileReader();
-        var imgElement = document.getElementById('preview');
+    // Función para mostrar el formulario de cliente por defecto al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+    var clientForm = document.getElementById('clientForm');
+    var providerForm = document.getElementById('providerForm');
 
-        reader.onload = function() {
-            if (reader.readyState === 2) {
-                imgElement.src = reader.result;
-                imgElement.style.display = 'block';
-            }
-        };
+    clientForm.style.display = 'block';
+    providerForm.style.display = 'none';
+});
 
-        reader.readAsDataURL(event.target.files[0]);
+function showForm(type) {
+    var clientForm = document.getElementById('clientForm');
+    var providerForm = document.getElementById('providerForm');
+
+    if (type === 'client') {
+        clientForm.style.display = 'block';
+        providerForm.style.display = 'none';
+    } else if (type === 'provider') {
+        clientForm.style.display = 'none';
+        providerForm.style.display = 'block';
     }
+}
+
+function previewImage(event) {
+var reader = new FileReader();
+var imgElement = document.getElementById('preview');
+
+reader.onload = function() {
+    if (reader.readyState === 2) {
+        imgElement.src = reader.result;
+        imgElement.style.display = 'block';
+    }
+};
+
+reader.readAsDataURL(event.target.files[0]);
+}
 </script>
+</body>
 </html>

@@ -53,7 +53,6 @@ public class RegistrationController {
         if (imagenFile != null && !imagenFile.isEmpty()) {
             providerUser.setImagenFile(imagenFile); 
         }
-        
         providerUser.setRolEnum(RolEnum.PROVEEDOR);
         providerService.registrar(providerUser);
         return "redirect:/user/list";
