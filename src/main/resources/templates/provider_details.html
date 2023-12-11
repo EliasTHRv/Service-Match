@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="@{/fragments/head} :: head"></head>
+
+    <body id="page-top" class="bg-dark">
+
+        <nav th:replace="@{/fragments/navbar} :: nav"></nav>
+
+        <div class="container bg-dark">
+            <div class="container dg">
+                <div class="row justify-content-center">
+                    <div class="col-md-7">
+                        <div class="card bg-dark border-card text-white">
+                            <div class="card-body">
+                                <h3 class="text-color text-center mb-4" th:text="${provider.name}"></h3>
+
+                                <div th:if="${provider.imagen != null}" class="text-slide-left mb-3">
+                                    <img class="img-perfilproveedor" th:src="@{/imagen/perfil/__${provider.id}__}"
+                                    style="max-width: 100%; max-height: 140px;" />
+                                </div>
+
+                                <p class="font-weight-bold">
+                                    WhatsApp: <span th:text="${provider.whatsApp}" style="font-weight: normal;"></span>
+                                </p>
+                                <h5> Comentearios:</h5>
+                                <div class="card-text" style="font-weight: bold; max-height: 120px; overflow: auto; scrollbar-width: thin; scrollbar-color: #F56349">
+                                    <p th:each="comment : ${comments}" class="comment" style="margin-bottom: 5px;">
+                                        <span th:text="${comment}"></span>
+                                    </p>
+                                </div>  
+
+                                <p class="font-weight-bold">
+                                    <h5> Calificación: </h5>
+                                   <span th:text="${averageCalification}" style="font-weight: normal;"></span>
+                                </p>
+
+                                <form th:action="@{/job/crearJobPrueba/{id}(id=${provider.id})}" method="post"
+                                      class="text-center mb-3">
+                                    <button type="submit" class="btn btn-success btn-md">Solicitar trabajo</button>
+                                        
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="text-center container mt-3 mb-5" >
+            <div class="row">
+                <div class="col">
+                    <a th:href="@{/user/providers}" class="btn btnOrigin btn-success btn-sm" >Volver</a>
+                </div>
+            </div>
+        </section>
+
+        <div th:if="${exito != null}" class="alert alert-success" role="alert">
+            <p th:text="${exito}"></p>
+        </div>
+        <div th:if="${error != null}" class="alert alert-danger" role="alert">
+            <p th:text="${error}"></p>
+        </div>
+        
+        <div>
+            
+            <footer th:replace="@{/fragments/footer} :: footer"></footer>
+        </div>
+
+        
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    </body>
+
+</html>

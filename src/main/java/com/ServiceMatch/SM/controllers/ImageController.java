@@ -17,10 +17,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ServiceMatch.SM.entities.Image;
+import com.ServiceMatch.SM.entities.Provider;
 import com.ServiceMatch.SM.services.ImageService;
+import com.ServiceMatch.SM.services.ServiceProvider;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
+@RequestMapping("/imagen")
 public class ImageController {
+    
+    
+
 
     @Autowired
     private ImageService imageService; // Suponiendo que tienes un servicio para manejar las imágenes
@@ -52,5 +59,21 @@ public class ImageController {
 
         return new ResponseEntity<>(imagenBytes, headers, HttpStatus.OK);
 
+    }
+    
+      @Autowired
+    ServiceProvider serviceProvider;
+    
+    @GetMapping("/perfil/{id}")
+    public ResponseEntity<byte[]> imagenUsuario (@PathVariable Long id){
+        Provider usuario = serviceProvider.getOne(id);
+        
+       byte[] imagen= usuario.getImagen().getContenido();
+       
+       HttpHeaders headers = new HttpHeaders();
+       
+       headers.setContentType(MediaType.IMAGE_JPEG);
+       
+       return new ResponseEntity<>(imagen,headers, HttpStatus.OK); 
     }
 }
