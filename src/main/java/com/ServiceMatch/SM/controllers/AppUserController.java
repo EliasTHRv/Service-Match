@@ -17,12 +17,16 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ServiceMatch.SM.entities.AppUser;
+import com.ServiceMatch.SM.entities.Job;
 import com.ServiceMatch.SM.entities.Provider;
 import com.ServiceMatch.SM.entities.Skill;
 import com.ServiceMatch.SM.exceptions.MyException;
+import com.ServiceMatch.SM.services.ServiceJob;
 import com.ServiceMatch.SM.services.ServiceProvider;
 import com.ServiceMatch.SM.services.ServiceSkill;
 import com.ServiceMatch.SM.services.UserService;
+import java.util.stream.Collectors;
+import javax.persistence.EntityNotFoundException;
 
 @Controller
 @RequestMapping("/user")
@@ -35,6 +39,9 @@ public class AppUserController {
 
     @Autowired
     UserService serviceUser;
+    
+    @Autowired
+    ServiceJob serviceJob;
 
     @GetMapping("/list") // http://localhost:8080/user/list/id
     public String listUsers(Model model, @RequestParam(defaultValue = "0") int page) {
@@ -160,6 +167,35 @@ public class AppUserController {
         return "redirect:/user/providers";
 
     }
+    
+    @GetMapping("providers/details/{id}")
+public String providerDetails(@PathVariable Long id, ModelMap model) {
+    try {
+        List<Job> jobs = serviceJob.listJobByProvider(id);
+        AppUser provider = serviceUser.getOne(id);
+
+        double totalCalification = 0.0;
+
+       for (Job job : jobs) {
+    Long callification = job.getCallification();
+    if (callification != null) {
+        totalCalification += callification;
+    }
+}
+        double averageCalification = jobs.isEmpty() ? 0.0 : totalCalification / jobs.size();
+
+        model.addAttribute("provider", provider);
+        model.addAttribute("providerName", jobs.isEmpty() ? "" : jobs.get(0).getProvider().getName());
+        model.addAttribute("comments", jobs.stream().map(Job::getComment).collect(Collectors.toList()));
+        model.addAttribute("averageCalification", averageCalification);
+
+        return "provider_details";
+    } catch (EntityNotFoundException e) {
+        // Manejar la excepción cuando el proveedor no se encuentra
+        model.addAttribute("error", "Proveedor no encontrado");
+        return "redirect:/user/providers";  // Puedes crear una plantilla de error personalizada
+    }
+}
 
     // METODO DE PRUEBA
     // @GetMapping("/provider/{id}")
@@ -168,4 +204,7 @@ public class AppUserController {
     // model.addAttribute("provider", provider);
     // return "provider_vistaprueba.html";
     // }
+    
+    
+    
 }
