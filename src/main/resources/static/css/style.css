@@ -268,4 +268,17 @@ a.link-colors:hover {
     height: 350px;
     position: static;
 }
+.thumbnail {
+    width: 200px;
+    height: auto;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
 
+ .thumbnail img {
+    width: 100%;
+    height: auto;
+    display: block;
+ }

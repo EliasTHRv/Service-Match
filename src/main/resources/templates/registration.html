@@ -39,9 +39,12 @@
                                placeholder="WhatsApp">
                         <label for="image" class="mb-2 fw-semibold fs-5">Foto de Perfil</label>
                         <input type="file" accept="image/*"
-                               th:field="*{imagenFile}" id="image" name="imagen" class="form-control bg-dark text-white"
-                               onchange="previewImage(event)">
-                        <img id="preview" src="" alt="Image Preview" style="max-width: 200px; max-height: 200px; display: none;">
+                               th:field="*{imagenFile}" id="image" 
+                               name="imagen" class="form-control bg-dark text-white"
+                               onchange="previewImage(event)"/>
+                        <div class="thumbnail">
+                            <img id="preview" src="" alt="Image Preview" style="display: none;">
+                        </div>
                         <input type="submit" value="Registrar como Proveedor"/>
                     </form>
 
@@ -91,5 +94,7 @@ reader.onload = function() {
 reader.readAsDataURL(event.target.files[0]);
 }
 </script>
+<footer th:replace="@{/fragments/footer} :: footer"></footer>
+
 </body>
 </html>
