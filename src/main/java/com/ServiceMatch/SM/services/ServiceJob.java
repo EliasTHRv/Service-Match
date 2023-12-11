@@ -266,4 +266,9 @@ public class ServiceJob {
         }
     }
 
+    // CENSURA DE COMENTARIOS
+    public void censorComment(String id) {
+        // completar la lógica necesaria
+    }
+
 }

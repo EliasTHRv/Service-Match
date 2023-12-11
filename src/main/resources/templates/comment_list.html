@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!-- Se incorporó el uso de thymeleaf y spring-security -->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<!--Traigo el  Fragmento del head-->
+
+<head th:replace="@{/fragments/head} :: head"></head>
+
+<body id="page-top" class="bg-dark">
+  <nav th:replace="@{/fragments/navbar} :: nav"></nav>
+
+  <main class="container justify-content-center">
+    <div>
+      <h5 class="text-color">Panel de comentarios</h5>
+    </div>
+    <div class="row justify-content-center">
+
+      <div th:replace="@{/fragments/thmsg} :: div"></div>
+
+      <table class="table table-borderless table-hover table-striped table-dark table-limit">
+        <thead class="thead-light">
+          <tr>
+            <!-- <th scope="col">Id</th> -->
+            <th scope="col">Comentario</th>
+            <th scope="col">ID Proveedor</th>
+            <th scope="col">Nombre Proveedor</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <!-- recorro muestro lista comentarios de cada job según provider-->
+        <tbody th:each="job : ${jobs}">
+          <tr class="p-4">
+            <!-- <th th:text="${skill.id}"></th> -->
+            <td th:text="${job.comment}"></td>
+            <td th:text="${job.provider.id}"></td>
+            <td th:text="${job.provider.name}"></td>
+            <td>
+              <a class="btn btn-danger btn-sm" th:href="@{/job/comment/censor/__${job.id}__}"
+                value="Este comentario ha sido censurado por contener lenguaje no apropiado." name="censura">Censurar</a>
+              <!-- <a class="btn btn-secondary btn-sm" th:href="@{/comment/restore/__${comment}__}">Restaurar</a> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Se aplica la paginación -->
+    <div th:replace="fragments/paginacion :: div"></div>
+  </main>
+  <!--Traigo el  Fragmento del footer-->
+  <footer th:replace="@{/fragments/footer} :: footer"></footer>
+  <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

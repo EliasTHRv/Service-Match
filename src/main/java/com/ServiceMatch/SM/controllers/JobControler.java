@@ -176,4 +176,25 @@ public class JobControler {
         }
     }
 
+    // MÉTODO PARA LISTAR COMENTARIOS DE JOBS
+    @GetMapping("/comment/list") // http://localhost:8080/user/list/id
+    public String listComments(Model model) {
+        List<Job> jobs = serviceJob.listJobs();
+        model.addAttribute("jobs", jobs);
+        return "comment_list.html";
+    }
+
+    @GetMapping("/comment/censor/{id}")
+    public String eliminarResenia(@PathVariable String id, ModelMap model) {
+        try {
+            // SERVICE JOB FALTA DEFINIR LA LÓGICA RESTANTE
+            serviceJob.censorComment(id);
+            model.put("exito", "Comentario censurado con exito");
+            return "redirect:/job/comment/list";
+        } catch (Exception e) {
+            model.put("error", e.getMessage());
+            return "redirect:/job/comment/list";
+        }
+    }
+
 }
