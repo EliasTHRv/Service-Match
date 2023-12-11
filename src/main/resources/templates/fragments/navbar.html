@@ -1,5 +1,5 @@
 <!--Imporntante colocar el script de boostrap antes de cerrar el body-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
 
   <div class="container-fluid ">
 
@@ -16,11 +16,11 @@
         <li th:if="${session.usuariosession != null}" sec:authorize="hasRole('ADMINISTRADOR')">
           <a th:href="@{/skill/list}" class="nav-link custom-link fs-5">Servicios</a>
         </li>
-        <li th:if="${session.usuariosession != null}">
+        <li th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('USUARIO', 'PROVEEDOR')">
           <a th:href="@{/user/providers}" class="nav-link custom-link fs-5">Buscar Proveedores</a>
         </li>
         <!-- SI EL USUARIO ESTA LOGUEADO SE MUESTRAN LOS TRABAJOS -->
-        <li class="nav-item" th:if="${session.usuariosession != null}">
+        <li class="nav-item" th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('USUARIO', 'PROVEEDOR')">
           <a th:href="@{'/job/list/provider/'+${session.usuariosession.id}}" name="id" class="nav-link custom-link fs-5">Trabajos</a>
         </li>
         <!-- SI EL USUARIO ESTA LOGUEADO Y ES UN ADMIN SE MUESTRAN LOS USUARIOS -->
