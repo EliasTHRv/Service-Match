@@ -1,5 +1,5 @@
 <!--Imporntante colocar el script de boostrap antes de cerrar el body-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
   <div class="container-fluid ">
 
@@ -38,12 +38,12 @@
         <!-- SI EL USUARIO ESTÁ LOGUEADO PUEDE EDITAR SU PERFIL Y CERRAR SESIÓN -->
         <li class="nav-item dropdown" th:if="${session.usuariosession != null}">
           <a class="nav-link dropdown-toggle nav-link custom-link fs-5" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Perfil </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Editar Perfil</a></li>
+          <ul class="dropdown-menu bg-dark text-light ">
+            <li><a class="dropdown-item text-light custom-dropdown-hover" href="#">Editar Perfil</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" th:href="@{/logout}">Cerrar Sesión</a></li>
+            <li><a class="dropdown-item text-light custom-dropdown-hover" th:href="@{/logout}">Cerrar Sesión</a></li>
           </ul>
         </li>
         <!-- SI EL USUARIO  NO ESTÁ LOGUEADO PUEDE REGISTRARSE -->

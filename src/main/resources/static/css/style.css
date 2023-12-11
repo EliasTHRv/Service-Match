@@ -114,6 +114,9 @@ select::placeholder {
     width: 15rem;
 }
 
+.custom-dropdown-hover:hover {
+    background-color: #343a40 !important;
+}
 
 
 .b-paginacion {
