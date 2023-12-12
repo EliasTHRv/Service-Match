@@ -23,12 +23,13 @@
                     </div>
                     <div class="form-group text-center pt-0 mb-5">
                         <h1 class="text-white fs-1">INGRESO</h1>
+                        <div th:replace="@{/fragments/thmsg} :: div"></div>
                     </div>
                     <div class="form-group mx-sm-4 pt-2">
-                        <input type="email" name="email" class="form-control text-white bg-dark fw-semibold" placeholder="Email" autocomplete="off">
+                        <input required="true" type="email" name="email" class="form-control text-white bg-dark fw-semibold" placeholder="Email" autocomplete="off">
                     </div>
                     <div class="form-group mx-sm-4 pt-3">
-                        <input type="password" name="password" class="form-control text-white bg-dark fw-semibold"
+                        <input required="true" type="password" name="password" class="form-control text-white bg-dark fw-semibold"
                             placeholder="Password" autocomplete="off">
                     </div>
                     <div class="form-group mx-sm-4 text-rigth pt-4 text-center">

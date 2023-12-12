@@ -1,6 +1,7 @@
 package com.ServiceMatch.SM.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +17,9 @@ public class PortalController {
     }
 
     @GetMapping("/login")
-    public String login(@RequestParam(required = false) String error, ModelMap model) {
+    public String login(@RequestParam(value = "error", required = false) String error, Model model) {
         if (error != null) {
-            model.put("error", "Usuario o Contraseña inválidos");
+            model.addAttribute("error", "Usuario o Contraseña inválidos");
         }
         return "login.html";
     }
