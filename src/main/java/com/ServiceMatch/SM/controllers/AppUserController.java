@@ -23,6 +23,7 @@ import com.ServiceMatch.SM.entities.AppUser;
 import com.ServiceMatch.SM.entities.Job;
 import com.ServiceMatch.SM.entities.Provider;
 import com.ServiceMatch.SM.entities.Skill;
+import com.ServiceMatch.SM.enums.RolEnum;
 import com.ServiceMatch.SM.exceptions.MyException;
 import com.ServiceMatch.SM.services.ServiceJob;
 import com.ServiceMatch.SM.services.ServiceProvider;
@@ -204,17 +205,19 @@ public class AppUserController {
     public String userProfile(@PathVariable Long id, Model model) {
         try {
             AppUser user = serviceUser.getOne(id);
-            if (user.getRol().toString().equals("USUARIO")) {
+            if (user.getRol().equals(RolEnum.USUARIO)) {
                 return "client_profile.html";
             }
-            if (user.getRol().toString().equals("PROVEEDOR")) {
+            if (user.getRol().equals(RolEnum.PROVEEDOR)) {
                 return "provider_profile.html";
+            } else {
+                return "index.html";
             }
+
         } catch (Exception ex) {
             model.addAttribute("error", ex.getMessage());
-            // return "index.html";
+            return "index.html";
         }
-        return "client_profile.html";
     }
 
     // MÉTODO PARA EDITAR PERFIL CLIENTE
