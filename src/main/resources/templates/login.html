@@ -4,40 +4,37 @@
 
 <head th:replace="@{/fragments/head} :: head"></head>
 
-<nav>
-    <li class="btn text-white btn-lg mt-2"><a th:href="@{/}" class="nav-link custom-link fs-5">Inicio</a></li>
-</nav>
-
 <body class="d-flex flex-column min-vh-100 bodyLogin">
     <nav th:replace="@{/fragments/navbar} :: nav"></nav>
-    <main class="container">
+    <main class="container">   
         <div class="row justify-content-center pt-3 mt-3 m-1">
-            <div class="col-10 col-md-8 col-sm-11 col-xl-5 col-lg-6 bg-color">
+            <div class="col-10 col-md-8 col-sm-11 col-xl-5 col-lg-6 bg-color">                
                 <form class="formularioLogin" th:action="@{/logincheck}" method="POST">
                     <div class="form-group text-center mb-2">
                         <a class="logo-color fs-4 text-decoration-none">
                             <span class="text-color">Match</span>
-                            <img src="images/alicates.png" alt="" class="icono" width="30em">
+                            <img th:src="@{../img/alicates.png}" alt="" class="icono" width="30em">
                             Service
                         </a>
                     </div>
                     <div class="form-group text-center pt-0 mb-5">
-                        <h1 class="text-white fs-1">INGRESO</h1>
+                        <h5 class="text-white fs-1">INGRESO</h5>                       
                     </div>
                     <div class="form-group mx-sm-4 pt-2">
-                        <input type="email" name="email" class="form-control text-white bg-dark fw-semibold" placeholder="Email" autocomplete="off">
+                        <input required="true" type="email" name="email" class="form-control text-white bg-dark fw-semibold" placeholder="Email" autocomplete="off">
                     </div>
                     <div class="form-group mx-sm-4 pt-3">
-                        <input type="password" name="password" class="form-control text-white bg-dark fw-semibold"
-                            placeholder="Password" autocomplete="off">
-                    </div>
+                        <input required="true" type="password" name="password" class="form-control text-white bg-dark fw-semibold"
+                            placeholder="Contraseña" autocomplete="off">
+                    </div>                   
                     <div class="form-group mx-sm-4 text-rigth pt-4 text-center">
                         <button id="enviarLogeo" name="enviarLogeo" class="btn btnOrigin text-white btn-lg mt-2"
                             type="submit">
                             Ingresar
                         </button>
                     </div>
-                </form>
+                    <div class="form-group mx-sm-2  pt-5" th:replace="@{/fragments/thmsg} :: div"></div>
+                </form> 
             </div>
         </div>
     </main>

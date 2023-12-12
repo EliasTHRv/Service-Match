@@ -3,7 +3,7 @@
 
   <div class="container-fluid ">
 
-    <a th:href="@{/}" class="navbar-brand logo-color fs-4"> <span class="text-color">Match</span> <img th:src="@{../../img/alicates.png}" alt="" class="icono"
+    <a th:href="@{/}" class="navbar-brand logo-color fs-4"> <span class="text-color">Match</span> <img th:src="@{/img/alicates.png}" alt="" class="icono"
         width="30em" th:href="@{/}"> Service </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarS" aria-controls="navbarS" aria-expanded="false"
       aria-label="Toggle navigation">
@@ -39,9 +39,10 @@
         <li class="nav-item dropdown" th:if="${session.usuariosession != null}">
           <a class="nav-link dropdown-toggle nav-link custom-link fs-5" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Perfil </a>
           <ul class="dropdown-menu bg-dark text-light ">
-            <li><a class="dropdown-item text-light custom-dropdown-hover" href="#">Editar Perfil</a></li>
+            <li><a class="dropdown-item text-light custom-dropdown-hover" sec:authorize="hasAnyRole('USUARIO', 'PROVEEDOR')"
+                th:href="@{'/user/editprofile/'+${session.usuariosession.id}}">Editar Perfil</a></li>
             <li>
-              <hr class="dropdown-divider">
+              <hr class=" dropdown-divider">
             </li>
             <li><a class="dropdown-item text-light custom-dropdown-hover" th:href="@{/logout}">Cerrar Sesión</a></li>
           </ul>

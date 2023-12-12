@@ -3,7 +3,7 @@
 
 <head th:replace="@{/fragments/head} :: head"></head>
 
-<body class="bodyRegister">
+<body class="bodyLogin">
     <nav>
         <li class="btn text-white btn-lg mt-2"><a th:href="@{/}" class="nav-link custom-link fs-5">Inicio</a></li>
     </nav>
@@ -15,7 +15,7 @@
                     <div class="form-group text-center mb-2">
                         <a class="logo-color fs-4 text-decoration-none">
                             <span class="text-color">Match</span>
-                            <img src="images/alicates.png" alt="" class="icono" width="30em">
+                            <img th:src="@{../img/alicates.png}" alt="" class="icono" width="30em">
                             Service
                         </a>
                     </div>

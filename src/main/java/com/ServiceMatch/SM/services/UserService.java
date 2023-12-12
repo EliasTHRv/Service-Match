@@ -34,21 +34,27 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void registrar(String name, String email, String password, String password2) throws MyException {
-
         validar(name, email, password, password2);
-
         AppUser appUser = new AppUser();
-
         appUser.setName(name);
-
         appUser.setEmail(email);
-
         appUser.setPassword(new BCryptPasswordEncoder().encode(password));
-
         appUser.setRol(RolEnum.USUARIO);
-
         userRepository.save(appUser);
+    }
 
+    // método para editar el perfil del cliente
+    @Transactional
+    public void editClient(Long id, String name, String password, String password2) throws MyException {
+        validarEdit(name, password, password2);
+        Optional<AppUser> result = userRepository.findById(id);
+        AppUser client = new AppUser();
+        if (result.isPresent()) {
+            client = result.get();
+            client.setName(name);
+            client.setPassword(new BCryptPasswordEncoder().encode(password));
+            userRepository.save(client);
+        }
     }
 
     public List<AppUser> getUsers() {
@@ -164,6 +170,19 @@ public class UserService implements UserDetailsService {
 
         }
 
+    }
+
+    private void validarEdit(String name, String password, String password2)
+            throws MyException {
+        if (name == null || name.isEmpty()) {
+            throw new MyException("El nombre no puede ser nulo o estar vacio");
+        }
+        if (password == null || password.isEmpty() || password.length() <= 5) {
+            throw new MyException("La contraseña no puede estar vacía, y debe tener mas de 5 digitos");
+        }
+        if (!password2.equals(password)) {
+            throw new MyException("Las contraseñas ingresadas no coinciden");
+        }
     }
 
 }
