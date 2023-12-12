@@ -23,6 +23,7 @@ import com.ServiceMatch.SM.entities.AppUser;
 import com.ServiceMatch.SM.entities.Job;
 import com.ServiceMatch.SM.entities.Provider;
 import com.ServiceMatch.SM.entities.Skill;
+import com.ServiceMatch.SM.enums.RolEnum;
 import com.ServiceMatch.SM.exceptions.MyException;
 import com.ServiceMatch.SM.services.ServiceJob;
 import com.ServiceMatch.SM.services.ServiceProvider;
@@ -198,11 +199,28 @@ public class AppUserController {
         }
     }
 
-    @GetMapping("/client/editprofile/{id}")
-    public String clientProfile(@PathVariable Long id) {
-        return "client_profile.html";
+    // MÉTODO PARA DEVOLVER VISTA EDITAR PERFIL TANTO PARA CLIENTE COMO PARA
+    // PROVEEDOR
+    @GetMapping("/editprofile/{id}")
+    public String userProfile(@PathVariable Long id, Model model) {
+        try {
+            AppUser user = serviceUser.getOne(id);
+            if (user.getRol().equals(RolEnum.USUARIO)) {
+                return "client_profile.html";
+            }
+            if (user.getRol().equals(RolEnum.PROVEEDOR)) {
+                return "provider_profile.html";
+            } else {
+                return "index.html";
+            }
+
+        } catch (Exception ex) {
+            model.addAttribute("error", ex.getMessage());
+            return "index.html";
+        }
     }
 
+    // MÉTODO PARA EDITAR PERFIL CLIENTE
     @PostMapping("/client/editprofile/{id}")
     public String clientProfile(@PathVariable Long id, @RequestParam String name, @RequestParam String password,
             @RequestParam String password2, Model model) {
