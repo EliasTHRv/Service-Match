@@ -1,15 +1,11 @@
 package com.ServiceMatch.SM.services;
 
-import com.ServiceMatch.SM.entities.Image;
-import com.ServiceMatch.SM.entities.Provider;
-import com.ServiceMatch.SM.entities.Skill;
-import com.ServiceMatch.SM.enums.RolEnum;
-import com.ServiceMatch.SM.exceptions.MyException;
-import com.ServiceMatch.SM.repository.ProviderRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +19,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ServiceMatch.SM.entities.Image;
+import com.ServiceMatch.SM.entities.Provider;
+import com.ServiceMatch.SM.entities.Skill;
+import com.ServiceMatch.SM.enums.RolEnum;
+import com.ServiceMatch.SM.exceptions.MyException;
+import com.ServiceMatch.SM.repository.ProviderRepository;
+
 @Service
 public class ServiceProvider implements UserDetailsService {
 
@@ -32,9 +35,9 @@ public class ServiceProvider implements UserDetailsService {
     @Autowired
     private ServiceImage serviceImage;
 
-
     @Transactional
-    public void registrar(MultipartFile archivo, String name, String email, String password, String password2, Long whatsapp, List<Skill>skills)
+    public void registrar(MultipartFile archivo, String name, String email, String password, String password2,
+            Long whatsapp, List<Skill> skills)
             throws MyException {
 
         validar(name, email, password, password2, whatsapp, skills);
@@ -50,7 +53,7 @@ public class ServiceProvider implements UserDetailsService {
         provider.setSkills(skills);
 
         provider.setRol(RolEnum.PROVEEDOR);
-        Image imagen= serviceImage.guardarImagen(archivo);
+        Image imagen = serviceImage.guardarImagen(archivo);
         provider.setImagen(imagen);
         providerRepository.save(provider);
     }
@@ -80,11 +83,11 @@ public class ServiceProvider implements UserDetailsService {
         if (result.isPresent()) {
             provider = result.get();
             provider.setName(name);
-            Long idImagen=null;
-            if(provider.getImagen() !=null){
-                idImagen=provider.getImagen().getId();
+            Long idImagen = null;
+            if (provider.getImagen() != null) {
+                idImagen = provider.getImagen().getId();
             }
-            Image imagen=serviceImage.actualizar(archivo, idImagen);
+            Image imagen = serviceImage.actualizar(archivo, idImagen);
             provider.setImagen(imagen);
             providerRepository.save(provider);
         }
@@ -95,7 +98,30 @@ public class ServiceProvider implements UserDetailsService {
         return providerRepository.findAll(pageable);
     }
 
-    private void validar(String name, String email, String password, String password2, Long whatsapp, List<Skill> skills)
+    @Override
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+        Provider provider = providerRepository.findByName(name);
+
+        if (provider != null) {
+            List<GrantedAuthority> permissions = new ArrayList<>();
+
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE " + provider.getRol().toString());
+
+            permissions.add(p);
+            return new User(provider.getEmail(), provider.getPassword(), permissions);
+
+        } else {
+            return null;
+        }
+
+    }
+
+    public List<Provider> loadUserByRol(RolEnum rol) {
+        return providerRepository.findByRol(rol);
+    }
+
+    private void validar(String name, String email, String password, String password2, Long whatsapp,
+            List<Skill> skills)
             throws MyException {
 
         if (name == null || name.isEmpty()) {
@@ -121,36 +147,11 @@ public class ServiceProvider implements UserDetailsService {
         if (skills.isEmpty()) {
             throw new MyException("La lista Oficio no puede ser nula.");
         }
-        
+
+    }
+    
+     public Provider getOne(Long id) {
+        return providerRepository.findById(id).get();
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        Provider provider = providerRepository.findByName(name);
-
-        if (provider != null) {
-            List<GrantedAuthority> permissions = new ArrayList<>();
-
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE " + provider.getRol().toString());
-
-            permissions.add(p);
-            return new User(provider.getEmail(), provider.getPassword(), permissions);
-
-        } else {
-            return null;
-        }
-
 }
-    
-      public List<Provider> loadUserByRol(RolEnum rol) {
-    return providerRepository.findByRol(rol);
-}
-
-
-}
-
-
-
-
-
-

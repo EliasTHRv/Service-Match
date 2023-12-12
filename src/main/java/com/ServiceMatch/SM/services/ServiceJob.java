@@ -215,6 +215,17 @@ public class ServiceJob {
         }
 
     }
+    
+     public List<Job> listJobByProvider(Long idProvider){
+        
+        List<Job> jobs= new ArrayList<>();
+        
+        
+        jobs= providerRepository.findByProvider(idProvider);
+        
+        
+        return jobs;
+    }
 
     public void validate(Double cost, String description, Long idSkill, Long idUser, Long idProvider)
             throws MyException {
@@ -263,6 +274,18 @@ public class ServiceJob {
         }
         if (cost == null || cost < 0) {
             throw new MyException("El costo debe ser un número positivo");
+        }
+    }
+
+    // CENSURA DE COMENTARIOS
+    public void censorComment(Long id) {
+        // completar la lógica necesaria
+        Optional<Job> result = jobRepository.findById(id);
+        Job job = new Job();
+        if (result.isPresent()) {
+            job = result.get();
+            job.setComment("Este comentario ha sido censurado por contener lenguaje no apropiado");
+            jobRepository.save(job);
         }
     }
 

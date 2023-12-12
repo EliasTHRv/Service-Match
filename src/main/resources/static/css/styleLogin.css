@@ -8,7 +8,7 @@
     list-style: none;
 }
 
-.bodyB {
+.bodyLogin{
     background: linear-gradient(rgba(29, 30, 35, 0.3),
             rgba(29, 30, 35, 0.3)),
         url(/img/derechos-trabajadores-turnos.jpg);
@@ -17,9 +17,10 @@
     background-attachment: fixed;
 }
 
-.formulario {
+
+.formularioLogin{
     padding: 50px;
-    height: 380px;
+    height: 420px;
     position: static;
 }
 

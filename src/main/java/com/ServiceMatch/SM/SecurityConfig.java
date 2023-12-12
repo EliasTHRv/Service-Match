@@ -18,41 +18,46 @@ import com.ServiceMatch.SM.services.UserService;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-        @Autowired
-        private UserService userService;
+    @Autowired
+    private UserService userService;
 
-        @Autowired
-        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-                auth.userDetailsService(userService)
-                                .passwordEncoder(new BCryptPasswordEncoder());
-        }
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService)
+                .passwordEncoder(new BCryptPasswordEncoder());
+    }
 
-        @Bean
-        public BCryptPasswordEncoder passwordEncoder() {
-                return new BCryptPasswordEncoder();
-        }
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-                http
-                                .authorizeRequests(requests -> requests
-                                                .antMatchers("/admin/*").hasRole("ADMINISTRADOR")
-                                                .antMatchers("/css/*", "/js/*", "/img/*", "/**")
-                                                .permitAll())
-                                .formLogin(login -> login
-                                                .loginPage("/login")
-                                                .loginProcessingUrl("/logincheck")
-                                                .usernameParameter("email")
-                                                .passwordParameter("password")
-                                                .defaultSuccessUrl("/")
-                                                .permitAll())
-                                .logout(logout -> logout
-                                                .logoutUrl("/logout")
-                                                .logoutSuccessUrl("/login")
-                                                .permitAll())
-                                .csrf(csrf -> csrf
-                                                .disable());
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests(requests -> requests
+                .antMatchers("/admin/*").hasRole("ADMINISTRADOR")
+                .antMatchers("/css/*", "/js/*", "/img/*", "/**")
+                .permitAll())
+                .formLogin(login -> login
+                .loginPage("/login")
+                .loginProcessingUrl("/logincheck")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/")
+                .failureHandler((request, response, exception) -> {
+                    // Invalidar la sesión en caso de fallo de autenticación
+                    request.getSession().invalidate();
+                    response.sendRedirect("/login?error=true");
+                })
+                .permitAll())
+                .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
+                .permitAll())
+                .csrf(csrf -> csrf
+                .disable());
 
-        }
+    }
 
 }
