@@ -343,7 +343,11 @@ a.link-colors:hover {
 }
 
 
-
+.formularioRegisterPrincipal {
+    padding: 50px;
+    height: 550px;
+    position: static;
+}
 
 
 
