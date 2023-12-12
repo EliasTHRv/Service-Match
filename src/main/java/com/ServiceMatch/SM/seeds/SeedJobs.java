@@ -1,11 +1,7 @@
 package com.ServiceMatch.SM.seeds;
 
-import com.ServiceMatch.SM.entities.AppUser;
 import com.ServiceMatch.SM.entities.Job;
-import com.ServiceMatch.SM.entities.Provider;
-import com.ServiceMatch.SM.entities.Skill;
 import com.ServiceMatch.SM.enums.JobStatusEnum;
-import com.ServiceMatch.SM.enums.RolEnum;
 import com.ServiceMatch.SM.repository.JobRepository;
 import com.ServiceMatch.SM.repository.ProviderRepository;
 import com.ServiceMatch.SM.repository.SkillRepository;
@@ -13,13 +9,10 @@ import com.ServiceMatch.SM.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Component
 public class SeedJobs implements ApplicationRunner {
