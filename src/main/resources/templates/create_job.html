@@ -20,14 +20,16 @@
           </a>
         </div>
 
-        <form class="" action="/job/crearJobPrueba" method="POST" enctype="multipart/form-data">
+        <form class="" action="/job/createJob" method="POST" enctype="multipart/form-data">
           <div class="form-group text-center pt-2">
-            <h4 class="text-white">SOLICITAR TRABAJO</h4>
+            <h4 class="text-white">SOLICITUD DE TRABAJO </h4>
           </div>
           <!-- manejo mensaje de errores -->
           <div th:replace="@{/fragments/thmsg} :: div"></div>
 
           <!-- DESCRIPCION SI ES USUARIO PUEDE CARGARLA - SI ES PROVEEDOR PUEDE VERLA -->
+          
+          
           <div class="form-group mx-sm-4 pt-3 mb-2">
             <!-- <label class="mb-2">Descripcion</label> -->
             <label for="description" class="text-color mb-1 fw-semibold ps-1">Descripción:</label>
@@ -37,15 +39,15 @@
 
           <!--Double cost, String description, Long idSkill, Long idUser, Long idProvider-->
           <!-- ESTO IRÍA EL A VISTA DEL PROVEEDOR -->
-          <div class="form-group mx-sm-4 text-rigth pt-4 text-center"> -->
-            <label class="mb-2">Costo</label>
+          <div class="form-group mx-sm-4 pt-3 mb-2"> 
+              <label class="text-color mb-1 fw-semibold ps-1"  >Precio presupuestado </label>
             <input type="number" class="form-control bg-dark  text-white" name="cost" placeholder="Costo ponderado" required="true">
           </div>
 
           <div class="form-group mx-sm-4 pt-2 text-white">
             <label for="description" class="text-color mb-1 fw-semibold ps-1">Servicio requerido:</label>
             <select name="idSkill" required="true" class="form-control bg-dark text-white" placeholder="Seleccionar servicio que se requiere">
-              <option value="" disabled selected>Sleccionar servicio que se requiere</option>
+              <option value="" disabled selected>Seleccionar servicio que se requiere</option>
               <option th:each="skill : ${skills}" th:if="${skill.active}" th:value="${skill.id}" th:text="${skill.name}"></option>
             </select>
           </div>

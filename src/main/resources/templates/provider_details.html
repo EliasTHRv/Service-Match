@@ -32,7 +32,8 @@
 
                                 <p class="font-weight-bold">
                                     <h5> Calificación: </h5>
-                                   <span th:text="${averageCalification}" style="font-weight: normal;"></span>
+                                    <!--CAMBIOS PARA QUE MUESTRE SOLO DOS DECIMALES--> 
+                                   <span th:text="${formattedAverageCalification}" style="font-weight: normal;"></span>
                                 </p>
 
                                 <form th:action="@{/job/crearJobPrueba/{id}(id=${provider.id})}" method="post"

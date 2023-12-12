@@ -182,12 +182,17 @@ public String providerDetails(@PathVariable Long id, ModelMap model) {
         totalCalification += callification;
     }
 }
+       
         double averageCalification = jobs.isEmpty() ? 0.0 : totalCalification / jobs.size();
+        
+        String formattedAverageCalification = String.format("%.2f", averageCalification);
 
         model.addAttribute("provider", provider);
         model.addAttribute("providerName", jobs.isEmpty() ? "" : jobs.get(0).getProvider().getName());
         model.addAttribute("comments", jobs.stream().map(Job::getComment).collect(Collectors.toList()));
-        model.addAttribute("averageCalification", averageCalification);
+  
+        //CAMBIOS PARA QUE MUESTRE SOLO DOS DECIMALES 
+        model.addAttribute("formattedAverageCalification", formattedAverageCalification );
 
         return "provider_details";
     } catch (EntityNotFoundException e) {
