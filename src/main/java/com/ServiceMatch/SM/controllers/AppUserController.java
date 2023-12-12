@@ -51,7 +51,6 @@ public class AppUserController {
         // Se guarda la lista de usuarios en "users" en formato de página (10 por
         // página)
         Page<AppUser> users = serviceUser.getPageOfUsers(page, 10);
-        AppUser p = new AppUser();
         // Se inyectan al modelo todos los usuarios "userList"
         model.addAttribute("userList", users.getContent());
         // Se agrega información de paginación al modelo

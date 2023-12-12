@@ -23,7 +23,6 @@ import com.ServiceMatch.SM.services.ServiceJob;
 import com.ServiceMatch.SM.services.ServiceProvider;
 import com.ServiceMatch.SM.services.ServiceSkill;
 import com.ServiceMatch.SM.services.UserService;
-import static org.hibernate.criterion.Projections.id;
 
 @Controller
 @RequestMapping("/job")
