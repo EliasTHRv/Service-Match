@@ -2,6 +2,9 @@ package com.ServiceMatch.SM.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,8 +28,6 @@ import com.ServiceMatch.SM.services.ServiceJob;
 import com.ServiceMatch.SM.services.ServiceProvider;
 import com.ServiceMatch.SM.services.ServiceSkill;
 import com.ServiceMatch.SM.services.UserService;
-import java.util.stream.Collectors;
-import javax.persistence.EntityNotFoundException;
 
 @Controller
 @RequestMapping("/user")
@@ -39,7 +40,7 @@ public class AppUserController {
 
     @Autowired
     UserService serviceUser;
-    
+
     @Autowired
     ServiceJob serviceJob;
 
@@ -167,35 +168,53 @@ public class AppUserController {
         return "redirect:/user/providers";
 
     }
-    
+
     @GetMapping("providers/details/{id}")
-public String providerDetails(@PathVariable Long id, ModelMap model) {
-    try {
-        List<Job> jobs = serviceJob.listJobByProvider(id);
-        AppUser provider = serviceUser.getOne(id);
+    public String providerDetails(@PathVariable Long id, ModelMap model) {
+        try {
+            List<Job> jobs = serviceJob.listJobByProvider(id);
+            AppUser provider = serviceUser.getOne(id);
 
-        double totalCalification = 0.0;
+            double totalCalification = 0.0;
 
-       for (Job job : jobs) {
-    Long callification = job.getCallification();
-    if (callification != null) {
-        totalCalification += callification;
+            for (Job job : jobs) {
+                Long callification = job.getCallification();
+                if (callification != null) {
+                    totalCalification += callification;
+                }
+            }
+            double averageCalification = jobs.isEmpty() ? 0.0 : totalCalification / jobs.size();
+
+            model.addAttribute("provider", provider);
+            model.addAttribute("providerName", jobs.isEmpty() ? "" : jobs.get(0).getProvider().getName());
+            model.addAttribute("comments", jobs.stream().map(Job::getComment).collect(Collectors.toList()));
+            model.addAttribute("averageCalification", averageCalification);
+
+            return "provider_details";
+        } catch (EntityNotFoundException e) {
+            // Manejar la excepción cuando el proveedor no se encuentra
+            model.addAttribute("error", "Proveedor no encontrado");
+            return "redirect:/user/providers"; // Puedes crear una plantilla de error personalizada
+        }
     }
-}
-        double averageCalification = jobs.isEmpty() ? 0.0 : totalCalification / jobs.size();
 
-        model.addAttribute("provider", provider);
-        model.addAttribute("providerName", jobs.isEmpty() ? "" : jobs.get(0).getProvider().getName());
-        model.addAttribute("comments", jobs.stream().map(Job::getComment).collect(Collectors.toList()));
-        model.addAttribute("averageCalification", averageCalification);
-
-        return "provider_details";
-    } catch (EntityNotFoundException e) {
-        // Manejar la excepción cuando el proveedor no se encuentra
-        model.addAttribute("error", "Proveedor no encontrado");
-        return "redirect:/user/providers";  // Puedes crear una plantilla de error personalizada
+    @GetMapping("/client/editprofile/{id}")
+    public String clientProfile(@PathVariable Long id) {
+        return "client_profile.html";
     }
-}
+
+    @PostMapping("/client/editprofile/{id}")
+    public String clientProfile(@PathVariable Long id, @RequestParam String name, @RequestParam String password,
+            @RequestParam String password2, Model model) {
+        try {
+            serviceUser.editClient(id, name, password, password2);
+            model.addAttribute("message", "User '" + name + "' edit successfully");
+        } catch (MyException ex) {
+            model.addAttribute("error", ex.getMessage());
+            return "index.html";
+        }
+        return "redirect:/";
+    }
 
     // METODO DE PRUEBA
     // @GetMapping("/provider/{id}")
@@ -204,7 +223,5 @@ public String providerDetails(@PathVariable Long id, ModelMap model) {
     // model.addAttribute("provider", provider);
     // return "provider_vistaprueba.html";
     // }
-    
-    
-    
+
 }
