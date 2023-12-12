@@ -198,11 +198,26 @@ public class AppUserController {
         }
     }
 
-    @GetMapping("/client/editprofile/{id}")
-    public String clientProfile(@PathVariable Long id) {
+    // MÉTODO PARA DEVOLVER VISTA EDITAR PERFIL TANTO PARA CLIENTE COMO PARA
+    // PROVEEDOR
+    @GetMapping("/editprofile/{id}")
+    public String userProfile(@PathVariable Long id, Model model) {
+        try {
+            AppUser user = serviceUser.getOne(id);
+            if (user.getRol().toString().equals("USUARIO")) {
+                return "client_profile.html";
+            }
+            if (user.getRol().toString().equals("PROVEEDOR")) {
+                return "provider_profile.html";
+            }
+        } catch (Exception ex) {
+            model.addAttribute("error", ex.getMessage());
+            // return "index.html";
+        }
         return "client_profile.html";
     }
 
+    // MÉTODO PARA EDITAR PERFIL CLIENTE
     @PostMapping("/client/editprofile/{id}")
     public String clientProfile(@PathVariable Long id, @RequestParam String name, @RequestParam String password,
             @RequestParam String password2, Model model) {
