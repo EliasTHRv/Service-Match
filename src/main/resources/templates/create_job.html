@@ -6,7 +6,6 @@
 
 
 <body class="d-flex flex-column min-vh-100 bodyCreateJob mb-5">
-
   <nav th:replace="@{/fragments/navbar} :: nav"></nav>
 
   <main class="container flex-grow-1 mb-4">
@@ -28,43 +27,34 @@
           <div th:replace="@{/fragments/thmsg} :: div"></div>
 
           <!-- DESCRIPCION SI ES USUARIO PUEDE CARGARLA - SI ES PROVEEDOR PUEDE VERLA -->
-          <div class="form-group mx-sm-4 pt-3 mb-2">
-            <!-- <label class="mb-2">Descripcion</label> -->
+          <div class="form-group mx-sm-4 pt-3 mb-2" sec:authorize="hasRole('USUARIO')">
             <label for="description" class="text-color mb-1 fw-semibold ps-1">Descripción:</label>
-            <textarea class="form-control bg-dark text-white" type="text" name="description" placeholder="Cargue una breve descripcion del trabajo que solicita"
-              required="true" sec:authorize="hasRole('USUARIO')" rows="5"></textarea>
+            <textarea class="form-control bg-dark text-white" type="text" name="description" placeholder="Cargue una breve descripcion del trabajo que solicita" required="true" rows="5"></textarea>
           </div>
 
-          <!--Double cost, String description, Long idSkill, Long idUser, Long idProvider-->
           <!-- ESTO IRÍA EL A VISTA DEL PROVEEDOR -->
-          <div class="form-group mx-sm-4 text-rigth pt-4 text-center"> -->
-            <label class="mb-2">Costo</label>
-            <input type="number" class="form-control bg-dark  text-white" name="cost" placeholder="Costo ponderado" required="true">
+          <div class="form-group mx-sm-4 text-rigth pt-4 text-center">
+            <label class="mb-2 text-color fw-semibold">Costo</label>
+            <input type="number" class="form-control bg-dark text-white" name="cost" placeholder="Costo ponderado" required="true">
           </div>
 
           <div class="form-group mx-sm-4 pt-2 text-white">
             <label for="description" class="text-color mb-1 fw-semibold ps-1">Servicio requerido:</label>
             <select name="idSkill" required="true" class="form-control bg-dark text-white" placeholder="Seleccionar servicio que se requiere">
-              <option value="" disabled selected>Sleccionar servicio que se requiere</option>
+              <option value="" disabled selected>Seleccionar servicio que se requiere</option>
               <option th:each="skill : ${skills}" th:if="${skill.active}" th:value="${skill.id}" th:text="${skill.name}"></option>
             </select>
           </div>
 
           <!-- CLIENTE: SE APLICA EL CLIENTE LOGUEADO en modo hidden -->
-          <input class="form-control" type="text" id="cliente" name="cliente" th:value="${session.usuariosession.id}" hidden>
-          <!-- <div class="form-group mx-sm-4 text-white pt-4 fw-semibold text-center">
-            <select name="idUser" required="true" class="form-control mb-2 bg-dark text-white">
-              <option value="" disabled selected>Seleccionar Cliente</option>
-              <option th:each="appUser : ${appUsers}" th:value="${appUser.id}" th:text="${appUser.name}" />
-            </select>
-          </div> -->
+          <input class="form-control" type="hidden" id="cliente" name="cliente" th:value="${session.usuariosession.id}">
 
-          <!-- POVEEDOR debería enviarse como el cliente-->
+          <!-- POVEEDOR debería enviarse como el cliente -->
           <div class="form-group mx-sm-4 pt-1 text-white">
             <label for="description" class="text-color mb-1 fw-semibold ps-1">Proveedor:</label>
             <select name="idProvider" required="true" class="form-control mb-4 bg-dark text-white">
               <option value="" disabled selected>Seleccionar Proveedor</option>
-              <option th:each="provider : ${providers}" th:value="${provider.id}" th:text="${provider.name}" />
+              <option th:each="provider : ${providers}" th:value="${provider.id}" th:text="${provider.name}"></option>
             </select>
           </div>
 
@@ -79,7 +69,6 @@
 
   <footer th:replace="@{/fragments/footer} :: footer"></footer>
 </body>
-
 <!-- <body>
         <nav th:replace="@{/fragments/navbar} :: nav"></nav>
 
