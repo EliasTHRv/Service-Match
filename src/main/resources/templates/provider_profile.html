@@ -6,20 +6,20 @@
 
 <body class="d-flex flex-column min-vh-100 bodyEditarPerfilProvider">
   <nav th:replace="@{/fragments/navbar} :: nav"></nav>
-  <main class="container pt-5">
+  <main class="container pt-5 mb-5">
     <div class="row justify-content-center pt-3 mt-3 m-1">
-      <div class="col-10 col-md-8 col-sm-11 col-xl-5 col-lg-6 formularioEditarPerfilProvider bg-color scroll-container">
+      <div class="col-10 col-md-8 col-sm-11 col-xl-5 col-lg-6 formularioEditarPerfilProvider bg-color">
         <form id="editarForm" th:action="@{/logincheck}" method="POST">
           <div class="form-group text-center mb-0">
             <a class="logo-color fs-3 text-decoration-none">
               <span class="text-color">Match</span>
-              <img src="images/alicates.png" alt="" class="icono" width="20rem">
+              <img th:src="@{/img/alicates.png}" alt="" class="icono" width="20rem">
               Service
             </a>
           </div>
           <div class="form-group text-center pt-2 mb-5">
             <h2 class="text-white fs-2">Editar Perfil</h2>
-            <h1 class="text-white fs-1">PROVAIDER</h1>
+            <h1 class="text-white fs-1">PROVEEDOR</h1>
           </div>
           <div class="form-group mb-5">
             <label for="nombreNuevo" class="form-label text-white fw-semibold">Nombre:</label>
