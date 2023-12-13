@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap');
 
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -232,7 +242,7 @@ a.link-colors:hover {
 .bodyRegistrarOficio {
     background: linear-gradient(rgba(29, 30, 35, 0.6),
             rgba(29, 30, 35, 0.6)),
-        url(images/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
+        url(/img/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
     background-position: top center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -266,7 +276,7 @@ a.link-colors:hover {
 .bodyActualizarOficio {
     background: linear-gradient(rgba(29, 30, 35, 0.6),
             rgba(29, 30, 35, 0.6)),
-        url(images/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
+        url(/img/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
     background-position: top center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -286,7 +296,7 @@ a.link-colors:hover {
 .bodyActualizarNombreUsuario {
     background: linear-gradient(rgba(29, 30, 35, 0.6),
             rgba(29, 30, 35, 0.6)),
-        url(images/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
+        url(/img/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
     background-position: top center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -305,7 +315,7 @@ a.link-colors:hover {
 .bodyRegister {
     background: linear-gradient(rgba(29, 30, 35, 0.6),
             rgba(29, 30, 35, 0.6)),
-        url(images/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
+        url(/img/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
     background-position: top center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -344,7 +354,7 @@ a.link-colors:hover {
 .bodyEditarPerfilProvider {
     background: linear-gradient(rgba(29, 30, 35, 0.2),
             rgba(29, 30, 35, 0.2)),
-        url(images/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
+        url(/img/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
     background-repeat: no-repeat;
     background-size: cover;
 
@@ -358,4 +368,8 @@ a.link-colors:hover {
 .scroll-container {
     max-height: 640px;
     overflow-y: auto;
+}
+
+.footerAbsolute{
+    position: absolute;
 }
