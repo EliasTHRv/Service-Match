@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!-- Se incorporó el uso de thymeleaf y spring-security -->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+
+<head th:replace="@{/fragments/head} :: head"></head>
+
+<body class="d-flex flex-column min-vh-100 bodyEditarPerfilProvider">
+  <nav th:replace="@{/fragments/navbar} :: nav"></nav>
+  <main class="container pt-5">
+    <div class="row justify-content-center pt-3 mt-3 m-1">
+      <div class="col-10 col-md-8 col-sm-11 col-xl-5 col-lg-6 formularioEditarPerfilProvider bg-color scroll-container">
+        <form id="editarForm" th:action="@{/logincheck}" method="POST">
+          <div class="form-group text-center mb-0">
+            <a class="logo-color fs-3 text-decoration-none">
+              <span class="text-color">Match</span>
+              <img src="images/alicates.png" alt="" class="icono" width="20rem">
+              Service
+            </a>
+          </div>
+          <div class="form-group text-center pt-2 mb-5">
+            <h2 class="text-white fs-2">Editar Perfil</h2>
+            <h1 class="text-white fs-1">PROVAIDER</h1>
+          </div>
+          <div class="form-group mb-5">
+            <label for="nombreNuevo" class="form-label text-white fw-semibold">Nombre:</label>
+            <input class="form-control bg-dark text-white fw-semibold" type="text" id="nombreNuevo" name="nombreNuevo" value="" required autocomplete="off">
+            <small class="form-text text-white">Ingrese el nombre que desea.</small>
+          </div>
+
+          <div class="form-group mb-5">
+            <label for="apellidoNuevo" class="form-label text-white fw-semibold">Apellido:</label>
+            <input class="form-control bg-dark text-white fw-semibold" type="text" id="apellidoNuevo" name="apellidoNuevo" value="" required autocomplete="off">
+            <small class="form-text text-white">Ingrese el apellido que desea.</small>
+          </div>
+
+          <div class="form-group mb-5">
+            <label for="contrasenaNueva" class="form-label text-white fw-semibold">Contraseña:</label>
+            <input class="form-control bg-dark text-white fw-semibold" type="password" id="contrasenaNueva" name="contrasenaNueva" required autocomplete="off">
+            <small class="form-text text-white">Ingrese la contraseña que desea.</small>
+          </div>
+
+          <div class="form-group mb-5">
+            <label for="emailNuevo" class="form-label text-white fw-semibold">Email:</label>
+            <input class="form-control bg-dark text-white fw-semibold" type="email" id="emailNuevo" name="emailNuevo" value="" required autocomplete="off">
+            <small class="form-text text-white">Ingrese el email que desea.</small>
+          </div>
+
+
+          <div class="form-group">
+            <label for="fotoPerfilNueva" class="form-label text-white">Foto de perfil:</label>
+            <input type="file" class="form-control bg-dark text-white" id="fotoPerfilNueva" name="fotoPerfilNueva">
+            <small class="form-text text-white">Ingrese la foto de perfil que desea.</small>
+          </div>
+
+          <div class="form-group mx-sm-4 text-rigth pt-4 text-center">
+            <button id="enviarLogeo" name="enviarLogeo" class="btn btnOrigin text-white btn-lg mt-3 mb-4" type="submit">
+              Actualizar Perfil
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer th:replace="@{/fragments/footer} :: footer"></footer>
+</body>

@@ -55,7 +55,7 @@
               <table class="table table-borderless table-hover table-striped table-dark">
                 <!-- SUPRIMI LOS ENCABEZADOS DE SKILL PORQUE ERA REDUNDANTE -->
                 <tbody>
-                  <tr th:each="skill : ${skillsRegistro}">
+                  <tr th:each="skill : ${skills}">
                     <td th:text="${skill.name}"></td>
                     <td><input type="checkbox" name="skills" th:value="${skill.id}"></td>
                   </tr>

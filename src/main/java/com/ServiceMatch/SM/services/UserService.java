@@ -20,10 +20,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ServiceMatch.SM.entities.AppUser;
+import com.ServiceMatch.SM.entities.Provider;
+import com.ServiceMatch.SM.entities.Skill;
 import com.ServiceMatch.SM.enums.RolEnum;
 import com.ServiceMatch.SM.exceptions.MyException;
+import com.ServiceMatch.SM.repository.ProviderRepository;
 import com.ServiceMatch.SM.repository.UserRepository;
 
 @Service
@@ -31,6 +35,11 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ProviderRepository providerRepository;
+
+    @Autowired
+    private ServiceImage serviceImage;
 
     @Transactional
     public void registrar(String name, String email, String password, String password2) throws MyException {
@@ -50,10 +59,28 @@ public class UserService implements UserDetailsService {
         Optional<AppUser> result = userRepository.findById(id);
         AppUser client = new AppUser();
         if (result.isPresent()) {
+            // agregar que si el rol es proveedor lo setee
             client = result.get();
             client.setName(name);
             client.setPassword(new BCryptPasswordEncoder().encode(password));
             userRepository.save(client);
+        }
+    }
+
+    // método para editar el perfil del proveedor
+    public void editProvider(Long id, String name, String password, String password2, Long whatsapp, List<Skill> skills,
+            MultipartFile file) throws MyException {
+        // validar(name, password, password2, whatsapp, skills);
+        Optional<Provider> result = providerRepository.findById(id);
+        Provider provider = new Provider();
+        if (result.isPresent()) {
+            provider = result.get();
+            provider.setName(name);
+            provider.setPassword(new BCryptPasswordEncoder().encode(password));
+            provider.setRol(RolEnum.PROVEEDOR);
+            provider.setSkills(skills);
+            provider.setWhatsApp(whatsapp);
+            providerRepository.save(provider);
         }
     }
 
