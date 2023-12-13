@@ -317,7 +317,6 @@ a.link-colors:hover {
 
 .formularioRegisterPrincipal {
     padding: 50px;
-    height: 550px;
     position: static;
 }
 
@@ -342,12 +341,6 @@ a.link-colors:hover {
     position: static;
 }
 
-
-.formularioRegisterPrincipal {
-    padding: 50px;
-    height: 550px;
-    position: static;
-}
 
 
 
