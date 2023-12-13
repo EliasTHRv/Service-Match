@@ -240,7 +240,7 @@ public class AppUserController {
                 serviceUser.editClient(id, name, password, password2);
             }
             if (role.equals("provider")) {
-                serviceUser.editProvider(id, name, password, password2, whatsApp, skills, file);
+                serviceUser.clientToProvider(id, name, password, password2, whatsApp, skills, file);
             }
             model.addAttribute("message", "Cambios guardados en perfil");
         } catch (MyException ex) {

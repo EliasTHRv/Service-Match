@@ -67,6 +67,24 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    // método para cambiar de rol de cliente a proveedor ARREGLAR
+    @Transactional
+    public void clientToProvider(Long id, String name, String password, String password2, Long whatsApp,
+            List<Skill> skills, MultipartFile file) {
+        Optional<AppUser> result = userRepository.findById(id);
+        Provider provider = new Provider();
+        if (result.isPresent()) {
+            provider.setId(id);
+            provider.setName(name);
+            provider.setPassword(new BCryptPasswordEncoder().encode(password));
+            provider.setRol(RolEnum.PROVEEDOR);
+            provider.setSkills(skills);
+            provider.setWhatsApp(whatsApp);
+            // setear la imagen
+            providerRepository.save(provider);
+        }
+    }
+
     // método para editar el perfil del proveedor
     public void editProvider(Long id, String name, String password, String password2, Long whatsapp, List<Skill> skills,
             MultipartFile file) throws MyException {
