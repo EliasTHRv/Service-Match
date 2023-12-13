@@ -211,7 +211,7 @@ public class AppUserController {
         try {
             AppUser user = serviceUser.getOne(id);
             List<Skill> skills = serviceSkill.getSkills();
-            model.addAttribute("skillS", skills);
+            model.addAttribute("skillsRegistro", skills);
             if (user.getRol().equals(RolEnum.USUARIO)) {
                 return "client_profile.html";
             }
@@ -240,10 +240,9 @@ public class AppUserController {
                 serviceUser.editClient(id, name, password, password2);
             }
             if (role.equals("provider")) {
-                serviceUser.editProvider(id, name, password, password2, whatsApp, skills, file);
+                serviceUser.clientToProvider(id, name, password, password2, whatsApp, skills, file);
             }
-            serviceUser.editClient(id, name, password, password2);
-            model.addAttribute("message", "User '" + name + "' edit successfully");
+            model.addAttribute("message", "Cambios guardados en perfil");
         } catch (MyException ex) {
             model.addAttribute("error", ex.getMessage());
             return "index.html";

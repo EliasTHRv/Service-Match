@@ -37,7 +37,8 @@
         </li>
         <!-- SI EL USUARIO ESTÁ LOGUEADO PUEDE EDITAR SU PERFIL Y CERRAR SESIÓN -->
         <li class="nav-item dropdown" th:if="${session.usuariosession != null}">
-          <a class="nav-link dropdown-toggle nav-link custom-link fs-5" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Perfil </a>
+          <a th:text="${session.usuariosession.name}" class="nav-link dropdown-toggle nav-link custom-link fs-5" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false"></a>
           <ul class="dropdown-menu bg-dark text-light ">
             <li><a class="dropdown-item text-light custom-dropdown-hover" sec:authorize="hasAnyRole('USUARIO', 'PROVEEDOR')"
                 th:href="@{'/user/editprofile/'+${session.usuariosession.id}}">Editar Perfil</a></li>
