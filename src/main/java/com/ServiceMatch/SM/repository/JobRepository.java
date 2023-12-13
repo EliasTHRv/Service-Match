@@ -36,4 +36,8 @@ public List<Job> findByJobSkill (@Param("skillName") String skillName );
 
 @Query("SELECT j FROM Job j WHERE j.provider.id = :id")
 public List<Job> findByAppUser(@Param("id") Long id);
+
+
+@Query("SELECT j FROM Job j WHERE j.appUser.id = :id")
+public List<Job> findByClient(@Param("id") Long id);
 }

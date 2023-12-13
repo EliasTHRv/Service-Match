@@ -94,6 +94,20 @@ public class ServiceJob {
         jobs = jobRepository.findByAppUser(id);
         return jobs;
     }
+    
+    // METODO NUEVO 12/12
+    
+     public List<Job> listByIdClient(Long id) {
+
+        List<Job> jobs = new ArrayList<>();
+
+        jobs = jobRepository.findByClient(id);
+        return jobs;
+    }
+     
+  
+     
+    
 
     @Transactional
 
