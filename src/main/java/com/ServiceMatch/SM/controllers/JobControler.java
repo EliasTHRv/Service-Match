@@ -15,6 +15,7 @@ import com.ServiceMatch.SM.entities.Job;
 import com.ServiceMatch.SM.entities.Provider;
 import com.ServiceMatch.SM.entities.Skill;
 import com.ServiceMatch.SM.enums.JobStatusEnum;
+import com.ServiceMatch.SM.enums.RolEnum;
 import com.ServiceMatch.SM.exceptions.MyException;
 import com.ServiceMatch.SM.services.ServiceJob;
 import com.ServiceMatch.SM.services.ServiceProvider;
@@ -80,17 +81,36 @@ public String createJob(@RequestParam(required = false) String description,
     String currentPath = request.getRequestURI();
     return "redirect:" + currentPath;
 }
-   
+
+
+// SERGIO METODO MODIFICADO Y FUNCIONANDO 
     @GetMapping("/list/provider/{id}")
-    public String jobListPrueba(@PathVariable Long id, Model model) {
-
+    public String jobListPrueba(HttpSession session,@PathVariable Long id, Model model) {
+        
+         AppUser client = (AppUser) session.getAttribute("usuariosession");
+         
+         if (client.getRol() == RolEnum.USUARIO) {
+             
+         List<Job> jobs = serviceJob.listByIdClient(client.getId());
+         
+          model.addAttribute("jobs", jobs);
+            
+        }else{
+             
         List<Job> jobs = serviceJob.listByIdProvider(id);
-
+        
         model.addAttribute("jobs", jobs);
+        
+        
+         }
+        
 
         return "job_list.html";
-
+         
     }
+    
+ 
+    
 
     // AQUI COMIENZA PAULINA MÉTODO GET Y POST PARA MODIFICAR JOB
     @GetMapping("/modify/{id}") // http://localhost:8080/job/modify/id
@@ -194,4 +214,6 @@ public String createJob(@RequestParam(required = false) String description,
         }
         return "redirect:/job/rating/{id}";
     }
+    
+ 
 }
