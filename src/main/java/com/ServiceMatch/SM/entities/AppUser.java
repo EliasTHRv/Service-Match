@@ -49,5 +49,5 @@ public class AppUser implements Serializable {
 
     @Column(name = "whats_app", nullable = true)
     private Long whatsApp;
-    
+
 }

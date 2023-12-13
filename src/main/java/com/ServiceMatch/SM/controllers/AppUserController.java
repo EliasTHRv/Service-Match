@@ -60,6 +60,7 @@ public class AppUserController {
         return "user_list.html";
     }
 
+    // MÉTODO PARA ADMIN
     @GetMapping("/modify/{id}") // http://localhost:8080/user/modify/id
     public String modifyUser(@PathVariable Long id, ModelMap model) {
         // Lógica para modificar la skill en la base de datos
@@ -68,6 +69,7 @@ public class AppUserController {
         return "user_modify.html";
     }
 
+    // MÉTODO PARA ADMIN EDITAR USUARIOS
     @PostMapping("/modify/{id}")
     public String modify(@PathVariable Long id, String name, boolean active, MultipartFile archivo, ModelMap model) {
         Optional<Provider> esProvider = serviceProvider.getProviderById(id);
@@ -85,6 +87,7 @@ public class AppUserController {
 
     }
 
+    // MÉTODO PARA ADMIN
     @GetMapping("/restore/{id}") // http://localhost:8080/user/restore/id
     public String restoreSkill(@PathVariable Long id, boolean active) {
         try {
@@ -99,6 +102,7 @@ public class AppUserController {
         }
     }
 
+    // MÉTODO PARA ADMIN
     @GetMapping("/delete/{id}") // http://localhost:8080/user/delete/id
     public String deleteSkill(@PathVariable Long id, ModelMap model) {
         // Lógica para eliminar la skill en la base
@@ -106,6 +110,7 @@ public class AppUserController {
         return "redirect:../list";
     }
 
+    // MÉTODO PARA EL REGISTRO DE UN USUARIO PROVEEDOR DEVUELVE VISTA CON SKILLS
     @GetMapping("/registration") // http://localhost:8080/user/registration
     public String showUserRegistrationForm(Model model) {
         List<Skill> skills = serviceSkill.getSkills();
@@ -113,6 +118,7 @@ public class AppUserController {
         return "register.html";
     }
 
+    // MÉTODO PARA GUARDAR EL NUEVO USUARIO SEGÚN ROL
     @PostMapping("/save")
     public String saveUser(
             @RequestParam(required = false) MultipartFile archivo,
@@ -125,8 +131,8 @@ public class AppUserController {
             @RequestParam String role,
             Model model) {
         try {
-            if(role.equals("client")){
-                serviceUser.registrar(name,email,password,password2);
+            if (role.equals("client")) {
+                serviceUser.registrar(name, email, password, password2);
                 return "redirect:/user/list";
             }
             serviceProvider.registrar(archivo, name, email, password, password2, whatsApp, skills);
@@ -204,6 +210,8 @@ public class AppUserController {
     public String userProfile(@PathVariable Long id, Model model) {
         try {
             AppUser user = serviceUser.getOne(id);
+            List<Skill> skills = serviceSkill.getSkills();
+            model.addAttribute("skillS", skills);
             if (user.getRol().equals(RolEnum.USUARIO)) {
                 return "client_profile.html";
             }
@@ -222,10 +230,18 @@ public class AppUserController {
     // MÉTODO PARA EDITAR PERFIL CLIENTE
     @PostMapping("/client/editprofile/{id}")
     public String clientProfile(@PathVariable Long id, @RequestParam String name, @RequestParam String password,
-            @RequestParam String password2, Model model) {
+            @RequestParam String password2, @RequestParam(required = false) Long whatsApp,
+            @RequestParam(required = false) List<Skill> skills, @RequestParam String role,
+            @RequestParam(required = false) MultipartFile file, Model model) {
         // añadir rol en caso de que quiera cambiarlo y si es asi setear todos los otros
-        // atributos
+        // atributos revisar metodo
         try {
+            if (role.equals("client")) {
+                serviceUser.editClient(id, name, password, password2);
+            }
+            if (role.equals("provider")) {
+                serviceUser.editProvider(id, name, password, password2, whatsApp, skills, file);
+            }
             serviceUser.editClient(id, name, password, password2);
             model.addAttribute("message", "User '" + name + "' edit successfully");
         } catch (MyException ex) {
