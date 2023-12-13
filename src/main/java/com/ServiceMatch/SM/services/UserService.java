@@ -23,6 +23,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ServiceMatch.SM.entities.AppUser;
+import com.ServiceMatch.SM.entities.Image;
 import com.ServiceMatch.SM.entities.Provider;
 import com.ServiceMatch.SM.entities.Skill;
 import com.ServiceMatch.SM.enums.RolEnum;
@@ -80,7 +81,7 @@ public class UserService implements UserDetailsService {
             provider.setRol(RolEnum.PROVEEDOR);
             provider.setSkills(skills);
             provider.setWhatsApp(whatsApp);
-            // setear la imagen
+            provider.setImagen((Image) file);
             providerRepository.save(provider);
         }
     }
