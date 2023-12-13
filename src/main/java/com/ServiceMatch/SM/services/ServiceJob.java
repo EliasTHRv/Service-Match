@@ -36,10 +36,10 @@ public class ServiceJob {
     @Autowired
     private ProviderRepository providerRepository;
 
-    public void createJob(Double cost, String description, Long idSkill, Long idUser, Long idProvider)
+    public void createJob(String description, Long idSkill, Long idUser, Long idProvider)
             throws MyException {
 
-        validate(cost, description, idSkill, idUser, idProvider);
+        validate(description, idSkill, idUser, idProvider);
 
         Optional<Skill> responseSkill = skillRepository.findById(idSkill);
         Optional<AppUser> responseUser = userRepository.findById(idUser);
@@ -67,7 +67,7 @@ public class ServiceJob {
 
         Job job = new Job();
 
-        job.setCost(cost);
+      
         job.setDescription(description);
         job.setJobStatus(JobStatusEnum.PENDING);
         job.setProvider(provider);
@@ -227,14 +227,10 @@ public class ServiceJob {
         return jobs;
     }
 
-    public void validate(Double cost, String description, Long idSkill, Long idUser, Long idProvider)
+    public void validate(String description, Long idSkill, Long idUser, Long idProvider)
             throws MyException {
 
-        // Validación de cost
-        if (cost == null || cost < 0) {
-            throw new MyException("El costo debe ser un número positivo");
-        }
-
+       
         if (description == null || description.isEmpty()) {
             throw new MyException("La descripción no puede ser nula o vacía");
         }

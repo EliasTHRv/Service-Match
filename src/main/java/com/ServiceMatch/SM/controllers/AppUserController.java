@@ -51,7 +51,6 @@ public class AppUserController {
         // Se guarda la lista de usuarios en "users" en formato de página (10 por
         // página)
         Page<AppUser> users = serviceUser.getPageOfUsers(page, 10);
-        AppUser p = new AppUser();
         // Se inyectan al modelo todos los usuarios "userList"
         model.addAttribute("userList", users.getContent());
         // Se agrega información de paginación al modelo
@@ -126,8 +125,8 @@ public class AppUserController {
             @RequestParam String role,
             Model model) {
         try {
-            if (role.equals("client")) {
-                serviceUser.registrar(name, email, password, password2);
+            if(role.equals("client")){
+                serviceUser.registrar(name,email,password,password2);
                 return "redirect:/user/list";
             }
             serviceProvider.registrar(archivo, name, email, password, password2, whatsApp, skills);
