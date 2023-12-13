@@ -302,9 +302,9 @@ a.link-colors:hover {
     position: static;
 }
 
-.bodyRegister{
+.bodyRegister {
     background: linear-gradient(rgba(29, 30, 35, 0.6),
-        rgba(29, 30, 35, 0.6)),
+            rgba(29, 30, 35, 0.6)),
         url(images/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
     background-position: top center;
     background-repeat: no-repeat;
@@ -320,7 +320,7 @@ a.link-colors:hover {
     position: static;
 }
 
-.bodyLogin{
+.bodyLogin {
     background: linear-gradient(rgba(29, 30, 35, 0.3),
             rgba(29, 30, 35, 0.3)),
         url(/img/derechos-trabajadores-turnos.jpg);
@@ -329,7 +329,7 @@ a.link-colors:hover {
     background-attachment: fixed;
 }
 
-.formularioLogin{
+.formularioLogin {
     padding: 50px;
     height: 420px;
     position: static;
@@ -341,6 +341,21 @@ a.link-colors:hover {
     position: static;
 }
 
+.bodyEditarPerfilProvider {
+    background: linear-gradient(rgba(29, 30, 35, 0.2),
+            rgba(29, 30, 35, 0.2)),
+        url(images/Cuales-son-los-factores-que-alteran-el-desempeno-de-los-trabajadores-en-el-sector-minero.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 
+}
 
+.formularioEditarPerfilProvider {
+    padding: 50px;
+    position: static;
+}
 
+.scroll-container {
+    max-height: 640px;
+    overflow-y: auto;
+}
