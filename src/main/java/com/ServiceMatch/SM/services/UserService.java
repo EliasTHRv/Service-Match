@@ -65,7 +65,12 @@ public class UserService implements UserDetailsService {
             client.setName(name);
             client.setPassword(new BCryptPasswordEncoder().encode(password));
             userRepository.save(client);
+
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpSession session = attr.getRequest().getSession(true);
+            session.setAttribute("usuariosession", client);
         }
+
     }
 
     // método para cambiar de rol de cliente a proveedor ARREGLAR
