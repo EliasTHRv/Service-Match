@@ -250,6 +250,22 @@ public class AppUserController {
         return "redirect:/";
     }
 
+    // método para editar perfil proveedor
+    @PostMapping("/provider/editprofile/{id}")
+    public String providerProfile(@PathVariable Long id, @RequestParam String name, @RequestParam String password,
+            @RequestParam String password2, @RequestParam(required = false) Long whatsApp,
+            @RequestParam(required = false) List<Skill> skills, @RequestParam(required = false) String role,
+            @RequestParam(required = false) MultipartFile file, Model model) {
+        try {
+            serviceUser.editProvider(id, name, password, password2, whatsApp, skills, file);
+            model.addAttribute("message", "Cambios guardados en perfil");
+        } catch (MyException ex) {
+            model.addAttribute("error", ex.getMessage());
+            return "index.html";
+        }
+        return "redirect:/";
+    }
+
     // METODO DE PRUEBA
     // @GetMapping("/provider/{id}")
     // public String userProvider(@RequestParam Long id, ModelMap model) {
