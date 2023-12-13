@@ -133,7 +133,7 @@ public class AppUserController {
         try {
             if (role.equals("client")) {
                 serviceUser.registrar(name, email, password, password2);
-                return "redirect:/user/list";
+                return "redirect:/";
             }
             serviceProvider.registrar(archivo, name, email, password, password2, whatsApp, skills);
             model.addAttribute("message", "User '" + name + "' saved successfully");
@@ -141,7 +141,7 @@ public class AppUserController {
             model.addAttribute("error", ex.getMessage());
             return "register.html";
         }
-        return "redirect:/user/list";
+        return "redirect:/";
     }
 
     @GetMapping("/providers")
