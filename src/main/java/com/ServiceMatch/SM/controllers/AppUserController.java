@@ -224,6 +224,8 @@ public class AppUserController {
     @PostMapping("/client/editprofile/{id}")
     public String clientProfile(@PathVariable Long id, @RequestParam String name, @RequestParam String password,
             @RequestParam String password2, Model model) {
+        // añadir rol en caso de que quiera cambiarlo y si es asi setear todos los otros
+        // atributos
         try {
             serviceUser.editClient(id, name, password, password2);
             model.addAttribute("message", "User '" + name + "' edit successfully");
