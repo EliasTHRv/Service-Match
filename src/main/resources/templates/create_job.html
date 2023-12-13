@@ -56,7 +56,7 @@
             <label for="description" class="text-color mb-1 fw-semibold ps-1">Servicio requerido:</label>
             <select name="idSkill" required="true" class="form-control bg-dark text-white"
               placeholder="Seleccionar servicio que se requiere">
-              <option value="" disabled selected>Seleccionar servicio que se requiere</option>
+              <option value=" disabled" selected>Seleccionar servicio que se requiere</option>
               <option th:each="skill : ${skills}" th:if="${skill.active}" th:value="${skill.id}"
                 th:text="${skill.name}"></option>
             </select>

@@ -23,6 +23,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ServiceMatch.SM.entities.AppUser;
+import com.ServiceMatch.SM.entities.Image;
 import com.ServiceMatch.SM.entities.Provider;
 import com.ServiceMatch.SM.entities.Skill;
 import com.ServiceMatch.SM.enums.RolEnum;
@@ -64,6 +65,24 @@ public class UserService implements UserDetailsService {
             client.setName(name);
             client.setPassword(new BCryptPasswordEncoder().encode(password));
             userRepository.save(client);
+        }
+    }
+
+    // método para cambiar de rol de cliente a proveedor ARREGLAR
+    @Transactional
+    public void clientToProvider(Long id, String name, String password, String password2, Long whatsApp,
+            List<Skill> skills, MultipartFile file) {
+        Optional<AppUser> result = userRepository.findById(id);
+        Provider provider = new Provider();
+        if (result.isPresent()) {
+            provider.setId(id);
+            provider.setName(name);
+            provider.setPassword(new BCryptPasswordEncoder().encode(password));
+            provider.setRol(RolEnum.PROVEEDOR);
+            provider.setSkills(skills);
+            provider.setWhatsApp(whatsApp);
+            provider.setImagen((Image) file);
+            providerRepository.save(provider);
         }
     }
 
