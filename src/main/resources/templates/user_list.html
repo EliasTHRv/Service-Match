@@ -40,7 +40,7 @@
                         <td>
                             <!-- MODIFIQUÉ EN ESTA LÍNEA EL TH:IF PORQUE ME ROMPÍA LA PÁGINA LA LÓGICA th:if="${user.rol == T(com.ServiceMatch.SM.enums.RolEnum).PROVEEDOR}" -->
                             <a th:if="${#strings.equals(user.rol, T(com.ServiceMatch.SM.enums.RolEnum).PROVEEDOR.name())}" class="btn btn-success btn-sm"
-                                th:href="@{/mostrar-imagen/__${user.id}__}" target="_blank">Ver</a>
+                                th:href="@{/imagen/mostrar-imagen/__${user.id}__}" target="_blank">Ver</a>
                         </td>
                         <!-- dtype,registration_date,whats_app me dan error al traerlos -->
                         <td>
@@ -90,7 +90,7 @@
             </nav>
         </div>
         <div th:if="${#lists.isEmpty(userList)}">
-            <p>No data available.</p>
+            <p>No hay dados disponibles.</p>
         </div>
 
     </main>
