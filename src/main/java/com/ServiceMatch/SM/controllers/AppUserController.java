@@ -224,9 +224,12 @@ public class AppUserController {
             model.addAttribute("skillsRegistro", skills);
             model.addAttribute("user", user);
             if (user.getRol().equals(RolEnum.USUARIO)) {
+                model.addAttribute("client", user);
                 return "client_profile.html";
             }
             if (user.getRol().equals(RolEnum.PROVEEDOR)) {
+                Provider provider = serviceProvider.getOne(id);
+                model.addAttribute("provider", provider);
                 return "provider_profile.html";
             } else {
                 return "index.html";
@@ -250,9 +253,8 @@ public class AppUserController {
         try {
             if (role.equals("client")) {
                 serviceUser.editClient(id, name, password, password2);
-                model.addAttribute("message", "Cambios guardados en perfil");
+                model.addAttribute("exito", "Cambios guardados en perfil");
                 return "index.html";
-
             }
             if (role.equals("provider")) {
                 serviceUser.clientToProvider(id, name, password, password2, whatsApp, skills, file);
@@ -260,7 +262,6 @@ public class AppUserController {
             } else {
                 return "/user/client/editprofile/";
             }
-
         } catch (MyException ex) {
             redirectAttributes.addFlashAttribute("error", ex.getMessage());
             return "redirect:/user/editprofile/" + id;
@@ -276,12 +277,12 @@ public class AppUserController {
             @RequestParam(required = false) MultipartFile file, Model model) {
         try {
             serviceUser.editProvider(id, name, password, password2, whatsApp, skills, file);
-            model.addAttribute("message", "Cambios guardados en perfil");
+            model.addAttribute("exito", "Cambios guardados con éxito.");
+            return "index.html";
         } catch (MyException ex) {
             model.addAttribute("error", ex.getMessage());
             return "index.html";
         }
-        return "redirect:/";
     }
 
     // METODO DE PRUEBA
