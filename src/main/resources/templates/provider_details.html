@@ -37,6 +37,7 @@
                                 </p>
 
                                 <form th:action="@{/job/create/{id}(id=${provider.id})}" method="get" class="text-center mb-3">
+                                    <input class="form-control" type="number" id="skill" name="idSkill" th:value="${skill.getId()}" hidden>
                                     <button type="submit" class="btn btn-success btn-md">Solicitar trabajo</button>
                                 </form>
                             </div>
