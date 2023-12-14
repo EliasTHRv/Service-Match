@@ -30,7 +30,7 @@ public class ImageController {
 
 
     @Autowired
-    private ImageService imageService; // Suponiendo que tienes un servicio para manejar las imágenes
+    private ImageService imageService; 
 
     @GetMapping("/mostrar-imagen/{id}")
     public ResponseEntity<byte[]> mostrarImagen(@PathVariable Long id) {
@@ -47,7 +47,6 @@ public class ImageController {
                         .contentType(MediaType.IMAGE_JPEG)
                         .body(imageBytes);
             } catch (IOException e) {
-                // Handle exception if the default image loading fails
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
         }

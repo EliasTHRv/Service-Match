@@ -67,7 +67,6 @@ public class ServiceJob {
 
         Job job = new Job();
 
-      
         job.setDescription(description);
         job.setJobStatus(JobStatusEnum.PENDING);
         job.setProvider(provider);
@@ -94,20 +93,16 @@ public class ServiceJob {
         jobs = jobRepository.findByAppUser(id);
         return jobs;
     }
-    
+
     // METODO NUEVO 12/12
-    
-     public List<Job> listByIdClient(Long id) {
+
+    public List<Job> listByIdClient(Long id) {
 
         List<Job> jobs = new ArrayList<>();
 
         jobs = jobRepository.findByClient(id);
         return jobs;
     }
-     
-  
-     
-    
 
     @Transactional
 
@@ -199,27 +194,25 @@ public class ServiceJob {
             throw new MyException("No se encontró el trabajo con el ID proporcionado: " + id);
         }
     }
-    
-    //SERGIO CARGAR COSTO AL JOB
-        public void updateCost(Long id, Double cost) throws MyException {
-            
+
+    // SERGIO CARGAR COSTO AL JOB
+    public void updateCost(Long id, Double cost) throws MyException {
+
         Optional<Job> responseJob = jobRepository.findById(id);
 
         if (responseJob.isPresent()) {
             Job job = responseJob.get();
             job.setCost(cost);
-            Double precio =job.getCost();
+            Double precio = job.getCost();
 
-            
             System.out.println("precio " + precio);
 
             jobRepository.save(job);
-            
+
         } else {
             throw new MyException("No se encontró el trabajo con el ID proporcionado: " + id);
         }
     }
-    
 
     public void deleteJob(Long id) {
 
@@ -233,39 +226,31 @@ public class ServiceJob {
     }
 
     public void createComment(Long id, Long callification, String comment) throws MyException {
-
         if (comment == null || comment.isEmpty() || callification < 0 || callification > 5) {
             throw new MyException("El comentario no puede ser nulo o vacío");
         }
-
         Optional<Job> result = jobRepository.findById(id);
         Job job = new Job();
         if (result.isPresent()) {
             job = result.get();
             job.setCallification(callification);
             job.setComment(comment);
-
             jobRepository.save(job);
-
         }
-
     }
-    
-     public List<Job> listJobByProvider(Long idProvider){
-        
-        List<Job> jobs= new ArrayList<>();
-        
-        
-        jobs= providerRepository.findByProvider(idProvider);
-        
-        
+
+    public List<Job> listJobByProvider(Long idProvider) {
+
+        List<Job> jobs = new ArrayList<>();
+
+        jobs = providerRepository.findByProvider(idProvider);
+
         return jobs;
     }
 
     public void validate(String description, Long idSkill, Long idUser, Long idProvider)
             throws MyException {
 
-       
         if (description == null || description.isEmpty()) {
             throw new MyException("La descripción no puede ser nula o vacía");
         }
