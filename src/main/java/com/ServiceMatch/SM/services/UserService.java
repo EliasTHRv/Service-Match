@@ -56,16 +56,33 @@ public class UserService implements UserDetailsService {
     // método para editar el perfil del cliente
     @Transactional
     public void editClient(Long id, String name, String password, String password2) throws MyException {
-        validarEdit(name, password, password2);
+
         Optional<AppUser> result = userRepository.findById(id);
+
         AppUser client = new AppUser();
+        AppUser c2 = new AppUser();
         if (result.isPresent()) {
-            // agregar que si el rol es proveedor lo setee
+            validarEdit(name);
+            if(!password2.equals(password)){
+                throw new MyException("passwords no coinciden");
+            }
             client = result.get();
+            c2 = result.get();
             client.setName(name);
-            client.setPassword(new BCryptPasswordEncoder().encode(password));
+            if (!password.isEmpty()){
+                client.setPassword(new BCryptPasswordEncoder().encode(password));
+            }else{
+                client.setPassword(c2.getPassword());
+            }
+
+            client.setRol(RolEnum.USUARIO);
             userRepository.save(client);
+
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpSession session = attr.getRequest().getSession(true);
+            session.setAttribute("usuariosession", client);
         }
+
     }
 
     // método para cambiar de rol de cliente a proveedor ARREGLAR
@@ -219,7 +236,11 @@ public class UserService implements UserDetailsService {
         }
 
     }
-
+    private void validarEdit(String name)throws MyException {
+        if (name == null || name.isEmpty()) {
+            throw new MyException("El nombre no puede ser nulo o estar vacio");
+        }
+    }
     private void validarEdit(String name, String password, String password2)
             throws MyException {
         if (name == null || name.isEmpty()) {

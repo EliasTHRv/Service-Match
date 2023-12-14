@@ -238,16 +238,23 @@ public class AppUserController {
         try {
             if (role.equals("client")) {
                 serviceUser.editClient(id, name, password, password2);
+                model.addAttribute("message", "Cambios guardados en perfil");
+                return "index.html";
+
             }
             if (role.equals("provider")) {
                 serviceUser.clientToProvider(id, name, password, password2, whatsApp, skills, file);
+                return "index.html";
+            }else {
+                return "/user/client/editprofile/";
             }
-            model.addAttribute("message", "Cambios guardados en perfil");
+
+
         } catch (MyException ex) {
             model.addAttribute("error", ex.getMessage());
             return "index.html";
         }
-        return "redirect:/";
+
     }
 
     // método para editar perfil proveedor
