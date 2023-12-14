@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
-<!--Traigo el  Fragmento del head-->
 
 <head th:replace="@{/fragments/head} :: head"></head>
 
 <body class="d-flex flex-column min-vh-100 bodyCreateJob">
   <nav th:replace="@{/fragments/navbar} :: nav"></nav>
-
+  <div th:replace="@{/fragments/thmsg} :: div"></div>
   <main class="container flex-grow-1 mb-4">
     <div class="row justify-content-center pt-3 mt-3 m-1">
       <div class="col-10 col-md-8 col-sm-11 col-xl-5 col-lg-6 formularioCreateJob bg-color">
