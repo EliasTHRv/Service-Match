@@ -17,6 +17,7 @@
             </form>
         </div>
         <div class="d-flex flex-row">
+            <div th:replace="@{/fragments/thmsg} :: div"></div>
             <div class="card bg-dark text-white cardIndex text-center" th:each="provider : ${providers}">
                 <input th:value="${provider.id}" name="id" hidden method="get" th:href="@{/}">
                 <img class="card-img-top" id="preview" alt="Image Preview" th:src="@{/imagen/perfil/__${provider.id}__}" th:if="${provider.imagen != null}">
