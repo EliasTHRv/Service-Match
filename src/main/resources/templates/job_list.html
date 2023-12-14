@@ -22,6 +22,13 @@
                             <div class="card-text block">Calificación: <span th:text="${job.callification}"></span></div>
                             <div class="card-text block">Estado: <span th:text="${job.jobStatus}"></span></div>
 
+
+                            <p class="card-text" style="font-weight: bold;">Comentario: <span th:text="${job.comment}" style="font-weight: normal;"></span></p>
+                            <p class="card-text" style="font-weight: bold;">Calificación: <span th:text="${job.callification}" style="font-weight: normal;"></span>
+                            </p>
+
+                            <p class="card-text" style="font-weight: bold;">Estado: <span th:text="${job.jobStatus}" style="font-weight: normal;"></span></p>
+
                             <div class="d-flex justify-content-between">
 
                                 <form sec:authorize="hasRole('PROVEEDOR')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).PENDING}"
@@ -53,7 +60,9 @@
                                     th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).END and job.callification == null}"
                                     th:action="@{/job/rating/{id}(id=${job.id})}" method="get">
                                     <button type="submit" class="btn btnbuscar">Calificar</button>
+
                                 </form> -->
+
                             </div>
                         </div>
                     </div>
