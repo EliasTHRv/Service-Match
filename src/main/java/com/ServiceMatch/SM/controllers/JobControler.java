@@ -45,13 +45,14 @@ public class JobControler {
 // REQUEST CREAR JOB (LO SOLICITA EL CLIENTE) TRAYENDO ID DE PROVIDER SELECCIONADO
     @PreAuthorize("hasRole('ROLE_USUARIO')")
     @GetMapping("/create/{idProvider}") // http://localhost:8080/job/create
-    public String createJob(HttpSession session, @PathVariable Long idProvider, Model model) {
+    public String createJob(HttpSession session, @PathVariable Long idProvider,@RequestParam Long idSkill, Model model) {
         Provider provider = serviceProvider.getOne(idProvider);
         AppUser client = (AppUser) session.getAttribute("usuariosession");
         Long idClient = client.getId();
         System.out.println("ID CLIENTE " + idClient);
-        List<Skill> skills = provider.getSkills();
-        model.addAttribute("skills", skills);
+       // List<Skill> skills = provider.getSkills();
+        Skill skill = serviceSkill.getOne(idSkill);
+        model.addAttribute("skill", skill);
         model.addAttribute("client", client);
         model.addAttribute("provider", provider);
         return "create_job.html";
