@@ -1,6 +1,6 @@
 <div class="container justify-content-center">
     <div>
-        <h4 class="text-color mt-3 mb-3">Todos los proveedores</h4>
+        <h4 class="text-color mt-3 mb-3 justify-content-center">Buscar Proveedores</h4>
         <form th:action="@{'/user/providers/' + ${selectedSkill}}" method="get">
             <div class="form-group my-3 mb-2 row">
                 <div class="col-4">
@@ -18,23 +18,23 @@
         <table>
             <table class="table table-dark">
                 <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>WhathApp</th>
-                    <th>Ver mas </th>
-                </tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>WhathApp</th>
+                        <th>Ver mas </th>
+                    </tr>
                 </thead>
 
                 <tbody>
-                <tr th:each="provider : ${providers}">
-                    <td th:text="${provider.id}"></td>
-                    <td th:text="${provider.name}"></td>
-                    <td th:text="${provider.whatsApp}"></td>
-                    <td>
-                        <a th:href="@{/user/providers/details/{id}(id=${provider.id})}" class="card-link">Ver Proveedor</a>
-                    </td>
-                </tr>
+                    <tr th:each="provider : ${providers}">
+                        <td th:text="${provider.id}"></td>
+                        <td th:text="${provider.name}"></td>
+                        <td th:text="${provider.whatsApp}"></td>
+                        <td>
+                            <a th:href="@{/user/providers/details/{id}(id=${provider.id})}" class="card-link">Ver Proveedor</a>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
     </div>

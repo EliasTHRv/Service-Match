@@ -80,7 +80,7 @@ public class JobControler {
     // SERGIO METODO MODIFICADO Y FUNCIONANDO
     // LISTAR JOBS DE UN USUARIO LOGUEADO CLIENT O PROVIDER
     @GetMapping("/list/provider/{id}")
-    public String jobListPrueba(HttpSession session, @PathVariable Long id, Model model) {
+    public String jobListPrueba(@PathVariable Long id, HttpSession session, Model model) {
         AppUser client = (AppUser) session.getAttribute("usuariosession");
         model.addAttribute(session);
         if (client.getRol() == RolEnum.USUARIO) {
