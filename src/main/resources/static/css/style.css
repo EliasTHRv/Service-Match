@@ -168,6 +168,15 @@ select::placeholder {
 
 }
 
+.cardIndex {
+    width: 18rem;
+    margin: 1em;
+}
+
+.card-img-top {
+    width: fit-content !important;
+    margin: 1em auto 0 auto !important;
+}
 
 .btn-rojo {
     background: linear-gradient(90deg,
