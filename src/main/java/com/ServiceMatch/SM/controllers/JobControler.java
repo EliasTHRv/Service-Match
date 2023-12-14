@@ -121,7 +121,7 @@ public class JobControler {
 
     // ACEPTAR JOB + CARGA DE PRESUPUESTO
 
-    @PostMapping("/list/provider/{id}/budged/{idJob}")
+    @PostMapping("/list/provider/{id}/budget/{idJob}")
     public String budgetJob(@PathVariable Long id, @PathVariable Long idJob, String status, @RequestParam Double cost,
             ModelMap model) {
         try {
