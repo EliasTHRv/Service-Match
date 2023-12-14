@@ -199,6 +199,27 @@ public class ServiceJob {
             throw new MyException("No se encontró el trabajo con el ID proporcionado: " + id);
         }
     }
+    
+    //SERGIO CARGAR COSTO AL JOB
+        public void updateCost(Long id, Double cost) throws MyException {
+            
+        Optional<Job> responseJob = jobRepository.findById(id);
+
+        if (responseJob.isPresent()) {
+            Job job = responseJob.get();
+            job.setCost(cost);
+            Double precio =job.getCost();
+
+            
+            System.out.println("precio " + precio);
+
+            jobRepository.save(job);
+            
+        } else {
+            throw new MyException("No se encontró el trabajo con el ID proporcionado: " + id);
+        }
+    }
+    
 
     public void deleteJob(Long id) {
 
