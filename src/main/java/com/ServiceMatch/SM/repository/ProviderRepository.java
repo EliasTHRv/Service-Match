@@ -15,13 +15,6 @@ import org.springframework.stereotype.Repository;
 public interface ProviderRepository extends JpaRepository<Provider, Long> {
     Provider findByName(String name);
 
-    // public List<Provider> findByRol(RolEnum rol);
-
-    // @query(SELECT p FROM )
-    // public List<Provider> findCalificacion(@Param("idProvider") Long id));
-    //
-    // }
-
     public List<Provider> findByRol(RolEnum rol);
     
      

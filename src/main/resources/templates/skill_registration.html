@@ -11,7 +11,7 @@
         <div class="form-group text-center mb-3 mt-4">
           <a class="logo-color fs-4 text-decoration-none">
             <span class="text-color">Match</span>
-            <img src="/img/alicates.png" alt="" class="icono" width="30em">
+            <img th:src="@{../img/alicates.png}" alt="" class="icono" width="30em">
             Service
           </a>
         </div>
@@ -20,9 +20,9 @@
         </div>
 
         <div class="form-group mx-sm-4 text-white pt-4 fw-semibold text-center">
-          <form action="/skill/save" method="post">
-            <input class="form-control bg-dark text-white fw-semibold" type="text" id="skillName" name="skillName" value="" required
-              placeholder="Nombre del oficio a registrar..." autocomplete="off">
+          <form th:action="@{/skill/save}" method="post">
+            <input class="form-control bg-dark text-white fw-semibold" type="text" id="skillName" name="skillName"
+              value="" required placeholder="Nombre del oficio a registrar..." autocomplete="off">
             <div class="form-group mx-sm-4 text-rigth pt-2 text-center">
               <button type="submit" class="btn text-white btnOrigin mt-4">Registrar</button>
             </div>
@@ -36,23 +36,4 @@
 
   <footer th:replace="@{/fragments/footer} :: footer"></footer>
 </body>
-
-
-<!-- <body class="bg-dark">
-
-        <nav th:replace="@{/fragments/navbar} :: nav"></nav>
-
-        <h1 class="text-color">Registrar Nuevo Oficio</h1>
-        
-        <form action="/skill/save" method="post">
-            <label for="skillName" class="text-color">Nombre del oficio:</label>
-            <input type="text" id="skillName" name="skillName" value="" required>
-
-            <input type="submit" value="Guardar Oficio">
-        </form> -->
-<!--Mensaje de Error th interaccion con controller-->
-<!-- <div th:replace="@{/fragments/thmsg} :: div"></div>
-        <footer th:replace="@{/fragments/footer} :: footer"></footer>
-    </body> -->
-
 </html>

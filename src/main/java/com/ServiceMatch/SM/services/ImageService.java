@@ -15,8 +15,4 @@ public class ImageService {
     public Optional<Provider> getProviderById(Long id) {
         return providerRepository.findById(id);
     }
-
-
-
-
 }

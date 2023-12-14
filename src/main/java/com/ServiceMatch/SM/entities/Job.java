@@ -2,11 +2,7 @@ package com.ServiceMatch.SM.entities;
 
 import com.ServiceMatch.SM.enums.JobStatusEnum;
 import javax.persistence.*;
-
-
-
 import java.io.Serializable;
-// import java.time.LocalDate;
 import java.util.Date;
 
 import lombok.*;

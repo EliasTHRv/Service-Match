@@ -1,6 +1,5 @@
 package com.ServiceMatch.SM.entities;
 
-
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

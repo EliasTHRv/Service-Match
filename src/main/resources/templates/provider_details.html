@@ -36,7 +36,6 @@
                             </div>
 
                             <form th:action="@{/job/create/{id}(id=${provider.id})}" method="get" class="text-center mb-1 mt-2">
-                                <!-- <input class="form-control" type="number" id="skill" name="idSkill" th:value="${skill.getId()}" hidden> -->
                                 <button type="submit" class="btn btnbuscar btn-md">Solicitar trabajo</button>
                             </form>
                             <div class="text-center container mt-2">
@@ -58,15 +57,11 @@
                             <div th:text="${#strings.length(job.comment) > 100 ? #strings.substring(job.comment, 0, 100) + '...' : job.comment}" class="">
                             </div>
                         </div>
-                        <!-- <small>3 days ago</small> -->
                         <span class="badge bg-califf rounded-pill"><span th:text="${job.callification}"></span> <i class="fa fa-star ms-1"></i></span>
                     </li>
 
                 </ul>
             </div>
-            <!-- <div style="font-weight: bold; max-height: 120px; overflow: auto; scrollbar-width: thin; scrollbar-color: #F56349">
-                <p th:each="comment : ${comments}" class="comment card-text" style="margin-bottom: 5px;"><span th:text="${comment}"></span></p>
-            </div> -->
         </div>
     </main>
     <footer th:replace="@{/fragments/footer} :: footer"></footer>

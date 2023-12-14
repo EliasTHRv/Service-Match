@@ -213,14 +213,12 @@ public class AppUserController {
 
             return "provider_details";
         } catch (EntityNotFoundException e) {
-            // Manejar la excepción cuando el proveedor no se encuentra
             model.addAttribute("error", "Proveedor no encontrado");
-            return "redirect:/user/providers"; // Puedes crear una plantilla de error personalizada
+            return "redirect:/user/providers"; 
         }
     }
 
-    // MÉTODO PARA DEVOLVER VISTA EDITAR PERFIL TANTO PARA CLIENTE COMO PARA
-    // PROVEEDOR
+    // MÉTODO PARA DEVOLVER VISTA EDITAR PERFIL TANTO PARA CLIENTE COMO PARA PROVEEDOR
     @GetMapping("/editprofile/{id}")
     public String userProfile(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         try {
@@ -257,8 +255,6 @@ public class AppUserController {
             @RequestParam String password2, @RequestParam(required = false) Long whatsApp,
             @RequestParam(required = false) List<Skill> skills, @RequestParam String role,
             @RequestParam(required = false) MultipartFile file, Model model, RedirectAttributes redirectAttributes) {
-        // añadir rol en caso de que quiera cambiarlo y si es asi setear todos los otros
-        // atributos revisar metodo
         try {
             if (role.equals("client")) {
                 serviceUser.editClient(id, name, password, password2);
@@ -293,13 +289,5 @@ public class AppUserController {
             return "index.html";
         }
     }
-
-    // METODO DE PRUEBA
-    // @GetMapping("/provider/{id}")
-    // public String userProvider(@RequestParam Long id, ModelMap model) {
-    // AppUser provider = serviceUser.getOne(id);
-    // model.addAttribute("provider", provider);
-    // return "provider_vistaprueba.html";
-    // }
 
 }
