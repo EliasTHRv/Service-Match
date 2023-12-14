@@ -75,11 +75,26 @@
   }
 
   function mostrarMensajeError(mensaje) {
-    // Mostrar el mensaje de error en un elemento específico (puedes ajustar según tu estructura HTML)
+
     var mensajeErrorElemento = document.getElementById('mensajeError');
     mensajeErrorElemento.innerText = mensaje;
 
-    // Puedes agregar estilos adicionales o animaciones aquí si lo deseas
   }
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const stars = document.querySelectorAll('.star');
+    const calificationInput = document.getElementById('callification');
+    stars.forEach(star => {
+      star.addEventListener('click', function () {
+        const value = this.getAttribute('data-value');
+        calificationInput.value = value;
+        stars.forEach(s => s.classList.remove('selected'));
+        for (let i = 1; i <= value; i++) {
+          stars[i - 1].classList.add('selected');
+        }
+      });
+    });
+  });
 
 </script>
