@@ -1,7 +1,12 @@
 package com.ServiceMatch.SM.controllers;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -10,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.ServiceMatch.SM.entities.AppUser;
 import com.ServiceMatch.SM.entities.Job;
 import com.ServiceMatch.SM.entities.Provider;
@@ -21,10 +28,6 @@ import com.ServiceMatch.SM.services.ServiceJob;
 import com.ServiceMatch.SM.services.ServiceProvider;
 import com.ServiceMatch.SM.services.ServiceSkill;
 import com.ServiceMatch.SM.services.UserService;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/job")
@@ -42,7 +45,6 @@ public class JobControler {
     @Autowired
     ServiceProvider serviceProvider;
 
-  
     @PreAuthorize("hasAnyRole('ROLE_USUARIO')")
     @GetMapping("/create/{idProvider}") // http://localhost:8080/job/create
     public String createJob(HttpSession session, @PathVariable Long idProvider, Model model) {
@@ -52,65 +54,49 @@ public class JobControler {
         AppUser client = (AppUser) session.getAttribute("usuariosession");
 
         Long idClient = client.getId();
-        System.out.println("ID CLIENTE " + idClient );
+        System.out.println("ID CLIENTE " + idClient);
 
         List<Skill> skills = provider.getSkills();
 
         model.addAttribute("skills", skills);
         model.addAttribute("client", client);
         model.addAttribute("provider", provider);
-        
 
         return "create_job.html";
     }
 
     // <!--Double cost, String description, Long idSkill, Long idUser, Long
     // idProvider-->
-   @PostMapping("/create/{idProvider}")
-public String createJob(@RequestParam(required = false) String description,
-                        Long idSkill, Long idClient,
-                        @RequestParam(required = false) Long idProvider,
-                        RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
-    try {
-        serviceJob.createJob(description, idSkill, idClient, idProvider);
-        redirectAttributes.addFlashAttribute("exito", "El job fue creado correctamente!");
-    } catch (MyException ex) {
-        redirectAttributes.addFlashAttribute("error", ex.getMessage());
+    @PostMapping("/create/{idProvider}")
+    public String createJob(@RequestParam(required = false) String description,
+            Long idSkill, Long idClient,
+            @RequestParam(required = false) Long idProvider,
+            RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
+        try {
+            serviceJob.createJob(description, idSkill, idClient, idProvider);
+            redirectAttributes.addFlashAttribute("exito", "El job fue creado correctamente!");
+        } catch (MyException ex) {
+            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+        }
+
+        String currentPath = request.getRequestURI();
+        return "redirect:" + currentPath;
     }
 
-    String currentPath = request.getRequestURI();
-    return "redirect:" + currentPath;
-}
-
-
-// SERGIO METODO MODIFICADO Y FUNCIONANDO 
+    // SERGIO METODO MODIFICADO Y FUNCIONANDO
     @GetMapping("/list/provider/{id}")
-    public String jobListPrueba(HttpSession session,@PathVariable Long id, Model model) {
-        
-         AppUser client = (AppUser) session.getAttribute("usuariosession");
-         
-         if (client.getRol() == RolEnum.USUARIO) {
-             
-         List<Job> jobs = serviceJob.listByIdClient(client.getId());
-         
-          model.addAttribute("jobs", jobs);
-            
-        }else{
-             
-        List<Job> jobs = serviceJob.listByIdProvider(id);
-        
-        model.addAttribute("jobs", jobs);
-        
-        
-         }
-        
-
+    public String jobListPrueba(HttpSession session, @PathVariable Long id, Model model) {
+        AppUser client = (AppUser) session.getAttribute("usuariosession");
+        if (client.getRol() == RolEnum.USUARIO) {
+            List<Job> jobs = serviceJob.listByIdClient(client.getId());
+            model.addAttribute("jobs", jobs);
+        } else {
+            List<Job> jobs = serviceJob.listByIdProvider(id);
+            model.addAttribute("jobs", jobs);
+        }
         return "job_list.html";
-         
+
     }
-    
- 
-    
 
     // AQUI COMIENZA PAULINA MÉTODO GET Y POST PARA MODIFICAR JOB
     @GetMapping("/modify/{id}") // http://localhost:8080/job/modify/id
@@ -133,10 +119,15 @@ public String createJob(@RequestParam(required = false) String description,
     }
     // AQUI TERMINA PAULINA
 
-    @PostMapping("/list/provider/{id}/accept/{idJob}")
-    public String acceptJob(@PathVariable Long id, @PathVariable Long idJob, String status, ModelMap model) {
+    // ACEPTAR JOB + CARGA DE PRESUPUESTO
+
+    @PostMapping("/list/provider/{id}/budget/{idJob}")
+    public String budgetJob(@PathVariable Long id, @PathVariable Long idJob, String status, @RequestParam Double cost,
+            ModelMap model) {
         try {
-            serviceJob.updateJobStatus(idJob, JobStatusEnum.ACCEPTED);
+            serviceJob.updateJobStatus(idJob, JobStatusEnum.BUDGETED);
+            serviceJob.updateCost(idJob, cost);
+
             model.put("exito", "Job actualizado correctamente");
             return "redirect:/job/list/provider/{id}";
         } catch (MyException ex) {
@@ -144,7 +135,21 @@ public String createJob(@RequestParam(required = false) String description,
             return "forward:/job/list/provider/{id}"; // Reenvía a la misma vista con mensajes de error
         }
     }
-//RECHAZAR JOB
+
+    @PostMapping("/list/provider/{id}/accept/{idJob}")
+    public String acceptJob(@PathVariable Long id, @PathVariable Long idJob, String status, ModelMap model) {
+        try {
+            serviceJob.updateJobStatus(idJob, JobStatusEnum.ACCEPTED);
+
+            model.put("exito", "Job actualizado correctamente");
+            return "redirect:/job/list/provider/{id}";
+        } catch (MyException ex) {
+            model.put("error", "Error al actualizar el job: " + ex.getMessage());
+            return "forward:/job/list/provider/{id}"; // Reenvía a la misma vista con mensajes de error
+        }
+    }
+
+    // RECHAZAR JOB
     @PostMapping("/list/provider/{id}/refused/{idJob}")
     public String refusedJob(@PathVariable Long id, @PathVariable Long idJob, String status, ModelMap model) {
         try {
@@ -156,7 +161,8 @@ public String createJob(@RequestParam(required = false) String description,
             return "forward:/job/list/provider/{id}"; // Reenvía a la misma vista con mensajes de error
         }
     }
-//FINALIZAR JOB
+
+    // FINALIZAR JOB
     @PostMapping("/list/provider/{id}/end/{idJob}")
     public String endJob(@PathVariable Long id, @PathVariable Long idJob, String status, ModelMap model) {
         try {
@@ -192,7 +198,7 @@ public String createJob(@RequestParam(required = false) String description,
         }
     }
 
-    //CONENTARIOS Y CALIFICACION
+    // CONENTARIOS Y CALIFICACION
     @GetMapping("/rating/{id}")
     public String formComment(@PathVariable Long id, ModelMap model) {
         Job job = serviceJob.getOne(id);
@@ -202,7 +208,8 @@ public String createJob(@RequestParam(required = false) String description,
     }
 
     @PostMapping("rating/{id}") // id del Job
-    public String ratingAndComment(@PathVariable Long id, @RequestParam(required = false) Long callification, @RequestParam String comment, ModelMap model) {
+    public String ratingAndComment(@PathVariable Long id, @RequestParam(required = false) Long callification,
+            @RequestParam String comment, ModelMap model) {
         try {
 
             serviceJob.createComment(id, callification, comment.toUpperCase());
@@ -214,6 +221,5 @@ public String createJob(@RequestParam(required = false) String description,
         }
         return "redirect:/job/rating/{id}";
     }
-    
- 
+
 }
