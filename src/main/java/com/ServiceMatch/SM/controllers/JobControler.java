@@ -35,33 +35,27 @@ public class JobControler {
 
     @Autowired
     ServiceJob serviceJob;
-
     @Autowired
     ServiceSkill serviceSkill;
-
     @Autowired
     UserService userService;
-
     @Autowired
     ServiceProvider serviceProvider;
 
-    @PreAuthorize("hasAnyRole('ROLE_USUARIO')")
+    // REQUEST CREAR JOB (LO SOLICITA EL CLIENTE) TRAYENDO ID DE PROVIDER
+    // SELECCIONADO
+    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @GetMapping("/create/{idProvider}") // http://localhost:8080/job/create
-    public String createJob(HttpSession session, @PathVariable Long idProvider, Model model) {
-
+    public String createJob(HttpSession session, @PathVariable Long idProvider,
+            Model model) {
         Provider provider = serviceProvider.getOne(idProvider);
-
         AppUser client = (AppUser) session.getAttribute("usuariosession");
-
         Long idClient = client.getId();
         System.out.println("ID CLIENTE " + idClient);
-
         List<Skill> skills = provider.getSkills();
-
         model.addAttribute("skills", skills);
         model.addAttribute("client", client);
         model.addAttribute("provider", provider);
-
         return "create_job.html";
     }
 
@@ -74,7 +68,7 @@ public class JobControler {
             RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
         try {
             serviceJob.createJob(description, idSkill, idClient, idProvider);
-            redirectAttributes.addFlashAttribute("exito", "El job fue creado correctamente!");
+            redirectAttributes.addFlashAttribute("exito", "La solicitud fue enviada correctamente");
         } catch (MyException ex) {
             redirectAttributes.addFlashAttribute("error", ex.getMessage());
         }
@@ -84,9 +78,11 @@ public class JobControler {
     }
 
     // SERGIO METODO MODIFICADO Y FUNCIONANDO
+    // LISTAR JOBS DE UN USUARIO LOGUEADO CLIENT O PROVIDER
     @GetMapping("/list/provider/{id}")
     public String jobListPrueba(HttpSession session, @PathVariable Long id, Model model) {
         AppUser client = (AppUser) session.getAttribute("usuariosession");
+        model.addAttribute(session);
         if (client.getRol() == RolEnum.USUARIO) {
             List<Job> jobs = serviceJob.listByIdClient(client.getId());
             model.addAttribute("jobs", jobs);
@@ -98,7 +94,7 @@ public class JobControler {
 
     }
 
-    // AQUI COMIENZA PAULINA MÉTODO GET Y POST PARA MODIFICAR JOB
+    // MÉTODO GET Y POST PARA MODIFICAR JOB ESTO SE USA?
     @GetMapping("/modify/{id}") // http://localhost:8080/job/modify/id
     public String modifyJob(@PathVariable Long id, ModelMap model) {
         // Lógica para modificar el job en la base de datos
@@ -117,9 +113,8 @@ public class JobControler {
             return "redirect:/job/modify/" + id;
         }
     }
-    // AQUI TERMINA PAULINA
 
-    // ACEPTAR JOB + CARGA DE PRESUPUESTO
+    // PRESUPUESTAR JOB SOLICITADO POR CLIENT (PROVIDER)
 
     @PostMapping("/list/provider/{id}/budget/{idJob}")
     public String budgetJob(@PathVariable Long id, @PathVariable Long idJob, String status, @RequestParam Double cost,
@@ -136,6 +131,8 @@ public class JobControler {
         }
     }
 
+    // ACEPTAR JOB PRESUPUESTADO (CLIENT)
+
     @PostMapping("/list/provider/{id}/accept/{idJob}")
     public String acceptJob(@PathVariable Long id, @PathVariable Long idJob, String status, ModelMap model) {
         try {
@@ -149,7 +146,8 @@ public class JobControler {
         }
     }
 
-    // RECHAZAR JOB
+    // RECHAZAR JOB (CLIENT Y PROVIDER)
+
     @PostMapping("/list/provider/{id}/refused/{idJob}")
     public String refusedJob(@PathVariable Long id, @PathVariable Long idJob, String status, ModelMap model) {
         try {
@@ -162,7 +160,8 @@ public class JobControler {
         }
     }
 
-    // FINALIZAR JOB
+    // FINALIZAR JOB (CLIENT Y PROVIDER)
+
     @PostMapping("/list/provider/{id}/end/{idJob}")
     public String endJob(@PathVariable Long id, @PathVariable Long idJob, String status, ModelMap model) {
         try {
@@ -176,6 +175,7 @@ public class JobControler {
     }
 
     // MÉTODO PARA LISTAR COMENTARIOS DE JOBS
+    @PreAuthorize("hasRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/comment/list") // http://localhost:8080/user/list/id
     public String listComments(Model model) {
         // completar lógica para que sólo traiga los jobs que tienen comentarios
@@ -185,6 +185,7 @@ public class JobControler {
     }
 
     // MÉTODO PARA CENSURAR COMENTARIOS
+    @PreAuthorize("hasRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/comment/censor/{id}")
     public String eliminarResenia(@PathVariable Long id, ModelMap model) {
         try {
@@ -198,7 +199,7 @@ public class JobControler {
         }
     }
 
-    // CONENTARIOS Y CALIFICACION
+    // COMENTARIOS Y CALIFICACION
     @GetMapping("/rating/{id}")
     public String formComment(@PathVariable Long id, ModelMap model) {
         Job job = serviceJob.getOne(id);
