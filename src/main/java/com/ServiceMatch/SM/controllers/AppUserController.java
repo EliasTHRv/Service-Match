@@ -147,19 +147,31 @@ public class AppUserController {
     }
 
     @GetMapping("/providers")
-    public String providerList(@RequestParam(name = "skill", required = false) String skill, ModelMap model) {
+    public String providerList(@RequestParam(name = "skill", required = false) String skill,
+            @RequestParam(name = "id", required = false) Long id, ModelMap model) {
         List<Skill> skills = serviceSkill.getSkills();
         model.addAttribute("skills", skills);
-
         if (skill != null) {
             List<AppUser> providers = serviceUser.loadUserBySkyll(skill);
             model.addAttribute("providers", providers);
             model.addAttribute("selectedSkill", skill);
-
         } else {
-            // Asegúrate de agregar selectedSkill al modelo con un valor predeterminado
-            model.addAttribute("selectedSkill", ""); // O cualquier valor predeterminado que desees
+            List<AppUser> providers = serviceUser.loadUserBySkyll("Plomero");
+            model.addAttribute("providers", providers);
+            model.addAttribute("selectedSkill", "Plomero");
         }
+        List<Job> jobs = serviceJob.listJobByProvider(id);
+        double totalCalification = 0.0;
+
+        for (Job job : jobs) {
+            Long callification = job.getCallification();
+            if (callification != null) {
+                totalCalification += callification;
+            }
+        }
+        double averageCalification = jobs.isEmpty() ? 0.0 : totalCalification / jobs.size();
+        BigDecimal roundedAverage = new BigDecimal(averageCalification).setScale(1, RoundingMode.HALF_UP);
+        model.addAttribute("averageCalification", roundedAverage);
 
         return "provider_list.html";
     }
@@ -210,8 +222,7 @@ public class AppUserController {
     // MÉTODO PARA DEVOLVER VISTA EDITAR PERFIL TANTO PARA CLIENTE COMO PARA
     // PROVEEDOR
     @GetMapping("/editprofile/{id}")
-    public String userProfile(@PathVariable Long id, Model model
-    ,RedirectAttributes redirectAttributes) {
+    public String userProfile(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         try {
             AppUser user = serviceUser.getOne(id);
             List<Skill> skills = serviceSkill.getSkills();
@@ -219,8 +230,7 @@ public class AppUserController {
             if (error != null) {
                 model.addAttribute("error", error);
             }
-            
-   
+
             model.addAttribute("skillsRegistro", skills);
             model.addAttribute("user", user);
             if (user.getRol().equals(RolEnum.USUARIO)) {
@@ -246,8 +256,7 @@ public class AppUserController {
     public String clientProfile(@PathVariable Long id, @RequestParam String name, @RequestParam String password,
             @RequestParam String password2, @RequestParam(required = false) Long whatsApp,
             @RequestParam(required = false) List<Skill> skills, @RequestParam String role,
-            @RequestParam(required = false) MultipartFile file, Model model
-            , RedirectAttributes redirectAttributes) {
+            @RequestParam(required = false) MultipartFile file, Model model, RedirectAttributes redirectAttributes) {
         // añadir rol en caso de que quiera cambiarlo y si es asi setear todos los otros
         // atributos revisar metodo
         try {

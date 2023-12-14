@@ -15,11 +15,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class Provider extends AppUser {
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "provider_skill",
-            joinColumns = @JoinColumn(name = "provider_id"),
-            inverseJoinColumns = @JoinColumn(name = "skill_id"))
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "provider_skill", joinColumns = @JoinColumn(name = "provider_id"), inverseJoinColumns = @JoinColumn(name = "skill_id"))
     private List<Skill> skills;
 
     @OneToOne
@@ -27,7 +24,8 @@ public class Provider extends AppUser {
 
     @Override
     public String toString() {
-        // Llamar al toString de la superclase y agregar los detalles específicos de Provider
+        // Llamar al toString de la superclase y agregar los detalles específicos de
+        // Provider
         return "Provider{Skills=" + skills + "', superclassDetails='" + super.toString() + "'}";
     }
 }
