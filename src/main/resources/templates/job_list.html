@@ -21,17 +21,8 @@
                                     th:text="${#strings.length(job.comment)> 40 ? #strings.substring(job.comment, 0, 40) + '...' : job.comment}"></span></div>
                             <div class="card-text block">Calificación: <span th:text="${job.callification}"></span></div>
                             <div class="card-text block">Estado: <span th:text="${job.jobStatus}"></span></div>
-
-
-                            <p class="card-text" style="font-weight: bold;">Comentario: <span th:text="${job.comment}" style="font-weight: normal;"></span></p>
-                            <p class="card-text" style="font-weight: bold;">Calificación: <span th:text="${job.callification}" style="font-weight: normal;"></span>
-                            </p>
-
-                            <p class="card-text" style="font-weight: bold;">Estado: <span th:text="${job.jobStatus}" style="font-weight: normal;"></span></p>
-
                             <div class="d-flex justify-content-between">
-
-                                <form sec:authorize="hasRole('PROVEEDOR')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).PENDING}"
+                                <form th:if="${job.jobStatus.name() == 'PENDING'}" sec:authorize="hasRole('PROVEEDOR')"
                                     th:action="@{/job/list/provider/{id}/budget/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
                                     <div class="form-group mx-sm-4 pt-2" id="cost">
                                         <input type="number" name="cost" class="form-control bg-dark text-white fw-semibold"
@@ -39,30 +30,26 @@
                                         <button type="submit" class="btn btn-success btn-md">Presupuestar</button>
                                     </div>
                                 </form>
-                                <!--
-                                <form sec:authorize="hasRole('USUARIO')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).BUDGETED}"
+                                <form th:if="${job.jobStatus.name() == 'BUDGETED'}" sec:authorize="hasRole('USUARIO')"
                                     th:action="@{/job/list/provider/{id}/accept/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
                                     <button type="submit" class="btn btn-success btn-md">Aceptar</button>
                                 </form>
-                                <form sec:authorize="hasRole('USUARIO')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).BUDGETED}"
+                                <form th:if="${job.jobStatus.name() == 'BUDGETED'}" sec:authorize="hasRole('USUARIO')"
                                     th:action="@{/job/list/provider/{id}/refused/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
                                     <button type="submit" class="btn btn-danger btn-md">Rechazar</button>
                                 </form>
-                                <form sec:authorize="hasRole('PROVEEDOR')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).PENDING}"
+                                <form th:if="${job.jobStatus.name() == 'PENDING'}" sec:authorize="hasRole('PROVEEDOR')"
                                     th:action="@{/job/list/provider/{id}/refused/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
                                     <button type="submit" class="btn btn-danger btn-md">Rechazar</button>
                                 </form>
-                                <form th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).ACCEPTED}"
+                                <form th:if="${job.jobStatus.name() == 'ACCEPTED'}" sec:authorize="hasAnyRole('PROVEEDOR', 'USUARIO')"
                                     th:action="@{/job/list/provider/{id}/end/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
                                     <button type="submit" class="btn btn-warning btn-md">Finalizar</button>
                                 </form>
-                                <form sec:authorize="hasRole('USUARIO')"
-                                    th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).END and job.callification == null}"
-                                    th:action="@{/job/rating/{id}(id=${job.id})}" method="get">
+                                <form th:if="${job.jobStatus.name() == 'END' and job.callification == null}" th:action="@{/job/rating/{id}(id=${job.id})}"
+                                    method="get" sec:authorize="hasRole('USUARIO')">
                                     <button type="submit" class="btn btnbuscar">Calificar</button>
-
-                                </form> -->
-
+                                </form>
                             </div>
                         </div>
                     </div>
