@@ -59,8 +59,6 @@ public class JobControler {
         return "create_job.html";
     }
 
-    // <!--Double cost, String description, Long idSkill, Long idUser, Long
-    // idProvider-->
     @PostMapping("/create/{idProvider}")
     public String createJob(@RequestParam(required = false) String description,
             Long idSkill, Long idClient,
@@ -94,10 +92,9 @@ public class JobControler {
 
     }
 
-    // MÉTODO GET Y POST PARA MODIFICAR JOB ESTO SE USA?
+    // MÉTODO GET Y POST PARA MODIFICAR JOB
     @GetMapping("/modify/{id}") // http://localhost:8080/job/modify/id
     public String modifyJob(@PathVariable Long id, ModelMap model) {
-        // Lógica para modificar el job en la base de datos
         model.put("job", serviceJob.getOne(id));
         return "job_modify.html";
     }
@@ -115,7 +112,6 @@ public class JobControler {
     }
 
     // PRESUPUESTAR JOB SOLICITADO POR CLIENT (PROVIDER)
-
     @PostMapping("/list/provider/{id}/budget/{idJob}")
     public String budgetJob(@PathVariable Long id, @PathVariable Long idJob, String status, @RequestParam Double cost,
             ModelMap model) {
@@ -132,7 +128,6 @@ public class JobControler {
     }
 
     // ACEPTAR JOB PRESUPUESTADO (CLIENT)
-
     @PostMapping("/list/provider/{id}/accept/{idJob}")
     public String acceptJob(@PathVariable Long id, @PathVariable Long idJob, String status, ModelMap model) {
         try {
@@ -147,7 +142,6 @@ public class JobControler {
     }
 
     // RECHAZAR JOB (CLIENT Y PROVIDER)
-
     @PostMapping("/list/provider/{id}/refused/{idJob}")
     public String refusedJob(@PathVariable Long id, @PathVariable Long idJob, String status, ModelMap model) {
         try {
@@ -161,7 +155,6 @@ public class JobControler {
     }
 
     // FINALIZAR JOB (CLIENT Y PROVIDER)
-
     @PostMapping("/list/provider/{id}/end/{idJob}")
     public String endJob(@PathVariable Long id, @PathVariable Long idJob, String status, ModelMap model) {
         try {
@@ -170,7 +163,7 @@ public class JobControler {
             return "redirect:/job/list/provider/{id}";
         } catch (MyException ex) {
             model.put("error", "Error al actualizar el job: " + ex.getMessage());
-            return "forward:/job/list/provider/{id}"; // Reenvía a la misma vista con mensajes de error
+            return "forward:/job/list/provider/{id}"; 
         }
     }
 
@@ -178,7 +171,6 @@ public class JobControler {
     @PreAuthorize("hasRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/comment/list") // http://localhost:8080/user/list/id
     public String listComments(Model model) {
-        // completar lógica para que sólo traiga los jobs que tienen comentarios
         List<Job> jobs = serviceJob.listJobs();
         model.addAttribute("jobs", jobs);
         return "comment_list.html";
@@ -189,7 +181,6 @@ public class JobControler {
     @GetMapping("/comment/censor/{id}")
     public String eliminarResenia(@PathVariable Long id, ModelMap model) {
         try {
-            // SERVICE JOB FALTA DEFINIR LA LÓGICA RESTANTE
             serviceJob.censorComment(id);
             model.put("exito", "Comentario censurado con exito");
             return "redirect:/job/comment/list";
