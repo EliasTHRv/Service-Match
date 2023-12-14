@@ -2,61 +2,62 @@
 <!-- Se incorporó el uso de thymeleaf y spring-security -->
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 <!--Traigo el  Fragmento del head-->
+
 <head th:replace="@{/fragments/head} :: head"></head>
 
-<body id="page-top" class="bg-dark">
-    <!--Traigo el  Fragmento de la navbar-->
-    <nav th:replace="@{/fragments/navbar} :: nav"></nav>
 
-    <main class="container justify-content-center">
-        <div>
-            <h5 class="text-color">Todos los servicios</h5>
-            <a th:href="@{/skill/registration}" class="btn btn-success btn-sm">Cargar nuevo Oficio</a>
-        </div>
-        <div class="row justify-content-center">
-            <!--Mensaje de Éxito th interaccion con controller-->
-            <div th:replace="@{/fragments/thmsg} :: div"></div>
-            <table class=" table table-borderless table-hover table-striped table-dark " style="max-width: 45rem;">
-                <thead class="thead-light">
-                    <tr>
-                        <!-- <th scope="col">Id</th> -->
-                        <th scope="col"> Oficios</th>
-                        <th scope="col" style="
-                                text-align: end;"> Acciones</th>
-                        <th scope="col"> </th>
-                        <th scope="col" style="
-                                text-align: center;
-                                "> Estado</th>
-                    </tr>
-                </thead>
-                <tbody th:each="skill : ${skillsList}">
-                    <tr class="p-4">
-                        <!-- <th th:text="${skill.id}"></th> -->
-                        <td th:text="${skill.name}"></td>
-                        <td style="
+
+<body id="page-top" class="d-flex flex-column min-vh-100 bodyUserList">
+    <nav th:replace="@{/fragments/navbar} :: nav"></nav>
+    <main class="container justify-content-center ">
+        <div th:replace="@{/fragments/thmsg} :: div"></div>
+        <div class="row justify-content-center mb-3">
+            <div class="table-responsive bg-dark rounded pt-2 mt-3">
+                <div class="d-flex justify-content-between align-items-center bg-dark">
+                    <h5 class="text-color text-center fs-3 mt-2 rounded">Panel de Servicios</h5>
+                    <a th:href="@{/skill/registration}" class="btn btnbuscar btn-sm me-4">Cargar nuevo Oficio</a>
+                </div>
+                <table class="table table-bordered table-hover table-striped table-dark mx-auto ">
+                    <div class="row justify-content-center">
+                        <!--Mensaje de Éxito th interaccion con controller-->
+                        <div th:replace="@{/fragments/thmsg} :: div"></div>
+                        <table class="table table-bordered table-hover table-striped table-dark mx-auto">
+                            <thead class="thead-light">
+                                <tr>
+                                    <!-- <th scope="col">Id</th> -->
+                                    <th scope="col"> Oficios</th>
+                                    <th scope="col" style="text-align: end;"> Acciones</th>
+                                    <th scope="col"> </th>
+                                    <th scope="col" style="text-align: center;"> Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody th:each="skill : ${skillsList}">
+                                <tr class="p-4">
+                                    <!-- <th th:text="${skill.id}"></th> -->
+                                    <td th:text="${skill.name}"></td>
+                                    <td style="
                                 text-align: center;">
-                            <!--Si está dado de alta: Boton para ELIMINAR-->
-                            <a th:if="${skill.active}" class="btn btn-danger btn-sm"
-                                th:href="@{/skill/delete/__${skill.id}__}">Eliminar</a>
-                            <!--Si está dado de baja: Boton para RESTAURAR-->
-                            <a th:if="${!(skill.active)}" class="btn btn-secondary btn-sm"
-                                th:href="@{/skill/restore/__${skill.id}__}">Restaurar</a>
-                        </td>
-                        <td>
-                            <!--Si está dado de alta: Boton para EDITAR-->
-                            <a th:if="${skill.active}" class="btn btn-success btn-sm"
-                                th:href="@{/skill/modify/__${skill.id}__}">Editar</a>
-                        </td>
-                        <!--en caso de alta circulo verde y de baja una circulo rojo. Ponerlo mas lindo al estilo, que soy un queso-->
-                        <td style="text-align: center;"> <i th:if="${skill.active}" class="fa-solid fa-circle fa-sm"
-                                style="color: #08a10a;"></i>
-                            <!-- circulo verde -->
-                            <i th:if="${!(skill.active)}" class="fa-solid fa-circle fa-sm" style="color: #f42a2a;"></i>
-                            <!-- circulo rojo -->
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                                        <!--Si está dado de alta: Boton para ELIMINAR-->
+                                        <a th:if="${skill.active}" class="btn btn-danger btn-sm" th:href="@{/skill/delete/__${skill.id}__}">Eliminar</a>
+                                        <!--Si está dado de baja: Boton para RESTAURAR-->
+                                        <a th:if="${!(skill.active)}" class="btn btn-secondary btn-sm" th:href="@{/skill/restore/__${skill.id}__}">Restaurar</a>
+                                    </td>
+                                    <td>
+                                        <!--Si está dado de alta: Boton para EDITAR-->
+                                        <a th:if="${skill.active}" class="btn btn-success btn-sm" th:href="@{/skill/modify/__${skill.id}__}">Editar</a>
+                                    </td>
+                                    <!--en caso de alta circulo verde y de baja una circulo rojo. Ponerlo mas lindo al estilo, que soy un queso-->
+                                    <td style="text-align: center;"> <i th:if="${skill.active}" class="fa-solid fa-circle fa-sm" style="color: #08a10a;"></i>
+                                        <!-- circulo verde -->
+                                        <i th:if="${!(skill.active)}" class="fa-solid fa-circle fa-sm" style="color: #f42a2a;"></i>
+                                        <!-- circulo rojo -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </table>
+            </div>
         </div>
         <!-- Se aplica la paginación -->
         <div th:replace="fragments/paginacion :: div"></div>
@@ -67,4 +68,5 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
         </script>
 </body>
+
 </html>

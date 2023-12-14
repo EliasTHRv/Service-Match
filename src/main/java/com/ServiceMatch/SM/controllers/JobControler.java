@@ -204,18 +204,16 @@ public class JobControler {
     public String formComment(@PathVariable Long id, ModelMap model) {
         Job job = serviceJob.getOne(id);
         model.addAttribute("job", job);
-
         return "rating_comments.html";
     }
 
     @PostMapping("rating/{id}") // id del Job
     public String ratingAndComment(@PathVariable Long id, @RequestParam(required = false) Long callification,
             @RequestParam String comment, ModelMap model) {
+        System.out.println("Calification: " + callification);
         try {
-
             serviceJob.createComment(id, callification, comment.toUpperCase());
             model.put("exito", "Job actualizado correctamente");
-
         } catch (MyException ex) {
             model.put("error", "Error al cargar la calificación y los comentarios. " + ex.getMessage());
             return "forward:/job/user/rating/{id}"; // Reenvía a la misma vista con mensajes de error
