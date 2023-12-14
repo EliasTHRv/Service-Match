@@ -25,6 +25,7 @@
                             <p class="card-text" style="font-weight: bold;">Calificación: <span th:text="${job.callification}" style="font-weight: normal;"></span>
                             </p>
 
+<<<<<<< Updated upstream
                             <p class="card-text" style="font-weight: bold;">Estado: <span th:text="${job.jobStatus}" style="font-weight: normal;"></span></p>
                             <div class="d-flex justify-content-between">
                                 <!--                                    MODIFICAR PARA CARGAR PRECIO-->
@@ -36,9 +37,13 @@
                                         <button type="submit" class="btn btn-success btn-md">Presupuestar</button>
                                     </div>
                                 </form>
-                                <form sec:authorize="hasRole('PROVEEDOR')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).BUDGETED}"
+                                <form sec:authorize="hasRole('USUARIO')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).BUDGETED}"
                                     th:action="@{/job/list/provider/{id}/accept/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
-                                    <button type="submit" class="btn btn-danger btn-md">Aceptar</button>
+                                    <button type="submit" class="btn btn-success btn-md">Aceptar</button>
+                                </form>
+                                <form sec:authorize="hasRole('USUARIO')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).BUDGETED}"
+                                    th:action="@{/job/list/provider/{id}/refused/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
+                                    <button type="submit" class="btn btn-danger btn-md">Rechazar</button>
                                 </form>
                                 <form sec:authorize="hasRole('PROVEEDOR')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).PENDING}"
                                     th:action="@{/job/list/provider/{id}/refused/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
@@ -53,6 +58,75 @@
                                     th:action="@{/job/rating/{id}(id=${job.id})}" method="get">
                                     <button type="submit" class="btn btnbuscar">Calificar</button>
                                 </form>
+=======
+        <div class="container bg-dark">
+
+            <div class="container dg">
+                <div class="row">
+                    <div class="col-md-4 mb-4" th:each="job : ${jobs}">
+                        <div class="card table-limit bg-dark border-card" style="color: white;">
+                            <div class="card-body">
+                                <h5 class="card-title d-flex justify-content-center" th:text="${job.description.toUpperCase}"></h5>
+                                <!--                            <p class="card-text">Costo: <span th:text="${job.cost}"></span></p>-->
+                                <p class="card-text" style="font-weight: bold;">Oficio requerido: <span th:text="${job.skill.name}"
+                                                                                                        style="font-weight: normal;"></span></p>
+                                <p class="card-text" style="font-weight: bold;">Usuario: <span th:text="${job.appUser.name}" style="font-weight: normal;"></span>
+                                </p>
+                                <p class="card-text" style="font-weight: bold;">Precio: USD $ <span th:text="${job.cost}" style="font-weight: normal;"></span></p>
+                                <p class="card-text" sec:authorize="hasRole('USUARIO')" style="font-weight: bold;">Proveedor: <span th:text="${job.provider.name}"
+                                                                                                                                    style="font-weight: normal;"></span></p>
+
+                                <p class="card-text" style="font-weight: bold;">Comentario: <span th:text="${job.comment}" style="font-weight: normal;"></span></p>
+                                <p class="card-text" style="font-weight: bold;">Calificación: <span th:text="${job.callification}"
+                                                                                                    style="font-weight: normal;"></span></p>
+
+                                <p class="card-text" style="font-weight: bold;">Estado: <span th:text="${job.jobStatus}" style="font-weight: normal;"></span></p>
+
+                                <div class="d-flex justify-content-between">
+
+                                    <!--                                    MODIFICAR PARA CARGAR PRECIO-->
+
+                                    <form sec:authorize="hasRole('PROVEEDOR')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).PENDING}"
+                                          th:action="@{/job/list/provider/{id}/budged/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
+
+                                        <div class="form-group mx-sm-4 pt-2" id="wapDiv">
+
+                                            <input type="number" name="cost" class="form-control bg-dark text-white fw-semibold"
+                                                   placeholder="Ingrese el precio de referencia" autocomplete="off">
+
+                                            <button type="submit" class="btn btn-success btn-md">Presupuestar</button>
+                                        </div>
+
+                                    </form>
+                                    <form sec:authorize="hasRole('USUARIO')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).BUDGETED}"
+                                          th:action="@{/job/list/provider/{id}/accept/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
+                                        <button type="submit" class="btn btn-success btn-md">Aceptar</button>
+                                    </form>
+                                    
+                                    <form sec:authorize="hasRole('USUARIO')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).BUDGETED}"
+                                          th:action="@{/job/list/provider/{id}/refused/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
+                                        <button type="submit" class="btn btn-danger btn-md">Rechazar</button>
+                                    </form>
+
+
+
+                                    <form sec:authorize="hasRole('PROVEEDOR')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).PENDING}"
+                                          th:action="@{/job/list/provider/{id}/refused/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
+                                        <button type="submit" class="btn btn-danger btn-md">Rechazar</button>
+                                    </form>
+
+                                    <form th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).ACCEPTED}"
+                                          th:action="@{/job/list/provider/{id}/end/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
+                                        <button type="submit" class="btn btn-warning btn-md">Finalizar</button>
+
+                                    </form>
+
+                                    <form sec:authorize="hasRole('USUARIO')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).END and job.callification == null }"
+                                          th:action="@{/job/rating/{id}(id=${job.id})}" method="get">
+                                        <button type="submit" class="btn btnbuscar">Calificar</button>
+                                    </form>
+                                </div>
+>>>>>>> Stashed changes
                             </div>
                         </div>
                     </div>
