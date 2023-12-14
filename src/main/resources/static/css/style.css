@@ -370,6 +370,15 @@ a.link-colors:hover {
     overflow-y: auto;
 }
 
-.footerAbsolute{
-    position: absolute;
+.bodyUserList {
+    background: linear-gradient(rgba(29, 30, 35, 0.2),
+            rgba(29, 30, 35, 0.2)),
+        url(images/1287690.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+.tablaUserList {
+    padding: 60px;
 }
