@@ -39,7 +39,7 @@ public class Job implements Serializable {
     Date endDate;   
 
     @Column(nullable = false)
-    Double cost=0.0;
+    Double cost = 0.0;
 
     @Column(nullable = false)
     String description;
