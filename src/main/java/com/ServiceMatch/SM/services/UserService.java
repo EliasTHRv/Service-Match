@@ -64,7 +64,7 @@ public class UserService implements UserDetailsService {
         if (result.isPresent()) {
             validarEdit(name);
             if(!password2.equals(password)){
-                throw new MyException("passwords no coinciden");
+                throw new MyException("los passwords ingresados no coinciden");
             }
             client = result.get();
             c2 = result.get();
@@ -95,7 +95,7 @@ public class UserService implements UserDetailsService {
             provider = (Provider) result.get();
             provider.setId(id);
             provider.setName(name);
-            provider.setPassword(new BCryptPasswordEncoder().encode(password));
+           
             provider.setRol(RolEnum.PROVEEDOR);
             provider.setSkills(skills);
             provider.setWhatsApp(whatsApp);
@@ -111,14 +111,27 @@ public class UserService implements UserDetailsService {
         // validar(name, password, password2, whatsapp, skills);
         Optional<Provider> result = providerRepository.findById(id);
         Provider provider = new Provider();
+        AppUser c2 = new AppUser();
         if (result.isPresent()) {
             provider = result.get();
+            c2 = result.get();
+
+            if(!password2.equals(password)){
+                throw new MyException("los passwords ingresados no coinciden");
+            }
             provider.setName(name);
-            provider.setPassword(new BCryptPasswordEncoder().encode(password));
+            if (!password.isEmpty()){
+                provider.setPassword(new BCryptPasswordEncoder().encode(password));
+            }else{
+                provider.setPassword(c2.getPassword());
+            }
             provider.setRol(RolEnum.PROVEEDOR);
             provider.setSkills(skills);
             provider.setWhatsApp(whatsapp);
             providerRepository.save(provider);
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpSession session = attr.getRequest().getSession(true);
+            session.setAttribute("usuariosession", provider);
         }
     }
 
