@@ -1,5 +1,7 @@
 package com.ServiceMatch.SM.controllers;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -190,11 +192,12 @@ public class AppUserController {
                 }
             }
             double averageCalification = jobs.isEmpty() ? 0.0 : totalCalification / jobs.size();
-
+            BigDecimal roundedAverage = new BigDecimal(averageCalification).setScale(1, RoundingMode.HALF_UP);
             model.addAttribute("provider", provider);
             model.addAttribute("providerName", jobs.isEmpty() ? "" : jobs.get(0).getProvider().getName());
             model.addAttribute("comments", jobs.stream().map(Job::getComment).collect(Collectors.toList()));
-            model.addAttribute("averageCalification", averageCalification);
+            model.addAttribute("averageCalification", roundedAverage);
+            model.addAttribute("jobs", jobs);
 
             return "provider_details";
         } catch (EntityNotFoundException e) {
@@ -254,10 +257,9 @@ public class AppUserController {
             if (role.equals("provider")) {
                 serviceUser.clientToProvider(id, name, password, password2, whatsApp, skills, file);
                 return "index.html";
-            }else {
+            } else {
                 return "/user/client/editprofile/";
             }
-
 
         } catch (MyException ex) {
             redirectAttributes.addFlashAttribute("error", ex.getMessage());
