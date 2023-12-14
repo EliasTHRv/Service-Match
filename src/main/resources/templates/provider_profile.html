@@ -1,66 +1,74 @@
 <!DOCTYPE html>
-<!-- Se incorporó el uso de thymeleaf y spring-security -->
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 
 <head th:replace="@{/fragments/head} :: head"></head>
 
-<body class="d-flex flex-column min-vh-100 bodyEditarPerfilProvider">
+<body id="page-top" class="bg-dark">
   <nav th:replace="@{/fragments/navbar} :: nav"></nav>
-  <main class="container pt-5 mb-5">
-    <div class="row justify-content-center pt-3 mt-3 m-1">
-      <div class="col-10 col-md-8 col-sm-11 col-xl-5 col-lg-6 formularioEditarPerfilProvider bg-color">
-        <form id="editarForm" th:action="@{/logincheck}" method="POST">
-          <div class="form-group text-center mb-0">
-            <a class="logo-color fs-3 text-decoration-none">
-              <span class="text-color">Match</span>
-              <img th:src="@{/img/alicates.png}" alt="" class="icono" width="20rem">
-              Service
-            </a>
+
+  <div th:replace="@{/fragments/thmsg} :: div"></div>
+
+  <main class="container d-flex justify-content-center mb-5 pb-5">
+    <div class="pt-4 mt-3 m-1 col-5">
+      <form class="form bg-color text-white" th:action="@{/user/provider/editprofile/__${session.usuariosession.id}__}" method="post" enctype="multipart/form-data">
+        <input hidden th:value="${id}" name="id">
+        <h4 class="text-color text-center">Editar Perfil</h4>
+        <div class="contenedor">
+          <div class="form-group text-white fw-semibold pt-2">
+            <label for="name" class="ps-1 pb-1">Nombre:</label>
+            <input class="form-control bg-dark text-white" type="text" name="name" th:value="${session.usuariosession.name}" placeholder="Nombre">
           </div>
-          <div class="form-group text-center pt-2 mb-5">
-            <h2 class="text-white fs-2">Editar Perfil</h2>
-            <h1 class="text-white fs-1">PROVEEDOR</h1>
+          <div class="form-group text-white fw-semibold pt-3" id="wapDiv">
+            <label for="password" class="ps-1 pb-1">Whatsapp:</label>
+            <input type="number" name="whatsApp" class="form-control bg-dark text-white fw-semibold" th:value="${session.usuariosession.whatsApp}"
+              placeholder="WhatsApp" autocomplete="off">
           </div>
-          <div class="form-group mb-5">
-            <label for="nombreNuevo" class="form-label text-white fw-semibold">Nombre:</label>
-            <input class="form-control bg-dark text-white fw-semibold" type="text" id="nombreNuevo" name="nombreNuevo" value="" required autocomplete="off">
-            <small class="form-text text-white">Ingrese el nombre que desea.</small>
+          <div class="form-group mx-sm-4 text-white pt-2 text-center" id="imagenDiv">
+            <label for="image" class="mb-2 fw-semibold fs-6">Foto de perfil:</label>
+            <input type="file" accept="image/*" id="image" name="file" class="form-control bg-dark text-white" onchange="previewImage(event)">
+            <img id="preview" alt="Image Preview" style="max-width: 200px; max-height: 200px;">
           </div>
 
-          <div class="form-group mb-5">
-            <label for="apellidoNuevo" class="form-label text-white fw-semibold">Apellido:</label>
-            <input class="form-control bg-dark text-white fw-semibold" type="text" id="apellidoNuevo" name="apellidoNuevo" value="" required autocomplete="off">
-            <small class="form-text text-white">Ingrese el apellido que desea.</small>
+          <div class="form-group text-white fw-semibold pt-3">
+            <label for="password" class="ps-1 pb-1">Nueva contraseña:</label>
+            <input class="form-control bg-dark text-white" type="password" name="password" placeholder="Contraseña">
           </div>
-
-          <div class="form-group mb-5">
-            <label for="contrasenaNueva" class="form-label text-white fw-semibold">Contraseña:</label>
-            <input class="form-control bg-dark text-white fw-semibold" type="password" id="contrasenaNueva" name="contrasenaNueva" required autocomplete="off">
-            <small class="form-text text-white">Ingrese la contraseña que desea.</small>
+          <div class="form-group text-white fw-semibold pt-3">
+            <input class="form-control bg-dark text-white" type="password" name="password2" placeholder="Repetir Contraseña">
           </div>
-
-          <div class="form-group mb-5">
-            <label for="emailNuevo" class="form-label text-white fw-semibold">Email:</label>
-            <input class="form-control bg-dark text-white fw-semibold" type="email" id="emailNuevo" name="emailNuevo" value="" required autocomplete="off">
-            <small class="form-text text-white">Ingrese el email que desea.</small>
+          <div class="form-group mx-sm-4 text-white pt-2 text-center" id="skillsDiv">
+            <div class="form-group mx-sm-4 text-white pt-2 fw-semibold text-center">
+              <label class="fw-semibold mb-2 fs-5">Seleccionar servicio/s</label>
+              <!-- Agrega un div para mostrar mensajes de error -->
+              <div id="mensajeError" style="color: red;"></div>
+            </div>
+            <div id="skills" style="height: 200px; overflow-y: auto;">
+              <table class="table table-borderless table-hover table-striped table-dark">
+                <!-- SUPRIMI LOS ENCABEZADOS DE SKILL PORQUE ERA REDUNDANTE -->
+                <tbody>
+                  <tr th:each="skill : ${skillsRegistro}">
+                    <td th:text="${skill.name}"></td>
+                    <td><input type="checkbox" name="skills" th:value="${skill.id}"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-
-
-          <div class="form-group">
-            <label for="fotoPerfilNueva" class="form-label text-white">Foto de perfil:</label>
-            <input type="file" class="form-control bg-dark text-white" id="fotoPerfilNueva" name="fotoPerfilNueva">
-            <small class="form-text text-white">Ingrese la foto de perfil que desea.</small>
+          <div class="form-group text-white fw-semibold pt-3 text-center">
+            <button class="btn btn-primary mt-3 botones m-auto w-auto pt-2" type="submit">Guardar cambios</button>
+            <button class="btn btnbuscar mt-3 botones m-auto w-auto pt-2" th:href="@{/}">Cancelar</button>
           </div>
-
-          <div class="form-group mx-sm-4 text-rigth pt-4 text-center">
-            <button id="enviarLogeo" name="enviarLogeo" class="btn btnOrigin text-white btn-lg mt-3 mb-4" type="submit">
-              Actualizar Perfil
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   </main>
 
   <footer th:replace="@{/fragments/footer} :: footer"></footer>
+  <script th:replace="@{/fragments/script} :: script"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
+
 </body>
+
+</html>
