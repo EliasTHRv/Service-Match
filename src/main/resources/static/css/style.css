@@ -434,3 +434,7 @@ a.link-colors:hover {
 .tablaUserList {
     padding: 60px;
 }
+
+.img-perfilproveedor {
+    max-width: 8em;
+}
