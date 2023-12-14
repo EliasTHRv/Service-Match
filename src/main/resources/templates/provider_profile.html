@@ -3,7 +3,7 @@
 
 <head th:replace="@{/fragments/head} :: head"></head>
 
-<body id="page-top" class="bg-dark">
+<body id="page-top" class="bodyEditarPerfilProvider">
   <nav th:replace="@{/fragments/navbar} :: nav"></nav>
 
   <div th:replace="@{/fragments/thmsg} :: div"></div>
@@ -25,7 +25,7 @@
           </div>
           <div class="form-group mx-sm-4 text-white pt-2 text-center" id="imagenDiv">
             <label for="image" class="mb-2 fw-semibold fs-6">Foto de perfil:</label>
-            <input type="file" accept="image/*" id="image" name="file" class="form-control bg-dark text-white" onchange="previewImage(event)">
+            <input type="file" accept="image/*" id="image" name="file" class="form-control bg-dark text-white mb-3" onchange="previewImage(event)">
             <img id="preview" alt="Image Preview" style="max-width: 200px; max-height: 200px;">
           </div>
 
