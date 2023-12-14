@@ -13,8 +13,9 @@
                     <div class="card bg-dark bg-color text-white">
                         <div class="card-body p-1">
                             <h3 class="text-color text-center mb-4" th:text="${provider.name}"></h3>
-                            <div th:if="${provider.imagen != null}" class="text-slide-left mb-3 text-center">
-                                <img class="img-perfilproveedor mx-auto" th:src="@{/imagen/perfil/__${provider.id}__}" style="max-width: 100%; max-height: 140px;" />
+                            <div class="text-slide-left mb-3 text-center">
+                                <img class="img-perfilproveedor mx-auto" th:src="@{/imagen/perfil/__${provider.id}__}" th:if="${provider.imagen != null}">
+                                <img class="img-perfilproveedor mx-auto" th:src="@{/img/no-profile.png}" th:if="${provider.imagen == null}">
                             </div>
                             <div>
                                 <label class="card-title fw-semibold pe-1">WhatsApp </label>
@@ -24,10 +25,12 @@
                             <div>
 
 
-                                <div class="rating">
+                                <div class="rating cardCalif">
                                     <label class="card-title fw-semibold">Calificación:</label>
-                                    <span class="card-text" th:text="${averageCalification}"></span>
-                                    <span class="fa fa-star ps-1" th:each="i : ${#numbers.sequence(1, averageCalification)}"></span>
+                                    <span th:if="${averageCalification != 0}" class="card-text" th:text="${averageCalification}"></span>
+                                    <span th:if="${averageCalification != 0}" class="fa fa-star ps-1"
+                                        th:each="i : ${#numbers.sequence(1, averageCalification)}"></span>
+                                    <span th:if="${averageCalification == 0}" class="card-text">-</span>
                                     <span th:if="${averageCalification % 1 != 0 && averageCalification < 4}" class="ps-0 fa fa-star-half"></span>
                                 </div>
                             </div>
