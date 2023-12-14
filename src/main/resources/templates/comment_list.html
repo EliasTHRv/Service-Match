@@ -17,6 +17,8 @@
             <tr>
               <!-- <th scope="col">Id</th> -->
               <th scope="col">Comentario</th>
+              <th scope="col">ID Cliente</th>
+              <th scope="col">Nombre Cliente</th>
               <th scope="col">ID Proveedor</th>
               <th scope="col">Nombre Proveedor</th>
               <th scope="col">Acciones</th>
@@ -24,16 +26,17 @@
           </thead>
           <!-- recorro muestro lista comentarios de cada job según provider-->
           <tbody th:each="job : ${jobs}">
-            <tr class="p-4">
+            <tr class="p-4" th:if="${job.comment != null}">
               <!-- <th th:text="${skill.id}"></th> -->
               <td th:text="${job.comment}"></td>
+              <td th:text="${job.appUser.id}"></td>
+              <td th:text="${job.appUser.name}"></td>
               <td th:text="${job.provider.id}"></td>
               <td th:text="${job.provider.name}"></td>
               <td>
-                <!-- COMPLETAR LA LÓGICA PARA QUE UNA VEZ CENSURADO EL BOTON NO SIGA APARECIENDO-->
                 <a class="btn btn-danger btn-sm" th:href="@{/job/comment/censor/__${job.id}__}"
+                  th:if="${job.comment ne 'Este comentario ha sido censurado por contener lenguaje no apropiado'}"
                   value="Este comentario ha sido censurado por contener lenguaje no apropiado." name="censura">Censurar</a>
-                <!-- <a class="btn btn-secondary btn-sm" th:href="@{/comment/restore/__${comment}__}">Restaurar</a> -->
               </td>
             </tr>
           </tbody>
