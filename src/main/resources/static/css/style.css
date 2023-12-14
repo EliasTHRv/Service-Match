@@ -334,9 +334,6 @@ a.link-colors:hover {
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
-    align-items: center;
-    min-height: 70vh;
-    padding: 80px 0 0 0;
 }
 
 .formularioRegistrarOficio {
