@@ -32,10 +32,26 @@
 
                                 <div class="d-flex justify-content-between">
 
+                                    <!--                                    MODIFICAR PARA CARGAR PRECIO-->
+
                                     <form sec:authorize="hasRole('PROVEEDOR')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).PENDING}"
-                                          th:action="@{/job/list/provider/{id}/accept/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
-                                        <button type="submit" class="btn btn-success btn-md">Aceptar</button>
+                                          th:action="@{/job/list/provider/{id}/buget/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
+
+                                        <div class="form-group mx-sm-4 pt-2" id="wapDiv">
+
+                                            <input type="number" name="cost" class="form-control bg-dark text-white fw-semibold"
+                                                   placeholder="Ingrese el precio de referencia" autocomplete="off">
+
+                                            <button type="submit" class="btn btn-success btn-md">Presupuestar</button>
+                                        </div>
+
                                     </form>
+                                    <form sec:authorize="hasRole('PROVEEDOR')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).BUDGETED}"
+                                          th:action="@{/job/list/provider/{id}/accept/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
+                                        <button type="submit" class="btn btn-danger btn-md">Aceptar</button>
+                                    </form>
+
+
 
                                     <form sec:authorize="hasRole('PROVEEDOR')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).PENDING}"
                                           th:action="@{/job/list/provider/{id}/refused/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">

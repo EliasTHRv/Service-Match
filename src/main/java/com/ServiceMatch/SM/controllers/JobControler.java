@@ -132,11 +132,33 @@ public String createJob(@RequestParam(required = false) String description,
         }
     }
     // AQUI TERMINA PAULINA
+    
+    
+    // ACEPTAR JOB + CARGA DE PRESUPUESTO
+    
+     @PostMapping("/list/provider/{id}/budged/{idJob}")
+    public String budgetJob(@PathVariable Long id, @PathVariable Long idJob, String status,@RequestParam Double cost, ModelMap model) {
+        try {
+            serviceJob.updateJobStatus(idJob, JobStatusEnum.BUDGETED);
+            serviceJob.updateCost(idJob, cost);
+            
+            model.put("exito", "Job actualizado correctamente");
+            return "redirect:/job/list/provider/{id}";
+        } catch (MyException ex) {
+            model.put("error", "Error al actualizar el job: " + ex.getMessage());
+            return "forward:/job/list/provider/{id}"; // Reenvía a la misma vista con mensajes de error
+        }
+    }
+    
+    
+    
 
     @PostMapping("/list/provider/{id}/accept/{idJob}")
     public String acceptJob(@PathVariable Long id, @PathVariable Long idJob, String status, ModelMap model) {
         try {
             serviceJob.updateJobStatus(idJob, JobStatusEnum.ACCEPTED);
+           
+            
             model.put("exito", "Job actualizado correctamente");
             return "redirect:/job/list/provider/{id}";
         } catch (MyException ex) {
