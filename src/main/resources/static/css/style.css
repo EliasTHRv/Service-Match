@@ -77,6 +77,57 @@ select::placeholder {
     color: #b14330;
 }
 
+#fondoProvDetails {
+    background: linear-gradient(rgba(9, 9, 10, 0.6), rgba(19, 20, 22, 0.6)), url(/img/fondo1.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.bg-califf {
+    background: linear-gradient(90deg,
+            rgba(245, 99, 72, 1) 0%,
+            rgba(245, 140, 32, 1) 100%);
+    ;
+}
+
+.list-comments {
+    max-height: 25em;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #F56349
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #24272E;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #424344;
+    border-radius: 5px;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
 #header {
     background: linear-gradient(rgba(29, 30, 35, 0.6),
             rgba(29, 30, 35, 0.6)),
@@ -113,8 +164,18 @@ select::placeholder {
             rgba(245, 99, 72, 1) 0%,
             rgba(245, 140, 32, 1) 100%);
     color: white !important;
-    width: 7rem;
+    width: auto;
 
+}
+
+.cardIndex {
+    width: 18rem;
+    margin: 1em;
+}
+
+.card-img-top {
+    width: fit-content !important;
+    margin: 1em auto 0 auto !important;
 }
 
 .btn-rojo {
@@ -268,8 +329,8 @@ a.link-colors:hover {
 }
 
 .formularioCreateJob {
-    padding: 50px;
-    height: 625px;
+    /* padding: 50px; */
+    height: 100%;
     position: static;
 }
 
@@ -381,4 +442,8 @@ a.link-colors:hover {
 
 .tablaUserList {
     padding: 60px;
+}
+
+.img-perfilproveedor {
+    max-width: 8em;
 }

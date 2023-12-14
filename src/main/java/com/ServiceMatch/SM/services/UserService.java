@@ -56,9 +56,7 @@ public class UserService implements UserDetailsService {
     // método para editar el perfil del cliente
     @Transactional
     public void editClient(Long id, String name, String password, String password2) throws MyException {
-
         Optional<AppUser> result = userRepository.findById(id);
-
         AppUser client = new AppUser();
         AppUser c2 = new AppUser();
         if (result.isPresent()) {
@@ -69,9 +67,9 @@ public class UserService implements UserDetailsService {
             client = result.get();
             c2 = result.get();
             client.setName(name);
-            if (!password.isEmpty()){
+            if (!password.isEmpty()) {
                 client.setPassword(new BCryptPasswordEncoder().encode(password));
-            }else{
+            } else {
                 client.setPassword(c2.getPassword());
             }
 
@@ -133,6 +131,9 @@ public class UserService implements UserDetailsService {
             HttpSession session = attr.getRequest().getSession(true);
             session.setAttribute("usuariosession", provider);
         }
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attr.getRequest().getSession(true);
+        session.setAttribute("usuariosession", provider);
     }
 
     public List<AppUser> getUsers() {
@@ -249,11 +250,11 @@ public class UserService implements UserDetailsService {
         }
 
     }
-    private void validarEdit(String name)throws MyException {
+
+    private void validarEdit(String name) throws MyException {
         if (name == null || name.isEmpty()) {
             throw new MyException("El nombre no puede ser nulo o estar vacio");
         }
     }
-  
 
 }
