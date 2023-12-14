@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
-<!--Traigo el  Fragmento del head-->
-
 <head th:replace="@{/fragments/head} :: head"></head>
-
-
 <body class="d-flex flex-column min-vh-100 bodyCreateJob mb-5">
   <nav th:replace="@{/fragments/navbar} :: nav"></nav>
-
 
   <div th:if="${exito}" class="alert alert-success text-center">
     <p th:text="${exito}"></p>
@@ -40,17 +35,17 @@
           <!-- manejo mensaje de errores -->
           <div th:replace="@{/fragments/thmsg} :: div"></div>
 
-          <!-- DESCRIPCION SI ES USUARIO PUEDE CARGARLA - SI ES PROVEEDOR PUEDE VERLA -->
-
-
+          <!-- DESCRIPCION -->
           <div class="form-group mx-sm-4 pt-3 mb-2">
             <!-- <label class="mb-2">Descripcion</label> -->
             <label for="description" class="text-color mb-1 fw-semibold ps-1">Descripción:</label>
             <textarea class="form-control bg-dark text-white" type="text" name="description"
               placeholder="Cargue una breve descripcion del trabajo que solicita" required="true"
               sec:authorize="hasRole('USUARIO')" rows="5"></textarea>
+</div>
+<!-- SKILL SELECCIONADA -->
+ <input class="form-control" type="number" id="skill" name="idSkill" th:value="${skill.getId()}" hidden>
 
-          </div>
 
           <div class="form-group mx-sm-4 pt-2 text-white" style="margin-bottom: 20px;">
             <label for="description" class="text-color mb-1 fw-semibold ps-1">Servicio requerido:</label>
@@ -61,23 +56,18 @@
                 th:text="${skill.name}"></option>
             </select>
           </div>
-          <div class="form-group mx-sm-4 pt-3 mb-2">
-            <label for="cost" class="text-color mb-1 fw-semibold ps-1">Precio </label>
-            <input class="form-control bg-dark text-white" type="number" name="cost"
-              placeholder="USD $ " required="true"
-              sec:authorize="hasRole('USUARIO')" rows="5"></input>
 
-          </div>
-          <!-- CLIENTE: SE APLICA EL CLIENTE LOGUEADO en modo hidden -->
+          <!-- CLIENTE LOGUEADO hidden -->
           <input class="form-control" type="number" id="client" name="idClient" th:if="${client != null}"
             th:value="${client.getId()}" hidden>
+  <!-- PROVEEDOR SELECCIONADO hidden -->
           <input class="form-control" type="number" id="provider" name="idProvider" th:value="${provider.getId()}"
             hidden>
 
 
-          <!-- ENVIAR CREAR EL TRABAJO SOLICITADO -->
+          <!-- ENVIAR SOLICITUD DE PRESUPUESTO -->
           <div class="form-group mx-sm text-rigth text-center pb-4">
-            <button type="submit" class="btn text-white btn-md btnbuscar">Registrar</button>
+            <button type="submit" class="btn text-white btn-md btnbuscar">Solicitar Presupuesto</button>
           </div>
 
           <section class=" text-center container">
