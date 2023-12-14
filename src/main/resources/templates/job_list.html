@@ -36,9 +36,13 @@
                                         <button type="submit" class="btn btn-success btn-md">Presupuestar</button>
                                     </div>
                                 </form>
-                                <form sec:authorize="hasRole('PROVEEDOR')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).BUDGETED}"
+                                <form sec:authorize="hasRole('USUARIO')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).BUDGETED}"
                                     th:action="@{/job/list/provider/{id}/accept/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
-                                    <button type="submit" class="btn btn-danger btn-md">Aceptar</button>
+                                    <button type="submit" class="btn btn-success btn-md">Aceptar</button>
+                                </form>
+                                <form sec:authorize="hasRole('USUARIO')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).BUDGETED}"
+                                    th:action="@{/job/list/provider/{id}/refused/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
+                                    <button type="submit" class="btn btn-danger btn-md">Rechazar</button>
                                 </form>
                                 <form sec:authorize="hasRole('PROVEEDOR')" th:if="${job.jobStatus == T(com.ServiceMatch.SM.enums.JobStatusEnum).PENDING}"
                                     th:action="@{/job/list/provider/{id}/refused/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
