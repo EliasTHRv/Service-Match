@@ -10,13 +10,13 @@
 
   <main class="container d-flex justify-content-center mb-5 pb-5">
     <div class="pt-4 mt-3 m-1 col-5">
-      <form class="form bg-color text-white" th:action="@{/user/client/editprofile/__${session.usuariosession.id}__}" method="post" enctype="multipart/form-data">
+      <form class="form bg-color text-white" th:action="@{/user/editprofile/__${session.usuariosession.id}__}" method="post" enctype="multipart/form-data">
         <input hidden th:value="${id}" name="id">
         <h4 class="text-color text-center">Editar Perfil</h4>
         <div class="contenedor">
           <div class="form-group text-white fw-semibold pt-2">
             <label for="name" class="ps-1 pb-1">Nombre:</label>
-            <input class="form-control bg-dark text-white" type="text" name="name" th:value="${session.usuariosession.name}" placeholder="Nombre">
+            <input class="form-control bg-dark text-white" type="text" name="name" th:value="${user.name}" placeholder="Nombre">
           </div>
           <div class="form-group text-white fw-semibold pt-3">
             <label for="password" class="ps-1 pb-1">Nueva contraseña:</label>
