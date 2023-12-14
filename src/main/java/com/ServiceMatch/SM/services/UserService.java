@@ -244,17 +244,4 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    private void validarEdit(String name, String password, String password2)
-            throws MyException {
-        if (name == null || name.isEmpty()) {
-            throw new MyException("El nombre no puede ser nulo o estar vacio");
-        }
-        if (password == null || password.isEmpty() || password.length() <= 5) {
-            throw new MyException("La contraseña no puede estar vacía, y debe tener mas de 5 digitos");
-        }
-        if (!password2.equals(password)) {
-            throw new MyException("Las contraseñas ingresadas no coinciden");
-        }
-    }
-
 }

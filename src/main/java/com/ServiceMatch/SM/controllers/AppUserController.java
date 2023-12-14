@@ -210,11 +210,19 @@ public class AppUserController {
     // MÉTODO PARA DEVOLVER VISTA EDITAR PERFIL TANTO PARA CLIENTE COMO PARA
     // PROVEEDOR
     @GetMapping("/editprofile/{id}")
-    public String userProfile(@PathVariable Long id, Model model) {
+    public String userProfile(@PathVariable Long id, Model model
+    ,RedirectAttributes redirectAttributes) {
         try {
             AppUser user = serviceUser.getOne(id);
             List<Skill> skills = serviceSkill.getSkills();
+            String error = (String) redirectAttributes.getFlashAttributes().get("error");
+            if (error != null) {
+                model.addAttribute("error", error);
+            }
+            
+   
             model.addAttribute("skillsRegistro", skills);
+            model.addAttribute("user", user);
             if (user.getRol().equals(RolEnum.USUARIO)) {
                 model.addAttribute("client", user);
                 return "client_profile.html";
@@ -234,11 +242,12 @@ public class AppUserController {
     }
 
     // MÉTODO PARA EDITAR PERFIL CLIENTE
-    @PostMapping("/client/editprofile/{id}")
+    @PostMapping("/editprofile/{id}")
     public String clientProfile(@PathVariable Long id, @RequestParam String name, @RequestParam String password,
             @RequestParam String password2, @RequestParam(required = false) Long whatsApp,
             @RequestParam(required = false) List<Skill> skills, @RequestParam String role,
-            @RequestParam(required = false) MultipartFile file, Model model) {
+            @RequestParam(required = false) MultipartFile file, Model model
+            , RedirectAttributes redirectAttributes) {
         // añadir rol en caso de que quiera cambiarlo y si es asi setear todos los otros
         // atributos revisar metodo
         try {
@@ -254,8 +263,8 @@ public class AppUserController {
                 return "/user/client/editprofile/";
             }
         } catch (MyException ex) {
-            model.addAttribute("error", ex.getMessage());
-            return "index.html";
+            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+            return "redirect:/user/editprofile/" + id;
         }
 
     }
