@@ -2,6 +2,7 @@
 <!-- Se incorporó el uso de thymeleaf y spring-security -->
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 <!--Traigo el  Fragmento del head-->
+
 <head th:replace="@{/fragments/head} :: head"></head>
 
 <body id="page-top" class="bg-dark">
@@ -10,8 +11,8 @@
 
     <main class="container justify-content-center">
         <div>
-            <h5 class="text-color">Todos los servicios</h5>
-            <a th:href="@{/skill/registration}" class="btn btn-success btn-sm">Cargar nuevo Oficio</a>
+            <h5 class="text-color">Panel de servicios</h5>
+            <a th:href="@{/skill/registration}" class="btn btnbuscar">Cargar nuevo Oficio</a>
         </div>
         <div class="row justify-content-center">
             <!--Mensaje de Éxito th interaccion con controller-->
@@ -36,20 +37,16 @@
                         <td style="
                                 text-align: center;">
                             <!--Si está dado de alta: Boton para ELIMINAR-->
-                            <a th:if="${skill.active}" class="btn btn-danger btn-sm"
-                                th:href="@{/skill/delete/__${skill.id}__}">Eliminar</a>
+                            <a th:if="${skill.active}" class="btn btn-danger btn-sm" th:href="@{/skill/delete/__${skill.id}__}">Eliminar</a>
                             <!--Si está dado de baja: Boton para RESTAURAR-->
-                            <a th:if="${!(skill.active)}" class="btn btn-secondary btn-sm"
-                                th:href="@{/skill/restore/__${skill.id}__}">Restaurar</a>
+                            <a th:if="${!(skill.active)}" class="btn btn-secondary btn-sm" th:href="@{/skill/restore/__${skill.id}__}">Restaurar</a>
                         </td>
                         <td>
                             <!--Si está dado de alta: Boton para EDITAR-->
-                            <a th:if="${skill.active}" class="btn btn-success btn-sm"
-                                th:href="@{/skill/modify/__${skill.id}__}">Editar</a>
+                            <a th:if="${skill.active}" class="btn btn-success btn-sm" th:href="@{/skill/modify/__${skill.id}__}">Editar</a>
                         </td>
                         <!--en caso de alta circulo verde y de baja una circulo rojo. Ponerlo mas lindo al estilo, que soy un queso-->
-                        <td style="text-align: center;"> <i th:if="${skill.active}" class="fa-solid fa-circle fa-sm"
-                                style="color: #08a10a;"></i>
+                        <td style="text-align: center;"> <i th:if="${skill.active}" class="fa-solid fa-circle fa-sm" style="color: #08a10a;"></i>
                             <!-- circulo verde -->
                             <i th:if="${!(skill.active)}" class="fa-solid fa-circle fa-sm" style="color: #f42a2a;"></i>
                             <!-- circulo rojo -->
@@ -67,4 +64,5 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
         </script>
 </body>
+
 </html>

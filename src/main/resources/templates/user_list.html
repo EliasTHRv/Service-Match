@@ -10,8 +10,8 @@
 <body id="page-top" class="d-flex flex-column min-vh-100 bodyUserList">
     <nav th:replace="@{/fragments/navbar} :: nav"></nav>
     <main class="container justify-content-center ">
+        <div th:replace="@{/fragments/thmsg} :: div"></div>
         <div class="row justify-content-center">
-
             <div class="table-responsive bg-dark rounded pt-2 mt-3">
                 <h5 class="text-color text-center fs-3 mt-2 bg-dark col-3 rounded ">Panel de Usuarios</h5>
                 <table class="table table-bordered table-hover table-striped table-dark mx-auto ">
@@ -39,7 +39,7 @@
                                     <a th:if="${!(user.active)}" class="btn btn-secondary btn-sm mb-2 mb-sm-0"
                                         th:href="@{/user/restore/__${user.id}__}">Restaurar</a>
                                     <a th:if="${user.active}" class="btn btn-success btn-sm mb-2 mb-sm-0" th:href="@{/user/modify/__${user.id}__}">Editar</a>
-                                    <a class="btn btn-rojo btn-sm" th:href="@{/user/delete/__${user.id}__}">Eliminar</a>
+                                    <a class="ms-3 btn btn-danger btn-sm" th:href="@{/user/delete/__${user.id}__}">Eliminar</a>
                                 </div>
                             </td>
                             <td th:if="${user.active}">
