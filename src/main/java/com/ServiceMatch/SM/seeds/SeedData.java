@@ -44,12 +44,12 @@ public class SeedData implements ApplicationRunner {
         if (userRepository.count() == 0) {
             // Si no hay usuarios, crear el admin
 
-            Skill skill = new Skill();
-            skill.setName("Plomero");
-            skill.setActive(true);
-            ArrayList<Skill> skills = new ArrayList<>();
-            skills.add(skill);
-            skillRepository.save(skill);
+            // Skill skill = new Skill();
+            // skill.setName("Plomero");
+            // skill.setActive(true);
+            // ArrayList<Skill> skills = new ArrayList<>();
+            // skills.add(skill);
+            // skillRepository.save(skill);
 
             // Encripta usando BCryptPasswordEncoder
             String encryptedPassword = passwordEncoder.encode("admin123");
@@ -64,38 +64,38 @@ public class SeedData implements ApplicationRunner {
             adminUser.setWhatsApp(1234567890L);
             userRepository.save(adminUser);
 
-            Provider provider = new Provider();
-            provider.setRol(RolEnum.PROVEEDOR);
-            provider.setRegistrationDate(new Date());
-            provider.setName("Provider1");
-            provider.setActive(true);
-            provider.setPassword(encryptedPassword);
-            provider.setEmail("Mail@gmail.com");
-            provider.setWhatsApp(1234567890L);
-            provider.setSkills(skills);
-            userRepository.save(provider);
+            // Provider provider = new Provider();
+            // provider.setRol(RolEnum.PROVEEDOR);
+            // provider.setRegistrationDate(new Date());
+            // provider.setName("Provider1");
+            // provider.setActive(true);
+            // provider.setPassword(encryptedPassword);
+            // provider.setEmail("Mail@gmail.com");
+            // provider.setWhatsApp(1234567890L);
+            // provider.setSkills(skills);
+            // userRepository.save(provider);
             
             
-             Provider provider2 = new Provider();
-            provider2.setRol(RolEnum.PROVEEDOR);
-            provider2.setRegistrationDate(new Date());
-            provider2.setName("Provider2");
-            provider2.setActive(true);
-            provider2.setPassword(encryptedPassword);
-            provider2.setEmail("Mail2@gmail.com");
-            provider2.setWhatsApp(1234567890L);
-            provider2.setSkills(skills);
-            userRepository.save(provider2);
+            //  Provider provider2 = new Provider();
+            // provider2.setRol(RolEnum.PROVEEDOR);
+            // provider2.setRegistrationDate(new Date());
+            // provider2.setName("Provider2");
+            // provider2.setActive(true);
+            // provider2.setPassword(encryptedPassword);
+            // provider2.setEmail("Mail2@gmail.com");
+            // provider2.setWhatsApp(1234567890L);
+            // provider2.setSkills(skills);
+            // userRepository.save(provider2);
 
-            AppUser adminUser2 = new AppUser();
-            adminUser2.setRol(RolEnum.USUARIO);
-            adminUser2.setRegistrationDate(new Date());
-            adminUser2.setName("User1");
-            adminUser2.setActive(true);
-            adminUser2.setPassword(encryptedPassword);
-            adminUser2.setEmail("emailadm2@afdmin.com");
-            adminUser2.setWhatsApp(1234567890L);
-            userRepository.save(adminUser2);
+            // AppUser adminUser2 = new AppUser();
+            // adminUser2.setRol(RolEnum.USUARIO);
+            // adminUser2.setRegistrationDate(new Date());
+            // adminUser2.setName("User1");
+            // adminUser2.setActive(true);
+            // adminUser2.setPassword(encryptedPassword);
+            // adminUser2.setEmail("emailadm2@afdmin.com");
+            // adminUser2.setWhatsApp(1234567890L);
+            // userRepository.save(adminUser2);
 
         }
 
