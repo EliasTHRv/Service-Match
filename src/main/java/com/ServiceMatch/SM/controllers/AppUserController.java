@@ -214,11 +214,12 @@ public class AppUserController {
             return "provider_details";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", "Proveedor no encontrado");
-            return "redirect:/user/providers"; 
+            return "redirect:/user/providers";
         }
     }
 
-    // MÉTODO PARA DEVOLVER VISTA EDITAR PERFIL TANTO PARA CLIENTE COMO PARA PROVEEDOR
+    // MÉTODO PARA DEVOLVER VISTA EDITAR PERFIL TANTO PARA CLIENTE COMO PARA
+    // PROVEEDOR
     @GetMapping("/editprofile/{id}")
     public String userProfile(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         try {
@@ -240,12 +241,13 @@ public class AppUserController {
                 model.addAttribute("provider", provider);
                 return "provider_profile.html";
             } else {
-                return "index.html";
+                return "redirect:/";
             }
 
         } catch (Exception ex) {
             model.addAttribute("error", ex.getMessage());
-            return "index.html";
+            return "redirect:/";
+
         }
     }
 
@@ -259,11 +261,11 @@ public class AppUserController {
             if (role.equals("client")) {
                 serviceUser.editClient(id, name, password, password2);
                 model.addAttribute("exito", "Cambios guardados en perfil");
-                return "index.html";
+                return "redirect:/";
             }
             if (role.equals("provider")) {
                 serviceUser.clientToProvider(id, name, password, password2, whatsApp, skills, file);
-                return "index.html";
+                return "redirect:/";
             } else {
                 return "/user/client/editprofile/";
             }
@@ -283,10 +285,10 @@ public class AppUserController {
         try {
             serviceUser.editProvider(id, name, password, password2, whatsApp, skills, file);
             model.addAttribute("exito", "Cambios guardados con éxito.");
-            return "index.html";
+            return "redirect:/";
         } catch (MyException ex) {
             model.addAttribute("error", ex.getMessage());
-            return "index.html";
+            return "redirect:/";
         }
     }
 
