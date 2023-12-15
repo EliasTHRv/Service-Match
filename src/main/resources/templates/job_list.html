@@ -13,7 +13,6 @@
                     <div class="card table-limit bg-dark border-card text-white">
                         <div class="card-body">
                             <h5 class="card-title d-flex justify-content-center" th:text="${job.description.toUpperCase}"></h5>
-                            <!--                            <p class="card-text">Costo: <span th:text="${job.cost}"></span></p>-->
                             <div class="card-text block">Oficio requerido: <span th:text="${job.skill.name}"></span></div>
                             <div class="card-text block" sec:authorize="hasRole('PROVEEDOR')">Cliente: <span th:text="${job.appUser.name}"></span></div>
                             <div class="card-text block">Precio: USD $ <span th:text="${job.cost}"></span></div>
@@ -22,36 +21,45 @@
                                     th:text="${#strings.length(job.comment)> 40 ? #strings.substring(job.comment, 0, 40) + '...' : job.comment}"></span></div>
                             <div class="card-text block">Calificación: <span th:text="${job.callification}"></span></div>
                             <div class="card-text block">Estado: <span th:text="${job.jobStatus}"></span></div>
-                            <div class="d-flex justify-content-between">
-                                <form th:if="${job.jobStatus.name() == 'PENDING'}" sec:authorize="hasRole('PROVEEDOR')"
-                                    th:action="@{/job/list/provider/{id}/budget/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
-                                    <div class="form-group mx-sm-4 pt-2" id="cost">
-                                        <input type="number" name="cost" class="form-control bg-dark text-white fw-semibold"
-                                            placeholder="Ingrese el precio de referencia" autocomplete="off">
-                                        <button type="submit" class="btn btn-success btn-md">Presupuestar</button>
-                                    </div>
-                                </form>
+
+                            <div th:if="${job.jobStatus.name() == 'PENDING'}" sec:authorize="hasRole('PROVEEDOR')" class="card-text block mt-1">Presupuesto: </div>
+
+                            <form th:if="${job.jobStatus.name() == 'PENDING'}" sec:authorize="hasRole('PROVEEDOR')"
+                                  th:action="@{/job/list/provider/{id}/budget/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
+                               
+                                <div class="form-group mx-sm-4 pt-2" id="cost">
+                                    <input type="number" name="cost" class="form-control bg-dark text-white fw-semibold"
+                                           placeholder="Ingrese el precio de referencia" autocomplete="off">
+                                </div>
+                                
+                                <div class="d-flex justify-content-between mt-3">
+                                    <button type="submit" class="btn btn-success btn-md">Presupuestar</button>
+                                </div>
+                            </form>
+
+                            <div class="mt-3 d-flex justify-content-between">
                                 <form th:if="${job.jobStatus.name() == 'BUDGETED'}" sec:authorize="hasRole('USUARIO')"
-                                    th:action="@{/job/list/provider/{id}/accept/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
+                                      th:action="@{/job/list/provider/{id}/accept/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
                                     <button type="submit" class="btn btn-success btn-md">Aceptar</button>
                                 </form>
                                 <form th:if="${job.jobStatus.name() == 'BUDGETED'}" sec:authorize="hasRole('USUARIO')"
-                                    th:action="@{/job/list/provider/{id}/refused/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
+                                      th:action="@{/job/list/provider/{id}/refused/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
                                     <button type="submit" class="btn btn-danger btn-md">Rechazar</button>
                                 </form>
                                 <form th:if="${job.jobStatus.name() == 'PENDING'}" sec:authorize="hasRole('PROVEEDOR')"
-                                    th:action="@{/job/list/provider/{id}/refused/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
+                                      th:action="@{/job/list/provider/{id}/refused/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
                                     <button type="submit" class="btn btn-danger btn-md">Rechazar</button>
                                 </form>
-                                <form th:if="${job.jobStatus.name() == 'ACCEPTED'}" sec:authorize="hasAnyRole('PROVEEDOR', 'USUARIO')"
-                                    th:action="@{/job/list/provider/{id}/end/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
-                                    <button type="submit" class="btn btn-warning btn-md">Finalizar</button>
-                                </form>
-                                <form th:if="${job.jobStatus.name() == 'END' and job.callification == null}" th:action="@{/job/rating/{id}(id=${job.id})}"
-                                    method="get" sec:authorize="hasRole('USUARIO')">
-                                    <button type="submit" class="btn  btn-primary">Calificar</button>
-                                </form>
                             </div>
+
+                            <form th:if="${job.jobStatus.name() == 'ACCEPTED'}" sec:authorize="hasAnyRole('PROVEEDOR', 'USUARIO')"
+                                  th:action="@{/job/list/provider/{id}/end/{idJob}(id=${job.provider.id}, idJob=${job.id})}" method="post">
+                                <button type="submit" class="btn btn-warning btn-md">Finalizar</button>
+                            </form>
+                            <form th:if="${job.jobStatus.name() == 'END' and job.callification == null}" th:action="@{/job/rating/{id}(id=${job.id})}"
+                                  method="get" sec:authorize="hasRole('USUARIO')">
+                                <button type="submit" class="btn btn-primary">Calificar</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -67,8 +75,11 @@
     </section>
     <footer th:replace="@{/fragments/footer} :: footer"></footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+        </script>
+</body>
+
 
 </body>
 
