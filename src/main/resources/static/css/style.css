@@ -61,20 +61,29 @@ select::placeholder {
 .nav-link.custom-link {
     margin-right: 40px;
     text-shadow: 1px 1px black;
-    color: aliceblue
+    color: aliceblue;
 }
 
 
-.nav-link.custom-link.nanraja {
+.nav-link.custom-link.naranja {
     color: #F56349;
+}
+
+.nav-link.custom-link.naranja:hover {
+    color: #b14330;
 }
 
 .nav-link.custom-link:hover {
     color: #F56349;
 }
 
-.nav-link.custom-link.nanraja:hover {
-    color: #b14330;
+.dropdown-menu {
+    background-color: #191A1F;
+}
+
+.dropdown-item:focus,
+.dropdown-item:hover {
+    background-color: #191A1F;
 }
 
 #fondoProvDetails {
@@ -234,6 +243,11 @@ select::placeholder {
     background-color: #24272E;
 }
 
+.section-container-dos {
+    background-color: #191A1F;
+    padding-bottom: 30px;
+}
+
 .table-limit {
     max-width: 45rem;
 }
@@ -293,23 +307,90 @@ select::placeholder {
     background-color: #24272E;
 }
 
+.contact {
+    padding: 100px 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.7),
+            rgba(0, 0, 0, 0.7)),
+        url(/img/celular-2.webp);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.contact-content {
+    text-align: center;
+}
+
+
+
 
 .mapa {
+    padding: 25px;
     text-align: center;
     background-color: #24272E;
 }
 
 .mapa-container {
-    padding: 25px 45px;
+    background-color: #191A1F;
+    max-width: 100%;
+    height: 380px;
+    margin: 25px auto;
+    overflow: hidden;
+}
+
+.mapa-container iframe {
+    width: 100%;
+    height: 375px;
+    padding: 50px 100px;
 }
 
 .group {
     color: #F56349;
 }
 
-.footer-color {
+footer {
     background-color: #191A1F;
+    padding: 5px;
+    text-align: center;
 }
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copyright {
+    margin: 5px;
+    text-align: left;
+    color: #FFFFFF;
+}
+
+.footer-content a {
+    margin: 5px;
+    text-decoration: none;
+    flex: 1;
+    text-align: center;
+}
+
+.social-icons a {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.home-link {
+    font-size: 20px;
+    color: #D4D4D4;
+    display: block;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px black;
+}
+
+.home-link:hover {
+    color: #F56349;
+}
+
 
 a.link-colors {
     text-decoration: none;
@@ -395,6 +476,13 @@ a.link-colors:hover {
     padding: 50px;
     height: 350px;
     position: static;
+}
+
+.bg-color {
+    background-color: #24272E;
+    opacity: 0.9;
+    padding: 20px;
+    border-radius: 5px;
 }
 
 .bodyRegister {
