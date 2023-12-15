@@ -12,6 +12,7 @@
     <div class="pt-4 mt-3 m-1 col-5">
       <form class="form bg-color text-white" th:action="@{/user/editprofile/__${session.usuariosession.id}__}" method="post" enctype="multipart/form-data">
         <input hidden th:value="${id}" name="id">
+        <input type="hidden" id="toggleRole" name="toggleRol" value="">
         <h4 class="text-color text-center">Editar Perfil</h4>
         <div class="contenedor">
           <div class="form-group text-white fw-semibold pt-2">

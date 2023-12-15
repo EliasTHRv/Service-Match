@@ -49,9 +49,10 @@ public class Job implements Serializable {
 
     @OneToOne
     AppUser appUser;
-
-    @OneToOne
-    Provider provider;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "provider_id")
+    private Provider provider;
     
     
 

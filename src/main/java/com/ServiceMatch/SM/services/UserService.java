@@ -21,8 +21,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import com.ServiceMatch.SM.entities.AppUser;
 import com.ServiceMatch.SM.entities.Image;
+import com.ServiceMatch.SM.entities.Job;
 import com.ServiceMatch.SM.entities.Provider;
 import com.ServiceMatch.SM.entities.Skill;
+import com.ServiceMatch.SM.enums.JobStatusEnum;
 import com.ServiceMatch.SM.enums.RolEnum;
 import com.ServiceMatch.SM.exceptions.MyException;
 import com.ServiceMatch.SM.repository.ProviderRepository;
@@ -38,6 +40,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private ServiceImage serviceImage;
+
+    @Autowired
+    private ServiceJob serviceJob;
 
     @Transactional
     public void registrar(String name, String email, String password, String password2) throws MyException {
@@ -58,7 +63,7 @@ public class UserService implements UserDetailsService {
         AppUser c2 = new AppUser();
         if (result.isPresent()) {
             validarEdit(name);
-            if(!password2.equals(password)){
+            if (!password2.equals(password)) {
                 throw new MyException("los passwords ingresados no coinciden");
             }
             client = result.get();
@@ -80,33 +85,81 @@ public class UserService implements UserDetailsService {
 
     }
 
-    // método para cambiar de rol de cliente a proveedor ARREGLAR
-    @Transactional
-    public void clientToProvider(Long id, String name, String password, String password2, Long whatsApp,
+    private void validarImagenProveedor(MultipartFile imagen) throws MyException {
+        if (!imagen.isEmpty()) {
+            long tamanoEnBytes = imagen.getSize();
+
+            double tamanoEnKB = tamanoEnBytes / 1024.0;
+            double tamanoEnMB = tamanoEnKB / 1024.0;
+            if (tamanoEnMB > 1) {
+                throw new MyException("No debe superar 1mb. para la imagen de perfil");
+            }
+
+        } else {
+            throw new MyException("Debe mandar una imagen");
+        }
+
+    }
+
+    private void validarCambioClienteAProveedor(Long id, String name, String password, String password2, Long whatsApp,
             List<Skill> skills, MultipartFile file) throws MyException {
         Optional<AppUser> result = userRepository.findById(id);
         Provider provider = new Provider();
-        if (result.isPresent()) {
-            provider = (Provider) result.get();
-            provider.setId(id);
-            provider.setName(name);
-           
-            provider.setRol(RolEnum.PROVEEDOR);
-            provider.setSkills(skills);
-            provider.setWhatsApp(whatsApp);
-            Image img = serviceImage.guardarImagen(file);
-            provider.setImagen(img);
-            providerRepository.save(provider);
+        if (!result.isPresent()) {
+            throw new MyException("no se puede asignar como proveedor usuario no existe");
         }
+        if (password.isEmpty() && password2.isEmpty()) {
+            validarEdit(name);
+        }
+        if (skills.isEmpty()) {
+            throw new MyException("Debe enviarnos al menos una habilidad seleccionada");
+        }
+        validarImagenProveedor(file);
+
     }
 
-    
+    public void clientToProvider(Long id, String name, String password, String password2, Long whatsApp,
+            List<Skill> skills, MultipartFile file) throws MyException {
+                try {
+                    Optional<AppUser> result = userRepository.findById(id);
+                    validarCambioClienteAProveedor(id, name, password, password2, whatsApp, skills, file);
+                
+                    if (result.isPresent()) {
+                        
+                        AppUser appUser = result.get();
+                        String email = appUser.getEmail();
+                        Provider provider = new Provider();
+                        provider.setName(appUser.getName()); 
+                        provider.setEmail("foo@ss.com"); 
+                        provider.setWhatsApp(whatsApp);
+                        provider.setRol(RolEnum.PROVEEDOR);
+                        if (!password.isEmpty()) {
+                            provider.setPassword(new BCryptPasswordEncoder().encode(password));
+                        } else {
+                            provider.setPassword(appUser.getPassword());
+                        }
+                        Image img = serviceImage.guardarImagen(file);
+                        provider.setImagen(img);
+                        provider.setSkills(skills);
+                        providerRepository.save(provider);
+                        
+                        userRepository.deleteById(id);
+                        provider.setEmail(email);
+                        providerRepository.save(provider);
+                     
+                    }
+                } catch (Exception ex) {
+                    // Manejar la excepción o lanzar una excepción personalizada
+                    throw new MyException("Error al realizar las actualizaciones: " + ex.getMessage());
+                }
+    }
+
     // método para editar el perfil del proveedor
     public void editProvider(Long id, String name, String password, String password2, Long whatsapp, List<Skill> skills,
             MultipartFile file) throws MyException {
         Optional<Provider> result = providerRepository.findById(id);
 
-        validarEditProvider(name,password,password2,whatsapp,skills);
+        validarEditProvider(name, password, password2, whatsapp, skills);
 
         Provider provider = new Provider();
         AppUser c2 = new AppUser();
@@ -114,9 +167,9 @@ public class UserService implements UserDetailsService {
             provider = result.get();
             c2 = result.get();
             provider.setName(name);
-            if (!password.isEmpty()){
+            if (!password.isEmpty()) {
                 provider.setPassword(new BCryptPasswordEncoder().encode(password));
-            }else{
+            } else {
                 provider.setPassword(c2.getPassword());
             }
             provider.setRol(RolEnum.PROVEEDOR);
@@ -197,7 +250,7 @@ public class UserService implements UserDetailsService {
         if (appUser != null) {
             List<GrantedAuthority> permissions = new ArrayList<>();
             GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + appUser.getRol().toString());
-            permissions.add(p);   
+            permissions.add(p);
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
             HttpSession session = attr.getRequest().getSession(true);
             session.setAttribute("usuariosession", appUser);
@@ -250,12 +303,13 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    private void validarEditProvider(String name,String password,String password2, Long whatsapp,List<Skill>skills) throws MyException {
+    private void validarEditProvider(String name, String password, String password2, Long whatsapp, List<Skill> skills)
+            throws MyException {
         if (name == null || name.isEmpty()) {
             throw new MyException("El nombre no puede ser nulo o estar vacio");
         }
 
-        if(!password.equals(password2) && !password.isEmpty() && !password2.isEmpty()){
+        if (!password.equals(password2) && !password.isEmpty() && !password2.isEmpty()) {
             throw new MyException("las contraseñas deben coincidir");
         }
     }

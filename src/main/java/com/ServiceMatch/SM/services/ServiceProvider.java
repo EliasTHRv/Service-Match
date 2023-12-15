@@ -148,7 +148,11 @@ public class ServiceProvider implements UserDetailsService {
     }
 
     public Provider getOne(Long id) {
-        return providerRepository.findById(id).get();
+        Optional<Provider> p = providerRepository.findById(id);
+        if(p.isPresent()){
+            return p.get();
+        }
+        return null;
     }
 
 }

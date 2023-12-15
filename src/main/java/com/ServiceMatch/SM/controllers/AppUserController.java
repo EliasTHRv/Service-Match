@@ -230,7 +230,7 @@ public class AppUserController {
             }
 
             model.addAttribute("skillsRegistro", skills);
-            model.addAttribute("user", user);
+            model.addAttribute("user", user);          
             if (user.getRol().equals(RolEnum.USUARIO)) {
                 model.addAttribute("client", user);
                 return "client_profile.html";
@@ -254,19 +254,20 @@ public class AppUserController {
     public String clientProfile(@PathVariable Long id, @RequestParam String name, @RequestParam String password,
             @RequestParam String password2, @RequestParam(required = false) Long whatsApp,
             @RequestParam(required = false) List<Skill> skills, @RequestParam String role,
-            @RequestParam(required = false) MultipartFile file, Model model, RedirectAttributes redirectAttributes) {
+            @RequestParam(required = false) MultipartFile file, Model model, 
+            RedirectAttributes redirectAttributes ){
         try {
             if (role.equals("client")) {
                 serviceUser.editClient(id, name, password, password2);
                 model.addAttribute("exito", "Cambios guardados en perfil");
                 return "index.html";
             }
-            if (role.equals("provider")) {
-                serviceUser.clientToProvider(id, name, password, password2, whatsApp, skills, file);
-                return "index.html";
-            } else {
-                return "/user/client/editprofile/";
-            }
+             if (role.equals("provider")) {
+                 serviceUser.clientToProvider(id, name, password, password2, whatsApp, skills, file);
+                 return "redirect:/logout";
+             } else {
+                 return "/user/client/editprofile/";
+            }        
         } catch (MyException ex) {
             redirectAttributes.addFlashAttribute("error", ex.getMessage());
             return "redirect:/user/editprofile/" + id;

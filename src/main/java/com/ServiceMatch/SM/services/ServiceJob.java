@@ -86,6 +86,12 @@ public class ServiceJob {
 
     }
 
+    public void save(Job j){
+        jobRepository.save(j);
+
+    }
+
+
     public List<Job> listByIdProvider(Long id) {
 
         List<Job> jobs = new ArrayList<>();

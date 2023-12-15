@@ -24,14 +24,16 @@
 
           <div class="form-group mx-sm-4 text-white pt-2 text-center" id="imagenDiv">
             <label for="image" class="mb-2 fw-semibold fs-6">Foto de perfil:</label>
-            <input type="file" accept="image/*" id="image" name="file" th:src="@{provider.imagen}" class="form-control bg-dark text-white mb-3"
-              onchange="previewImage(event)">
-            <div th:if="${provider.imagen != null}" class="mb-3 text-center">
-              <img id="preview" alt="Image Preview" class="img-perfilproveedor mx-auto" th:src="@{/imagen/perfil/__${provider.id}__}">
-            </div>
             <div th:if="${provider.imagen == null}" class="mb-3 text-center">
               <img class="img-perfilproveedor mx-auto" src="../static/img/no-profile.png">
             </div>
+            
+            <div th:if="${provider.imagen != null}" class="mb-3 text-center">
+              <input type="file" accept="image/*" id="image" name="file" th:src="@{provider.imagen}" class="form-control bg-dark text-white mb-3"
+              onchange="previewImage(event)">
+              <img id="preview" alt="Image Preview" class="img-perfilproveedor mx-auto" th:src="@{/imagen/perfil/__${provider.id}__}">
+            </div>
+            
           </div>
 
           <div class="form-group mx-sm-4 text-white pt-2 text-center" id="skillsDiv">
