@@ -10,6 +10,7 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -47,6 +48,7 @@ public class AppUserController {
     @Autowired
     ServiceJob serviceJob;
 
+    @PreAuthorize("hasRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/list") // http://localhost:8080/user/list/id
     public String listUsers(Model model, @RequestParam(defaultValue = "0") int page) {
         // Muestra 10 usuarios por página
@@ -63,6 +65,7 @@ public class AppUserController {
     }
 
     // MÉTODO PARA ADMIN
+    @PreAuthorize("hasRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/modify/{id}") // http://localhost:8080/user/modify/id
     public String modifyUser(@PathVariable Long id, ModelMap model) {
         // Lógica para modificar la skill en la base de datos
@@ -72,6 +75,7 @@ public class AppUserController {
     }
 
     // MÉTODO PARA ADMIN EDITAR USUARIOS
+    @PreAuthorize("hasRole('ROLE_ADMINISTRADOR')")
     @PostMapping("/modify/{id}")
     public String modify(@PathVariable Long id, String name, boolean active, MultipartFile archivo, ModelMap model) {
         Optional<Provider> esProvider = serviceProvider.getProviderById(id);
@@ -90,6 +94,7 @@ public class AppUserController {
     }
 
     // MÉTODO PARA ADMIN
+    @PreAuthorize("hasRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/restore/{id}") // http://localhost:8080/user/restore/id
     public String restoreSkill(@PathVariable Long id, boolean active) {
         try {
@@ -105,6 +110,7 @@ public class AppUserController {
     }
 
     // MÉTODO PARA ADMIN
+    @PreAuthorize("hasRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/delete/{id}") // http://localhost:8080/user/delete/id
     public String deleteSkill(@PathVariable Long id, ModelMap model) {
         // Lógica para eliminar la skill en la base
@@ -146,6 +152,7 @@ public class AppUserController {
         return "redirect:/";
     }
 
+    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @GetMapping("/providers")
     public String providerList(@RequestParam(name = "skill", required = false) String skill,
             @RequestParam(name = "id", required = false) Long id, ModelMap model) {
@@ -176,6 +183,7 @@ public class AppUserController {
         return "provider_list.html";
     }
 
+    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @GetMapping("/providers/{skill}")
     public String userProviderList(@RequestParam String skill, ModelMap model, RedirectAttributes redirectAttributes) {
         List<AppUser> providers = serviceUser.loadUserBySkyll(skill);
@@ -189,6 +197,7 @@ public class AppUserController {
 
     }
 
+    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @GetMapping("providers/details/{id}")
     public String providerDetails(@PathVariable Long id, ModelMap model) {
         try {
@@ -218,8 +227,39 @@ public class AppUserController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_PROVEEDOR')")
+    @GetMapping("providers/calification/{id}")
+    public String providerCali(@PathVariable Long id, ModelMap model) {
+        try {
+            List<Job> jobs = serviceJob.listJobByProvider(id);
+            AppUser provider = serviceUser.getOne(id);
+
+            double totalCalification = 0.0;
+
+            for (Job job : jobs) {
+                Long callification = job.getCallification();
+                if (callification != null) {
+                    totalCalification += callification;
+                }
+            }
+            double averageCalification = jobs.isEmpty() ? 0.0 : totalCalification / jobs.size();
+            BigDecimal roundedAverage = new BigDecimal(averageCalification).setScale(1, RoundingMode.HALF_UP);
+            model.addAttribute("provider", provider);
+            model.addAttribute("providerName", jobs.isEmpty() ? "" : jobs.get(0).getProvider().getName());
+            model.addAttribute("comments", jobs.stream().map(Job::getComment).collect(Collectors.toList()));
+            model.addAttribute("averageCalification", roundedAverage);
+            model.addAttribute("jobs", jobs);
+
+            return "provider_calification.html";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", "Proveedor no encontrado");
+            return "redirect:/";
+        }
+    }
+
     // MÉTODO PARA DEVOLVER VISTA EDITAR PERFIL TANTO PARA CLIENTE COMO PARA
     // PROVEEDOR
+    @PreAuthorize("hasAnyRole('ROLE_PROVEEDOR', 'ROLE_USUARIO')")
     @GetMapping("/editprofile/{id}")
     public String userProfile(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         try {

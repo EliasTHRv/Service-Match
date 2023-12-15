@@ -77,6 +77,7 @@ public class JobControler {
 
     // SERGIO METODO MODIFICADO Y FUNCIONANDO
     // LISTAR JOBS DE UN USUARIO LOGUEADO CLIENT O PROVIDER
+    @PreAuthorize("hasAnyRole('ROLE_PROVEEDOR', 'ROLE_USUARIO')")
     @GetMapping("/list/provider/{id}")
     public String jobListPrueba(@PathVariable Long id, HttpSession session, Model model) {
         AppUser client = (AppUser) session.getAttribute("usuariosession");
@@ -112,6 +113,7 @@ public class JobControler {
     }
 
     // PRESUPUESTAR JOB SOLICITADO POR CLIENT (PROVIDER)
+    @PreAuthorize("hasRole('ROLE_PROVEEDOR')")
     @PostMapping("/list/provider/{id}/budget/{idJob}")
     public String budgetJob(@PathVariable Long id, @PathVariable Long idJob, String status, @RequestParam Double cost,
             ModelMap model) {
@@ -128,6 +130,7 @@ public class JobControler {
     }
 
     // ACEPTAR JOB PRESUPUESTADO (CLIENT)
+    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @PostMapping("/list/provider/{id}/accept/{idJob}")
     public String acceptJob(@PathVariable Long id, @PathVariable Long idJob, String status, ModelMap model) {
         try {
@@ -142,6 +145,7 @@ public class JobControler {
     }
 
     // RECHAZAR JOB (CLIENT Y PROVIDER)
+    @PreAuthorize("hasAnyRole('ROLE_PROVEEDOR', 'ROLE_USUARIO')")
     @PostMapping("/list/provider/{id}/refused/{idJob}")
     public String refusedJob(@PathVariable Long id, @PathVariable Long idJob, String status, ModelMap model) {
         try {
@@ -155,6 +159,7 @@ public class JobControler {
     }
 
     // FINALIZAR JOB (CLIENT Y PROVIDER)
+    @PreAuthorize("hasAnyRole('ROLE_PROVEEDOR', 'ROLE_USUARIO')")
     @PostMapping("/list/provider/{id}/end/{idJob}")
     public String endJob(@PathVariable Long id, @PathVariable Long idJob, String status, ModelMap model) {
         try {
@@ -163,7 +168,7 @@ public class JobControler {
             return "redirect:/job/list/provider/{id}";
         } catch (MyException ex) {
             model.put("error", "Error al actualizar el job: " + ex.getMessage());
-            return "forward:/job/list/provider/{id}"; 
+            return "forward:/job/list/provider/{id}";
         }
     }
 
@@ -191,6 +196,7 @@ public class JobControler {
     }
 
     // COMENTARIOS Y CALIFICACION
+    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @GetMapping("/rating/{id}")
     public String formComment(@PathVariable Long id, ModelMap model) {
         Job job = serviceJob.getOne(id);
@@ -198,6 +204,7 @@ public class JobControler {
         return "rating_comments.html";
     }
 
+    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @PostMapping("rating/{id}") // id del Job
     public String ratingAndComment(@PathVariable Long id, @RequestParam(required = false) Long callification,
             @RequestParam String comment, ModelMap model) {

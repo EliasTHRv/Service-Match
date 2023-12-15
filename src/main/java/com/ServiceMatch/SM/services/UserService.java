@@ -105,9 +105,26 @@ public class UserService implements UserDetailsService {
             List<Skill> skills, MultipartFile file) throws MyException {
         Optional<AppUser> result = userRepository.findById(id);
         Provider provider = new Provider();
+
         if (!result.isPresent()) {
             throw new MyException("no se puede asignar como proveedor usuario no existe");
         }
+
+            provider = (Provider) result.get();
+            provider.setId(id);
+            provider.setName(name);
+
+            provider.setRol(RolEnum.PROVEEDOR);
+            provider.setSkills(skills);
+            provider.setWhatsApp(whatsApp);
+            if (!file.isEmpty()) {
+                Image img = serviceImage.guardarImagen(file);
+                provider.setImagen(img);
+            } else {
+                provider.setImagen(provider.getImagen());
+            }
+            providerRepository.save(provider);
+        
         if (password.isEmpty() && password2.isEmpty()) {
             validarEdit(name);
         }
@@ -155,6 +172,7 @@ public class UserService implements UserDetailsService {
     }
 
     // método para editar el perfil del proveedor
+    @Transactional
     public void editProvider(Long id, String name, String password, String password2, Long whatsapp, List<Skill> skills,
             MultipartFile file) throws MyException {
         Optional<Provider> result = providerRepository.findById(id);
@@ -174,9 +192,12 @@ public class UserService implements UserDetailsService {
             }
             provider.setRol(RolEnum.PROVEEDOR);
             provider.setSkills(skills);
-            Image img = serviceImage.guardarImagen(file);
-
-            provider.setImagen(img);
+            if (!file.isEmpty()) {
+                Image img = serviceImage.guardarImagen(file);
+                provider.setImagen(img);
+            } else {
+                provider.setImagen(provider.getImagen());
+            }
             provider.setWhatsApp(whatsapp);
             providerRepository.save(provider);
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
