@@ -5,6 +5,7 @@ import com.ServiceMatch.SM.exceptions.MyException;
 import com.ServiceMatch.SM.services.ServiceSkill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -21,8 +22,10 @@ public class SkillController {
     @Autowired
     ServiceSkill serviceSkill;
 
+    @PreAuthorize("hasRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/list") // http://localhost:8080/skill/list
-    public String listSkills(@RequestParam(required = false) String success, Model model, @RequestParam(defaultValue = "0") int page) {
+    public String listSkills(@RequestParam(required = false) String success, Model model,
+            @RequestParam(defaultValue = "0") int page) {
         // Muestra 15 skills
         Page<Skill> skills = serviceSkill.getPageOfSkills(page, 15);
 
@@ -35,11 +38,13 @@ public class SkillController {
         return "skill_list.html";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/registration") // http://localhost:8080/skill/registration
     public String showSkillRegistrationForm() {
         return "skill_registration.html";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMINISTRADOR')")
     @PostMapping("/save") // http://localhost:8080/skill/save
     public String saveSkill(@RequestParam String skillName, Model model) {
         // Lógica para guardar la skill en la base de datos
@@ -52,6 +57,7 @@ public class SkillController {
         return "redirect:../skill/list?success=Skill '" + skillName + "' saved successfully";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/modify/{id}") // http://localhost:8080/skill/modify/id
     public String modifySkill(@PathVariable Long id, ModelMap model) {
         // Lógica para modificar la skill en la base de datos
@@ -60,6 +66,7 @@ public class SkillController {
         return "skill_modify.html";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMINISTRADOR')")
     @PostMapping("/modify/{id}")
     public String modify(@PathVariable Long id, String name, boolean active, ModelMap model) {
 
@@ -74,6 +81,7 @@ public class SkillController {
 
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/restore/{id}")
     public String restoreSkill(@PathVariable Long id, boolean active) {
         try {
@@ -87,6 +95,7 @@ public class SkillController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/delete/{id}") // http://localhost:8080/skill/delete/id
     public String deleteSkill(@PathVariable Long id, ModelMap model) {
         // Lógica para eliminar la skill en la base

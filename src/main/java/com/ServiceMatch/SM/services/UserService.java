@@ -58,7 +58,7 @@ public class UserService implements UserDetailsService {
         AppUser c2 = new AppUser();
         if (result.isPresent()) {
             validarEdit(name);
-            if(!password2.equals(password)){
+            if (!password2.equals(password)) {
                 throw new MyException("los passwords ingresados no coinciden");
             }
             client = result.get();
@@ -90,23 +90,27 @@ public class UserService implements UserDetailsService {
             provider = (Provider) result.get();
             provider.setId(id);
             provider.setName(name);
-           
+
             provider.setRol(RolEnum.PROVEEDOR);
             provider.setSkills(skills);
             provider.setWhatsApp(whatsApp);
-            Image img = serviceImage.guardarImagen(file);
-            provider.setImagen(img);
+            if (!file.isEmpty()) {
+                Image img = serviceImage.guardarImagen(file);
+                provider.setImagen(img);
+            } else {
+                provider.setImagen(provider.getImagen());
+            }
             providerRepository.save(provider);
         }
     }
 
-    
     // método para editar el perfil del proveedor
+    @Transactional
     public void editProvider(Long id, String name, String password, String password2, Long whatsapp, List<Skill> skills,
             MultipartFile file) throws MyException {
         Optional<Provider> result = providerRepository.findById(id);
 
-        validarEditProvider(name,password,password2,whatsapp,skills);
+        validarEditProvider(name, password, password2, whatsapp, skills);
 
         Provider provider = new Provider();
         AppUser c2 = new AppUser();
@@ -114,16 +118,19 @@ public class UserService implements UserDetailsService {
             provider = result.get();
             c2 = result.get();
             provider.setName(name);
-            if (!password.isEmpty()){
+            if (!password.isEmpty()) {
                 provider.setPassword(new BCryptPasswordEncoder().encode(password));
-            }else{
+            } else {
                 provider.setPassword(c2.getPassword());
             }
             provider.setRol(RolEnum.PROVEEDOR);
             provider.setSkills(skills);
-            Image img = serviceImage.guardarImagen(file);
-
-            provider.setImagen(img);
+            if (!file.isEmpty()) {
+                Image img = serviceImage.guardarImagen(file);
+                provider.setImagen(img);
+            } else {
+                provider.setImagen(provider.getImagen());
+            }
             provider.setWhatsApp(whatsapp);
             providerRepository.save(provider);
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
@@ -197,7 +204,7 @@ public class UserService implements UserDetailsService {
         if (appUser != null) {
             List<GrantedAuthority> permissions = new ArrayList<>();
             GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + appUser.getRol().toString());
-            permissions.add(p);   
+            permissions.add(p);
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
             HttpSession session = attr.getRequest().getSession(true);
             session.setAttribute("usuariosession", appUser);
@@ -250,12 +257,13 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    private void validarEditProvider(String name,String password,String password2, Long whatsapp,List<Skill>skills) throws MyException {
+    private void validarEditProvider(String name, String password, String password2, Long whatsapp, List<Skill> skills)
+            throws MyException {
         if (name == null || name.isEmpty()) {
             throw new MyException("El nombre no puede ser nulo o estar vacio");
         }
 
-        if(!password.equals(password2) && !password.isEmpty() && !password2.isEmpty()){
+        if (!password.equals(password2) && !password.isEmpty() && !password2.isEmpty()) {
             throw new MyException("las contraseñas deben coincidir");
         }
     }
