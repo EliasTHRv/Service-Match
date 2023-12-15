@@ -25,7 +25,7 @@
                                 <tr>
                                     <!-- <th scope="col">Id</th> -->
                                     <th scope="col"> Oficios</th>
-                                    <th scope="col" style="text-align: end;"> Acciones</th>
+                                    <th scope="col" style="text-align: center;"> Acciones</th>
                                     <th scope="col" style="text-align: center;"> Estado</th>
                                 </tr>
                             </thead>
@@ -42,14 +42,21 @@
                                         <a th:if="${skill.active}" class="btn btn-success btn-sm"
                                         th:href="@{/skill/modify/__${skill.id}__}">Editar</a>
                                     </td>
-                                    <!--en caso de alta circulo verde y de baja una circulo rojo. Ponerlo mas lindo al estilo, que soy un queso-->
-                                    <td style="text-align: center;"> <i th:if="${skill.active}"
-                                            class="fa-solid fa-circle fa-sm" style="color: #08a10a;"></i>
-                                        <!-- circulo verde -->
-                                        <i th:if="${!(skill.active)}" class="fa-solid fa-circle fa-sm"
-                                            style="color: #f42a2a;"></i>
-                                        <!-- circulo rojo -->
-                                    </td>
+                                 
+                                     <td th:if="${skill.active}">
+                                <div class="d-flex justify-content-center">
+                                    <i class="fa-regular fa-circle-check fa-beat-fade fa-2x "
+                                        style="color: #1f9327;"></i>
+                                </div>
+                            </td>
+                            
+                            <td th:unless="${skill.active}">
+                                <div class="d-flex justify-content-center">
+                                    <i class="fa-regular fa-circle-xmark fa-2x" style="color: #f56349;"></i>
+                                </div>
+                            </td>
+                            
+                            
                                 </tr>
                             </tbody>
                         </table>
