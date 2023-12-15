@@ -38,7 +38,7 @@
     </div>
   </header>
 
-  <main class="container-fluid p-5 section-container pt-1">
+  <main class="container-fluid p-5 section-container pt-1" th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('USUARIO')">
     <section class="container-fluid section-container-dos">
       <div th:replace="@{/fragments/providerlist} :: div">
         <div th:replace="@{/fragments/thmsg} :: div"></div>
