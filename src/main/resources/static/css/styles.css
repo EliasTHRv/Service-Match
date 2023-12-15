@@ -193,3 +193,9 @@ footer {
 .group {
   color: #F56349;
 }
+
+.formulario {
+  padding: 50px;
+  height: 740px;
+  position: static;
+}

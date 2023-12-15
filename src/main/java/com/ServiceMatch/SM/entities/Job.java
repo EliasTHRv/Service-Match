@@ -2,11 +2,7 @@ package com.ServiceMatch.SM.entities;
 
 import com.ServiceMatch.SM.enums.JobStatusEnum;
 import javax.persistence.*;
-
-
-
 import java.io.Serializable;
-// import java.time.LocalDate;
 import java.util.Date;
 
 import lombok.*;
@@ -39,7 +35,7 @@ public class Job implements Serializable {
     Date endDate;   
 
     @Column(nullable = false)
-    Double cost;
+    Double cost = 0.0;
 
     @Column(nullable = false)
     String description;
@@ -58,6 +54,7 @@ public class Job implements Serializable {
     Provider provider;
     
     
+
 
     
 

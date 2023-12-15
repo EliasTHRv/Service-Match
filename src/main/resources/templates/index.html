@@ -13,10 +13,11 @@
 
 
   <header class="container-fluid bg-dark text-white" id="header">
+
     <div class="container">
       <div class="header-txt text-center">
-        <h1 class="titulo-h1 py-1">TRABAJO Y CONECTIVIDAD</h1>
-        <p class="descripcion-p">
+        <h1 class="titulo-h1 py-1 text-slide-top">TRABAJO Y CONECTIVIDAD</h1>
+        <p class="descripcion-p text-slide-left">
           Nuestra página web conecta a usuarios con trabajadores de oficio altamente calificados. Ofrecemos
           una
           plataforma fácil de usar donde los usuarios pueden buscar y filtrar a través de una amplia gama de
@@ -28,8 +29,7 @@
         </p>
         <div class="row justify-content-center">
           <div class="col-md-6">
-            <a th:href="@{/user/registration}" id="registrarse" name="buscar"
-              class="btnOrigin btn text-white btn-lg mt-2">
+            <a th:href="@{/user/registration}" th:if="${session.usuariosession == null}" id="registrarse" name="buscar" class="btnOrigin btn text-white btn-lg mt-2">
               Registrarse
             </a>
           </div>
@@ -39,257 +39,9 @@
   </header>
 
   <main class="container-fluid p-5 section-container pt-1">
-    <section class="container-fluid section-container-dos ">
-      <p href="#" class="logo-color text-center fs-4 pt-4 mb-2">
-        <span class="text-color">Match</span>
-
-        <img th:src="@{../img/alicates.png}" alt="Icono" class="icono">
-        Service
-      </p>
-      <h2 class="text-center text-white mb-4">¡Buscá los mejores profesionales de tu zona!</h2>
-
-      <div class="d-flex justify-content-center">
-        <form action="" class="ticketsForm">
-          <div class="row justify-content-center">
-            <div class="col-12 col-md-6">
-              <input placeholder="Localidad" class="ticketsFirslocalidad form-control mb-2" type="text" name="localidad"
-                id="Localidad">
-            </div>
-            <div class="col-12 col-md-6">
-              <select name="oficio" class="oficios form-select mb-2">
-                <option value="plomería">Servicios de plomería</option>
-                <option value="gas">Servicios de gas</option>
-                <option value="bicicletas">Reparación de bicicletas</option>
-                <option value="costura">Servicios de costura</option>
-                <option value="modistería">Servicios de modistería</option>
-                <option value="carpintería">Servicios de carpintería</option>
-                <option value="limpieza">Servicios de limpieza</option>
-                <option value="costura">Servicios de costura</option>
-                <option value="modistería">Servicios de modistería</option>
-                <option value="limpieza">Servicios de limpieza</option>
-                <option value="Artesanía">Servicios de artesanía</option>
-                <option value="Cocina">Servicios de cocina</option>
-                <option value="Enfermería">Servicios de enfermería</option>
-                <option value="Carpintería">Servicios de carpintería</option>
-              </select>
-            </div>
-          </div>
-          <div class="text-center p-4 pt-2">
-            <button id="buscarOficios" name="buscar" class="btnOrigin btn text-white btn-lg mt-2">
-              Buscar
-            </button>
-          </div>
-        </form>
-      </div>
-
-
-      <div id="carousel-principal" class="carousel carousel-dark slide" data-bs-ride="carousel">
-
-        <div class="carousel-inner carousel-fade">
-          <div class="carousel-item active" data-bs-interval="4000">
-            <div class="row">
-              <div class="col-md-3">
-                <div class="card rounded-4">
-                  <img th:src="@{../img/trabajador1.jpg}" class="card-img-top img-fluid" alt="Foto del Profesional 1">
-
-                  <div class="card-body">
-                    <h3 class="card-title text-center">Carlos Fernandez</h3>
-                    <h4 class="card-subtitle text-center">Plomero</h4>
-                    <div class="text-center">
-
-                      <a href="#" class="star"><img th:src="@{../img/001-estrella.png}" alt="estrella"></a>
-                    </div>
-                    <p class="card-text"><strong>Localidad:</strong> </p>
-                    <p class="card-text"><strong>Horario:</strong> </p>
-                    <p class="card-text"><strong>Precio/h:</strong></p>
-                    <div class="text-center">
-                      <button id="contactar" name="contactar"
-                        class="btnOrigin btn btn-btnContactar text-white btn-lg mt-2">Contactar</button>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card rounded-4">
-
-                  <img th:src="@{../img/trabajador11.jpg}" class="card-img-top img-fluid" alt="Foto del Profesional 2">
-
-                  <div class="card-body">
-                    <h3 class="card-title text-center">María García</h3>
-                    <h4 class="card-subtitle text-center">Bicicletera</h4>
-                    <div class="text-center">
-
-                      <a href="#" class="star"><img th:src="@{../img/001-estrella.png}" alt="estrella"></a>
-
-                    </div>
-                    <p class="card-text"><strong>Localidad:</strong> </p>
-                    <p class="card-text"><strong>Horario:</strong> </p>
-                    <p class="card-text"><strong>Precio/h:</strong> </p>
-                    <div class="text-center">
-                      <button id="contactar" name="contactar"
-                        class="btnContactar btn btnOrigin text-white btn-lg mt-2">Contactar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card rounded-4">
-
-                  <img th:src="@{../img/trabajador4.jpg}" class="card-img-top img-fluid" alt="Foto del Profesional 3">
-
-                  <div class="card-body">
-                    <h3 class="card-title text-center">Juan Pérez </h3>
-                    <h4 class="card-subtitle text-center">Gasista</h4>
-                    <div class="text-center">
-
-                      <a href="#" class="star"><img th:src="@{../img/001-estrella.png}" alt="estrella"></a>
-
-                    </div>
-                    <p class="card-text"><strong>Localidad:</strong> </p>
-                    <p class="card-text"><strong>Horario:</strong> </p>
-                    <p class="card-text"><strong>Precio/h:</strong></p>
-                    <div class="text-center">
-                      <button id="contactar" name="contactar"
-                        class="btnContactar btn btnOrigin text-white btn-lg mt-2">Contactar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card rounded-4">
-
-                  <img th:src="@{../img/trabajador10.jpg}" class="card-img-top img-fluid" alt="Foto del Profesional 3">
-
-                  <div class="card-body">
-                    <h3 class="card-title text-center">Ana Rodríguez </h3>
-                    <h4 class="card-subtitle text-center">Limpieza</h4>
-                    <div class="text-center">
-
-                      <a href="#" class="star"><img th:src="@{../img/001-estrella.png}" alt="estrella"></a>
-
-                    </div>
-                    <p class="card-text"><strong>Localidad:</strong> </p>
-                    <p class="card-text"><strong>Horario:</strong></p>
-                    <p class="card-text"><strong>Precio/h:</strong></p>
-                    <div class="text-center">
-                      <button id="contactar" name="contactar"
-                        class="btnContactar btn btnOrigin text-white btn-lg mt-2">Contactar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="carousel-item" data-bs-interval="4000">
-            <div class="row">
-              <div class="col-md-3">
-                <div class="card rounded-4">
-                  <img th:src="@{../img/trabajador7.jpg}" class="card-img-top" alt="Foto del Profesional 4">
-
-                  <div class="card-body">
-                    <h3 class="card-title text-center">Luis Ramírez</h3>
-                    <h4 class="card-subtitle text-center">Carpintero</h4>
-                    <div class="text-center">
-
-                      <a href="#" class="star"><img th:src="@{../img/001-estrella.png}" alt="estrella"></a>
-
-                    </div>
-                    <p class="card-text"><strong>Localidad:</strong></p>
-                    <p class="card-text"><strong>Horario:</strong></p>
-                    <p class="card-text"><strong>Precio/h:</strong></p>
-                    <div class="text-center">
-                      <button id="contactar" name="contactar"
-                        class="btnContactar btn btnOrigin text-white btn-lg mt-2">Contactar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card rounded-4">
-
-                  <img th:src="@{../img/trabajador8.jpg}" class="card-img-top" alt="Foto del Profesional 5">
-
-                  <div class="card-body">
-                    <h3 class="card-title text-center">Isabel Martínez</h3>
-                    <h4 class="card-subtitle text-center">Costurera</h4>
-                    <div class="text-center">
-
-                      <a href="#" class="star"><img th:src="@{../img/001-estrella.png}" alt="estrella"></a>
-
-                    </div>
-                    <p class="card-text"><strong>Localidad:</strong></p>
-                    <p class="card-text"><strong>Horario:</strong></p>
-                    <p class="card-text"><strong>Precio/h:</strong></p>
-                    <div class="text-center">
-                      <button id="contactar" name="contactar"
-                        class="btnContactar btn btnOrigin text-white btn-lg mt-2">Contactar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card rounded-4">
-
-                  <img th:src="@{../img/trabajador9.jpg}" class="card-img-top" alt="Foto del Profesional 6">
-
-                  <div class="card-body">
-                    <h3 class="card-title text-center">Jesica Freeze</h3>
-                    <h4 class="card-subtitle text-center">Modista</h4>
-                    <div class="text-center">
-
-                      <a href="#" class="star"><img th:src="@{../img/001-estrella.png}" alt="estrella"></a>
-
-                    </div>
-                    <p class="card-text"><strong>Localidad:</strong></p>
-                    <p class="card-text"><strong>Horario:</strong></p>
-                    <p class="card-text"><strong>Precio/h:</strong></p>
-                    <div class="text-center">
-                      <button id="contactar" name="contactar"
-                        class="btnContactar btn btnOrigin text-white btn-lg mt-2">Contactar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card rounded-4">
-
-                  <img th:src="@{../img/trabajador5.jpg}" class="card-img-top" alt="Foto del Profesional 6">
-
-                  <div class="card-body">
-                    <h3 class="card-title text-center">Andres Lopez</h3>
-                    <h4 class="card-subtitle text-center">Bicicletero</h4>
-                    <div class="text-center">
-
-                      <a href="#" class="star"><img th:src="@{../img/001-estrella.png}" alt="estrella"></a>
-
-                    </div>
-                    <p class="card-text"><strong>Localidad:</strong></p>
-                    <p class="card-text"><strong>Horario:</strong></p>
-                    <p class="card-text"><strong>Precio/h:</strong></p>
-                    <div class="text-center">
-                      <button id="contactar" name="contactar"
-                        class="btnContactar btn btnOrigin text-white btn-lg mt-2">Contactar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <button class="carousel-control-prev corousel-flecha" type="button" data-bs-target="#carousel-principal"
-          data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-
-        <button class="carousel-control-next corousel-flecha" type="button" data-bs-target="#carousel-principal"
-          data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
+    <section class="container-fluid section-container-dos">
+      <div th:replace="@{/fragments/providerlist} :: div">
+        <div th:replace="@{/fragments/thmsg} :: div"></div>
       </div>
     </section>
   </main>
@@ -309,11 +61,10 @@
 
         </div>
         <div class="col-12">
-          <div class="mapa-container">
+          <div class="mapa-container embed-responsive embed-responsive-16by9">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26774.937416644945!2d-68.89750030045076!3d-32.98090590902902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x967e0af3dc0e8f1f%3A0x6b647646861df9cf!2sChacras%20de%20Coria%2C%20Mendoza!5e0!3m2!1ses-419!2sar!4v1701294838524!5m2!1ses-419!2sar"
-              width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"></iframe>
+              class="embed-responsive-item" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
 
         </div>
@@ -325,8 +76,7 @@
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-    crossorigin="anonymous"></script>
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script src="js/script.js"></script>
 </body>
 
