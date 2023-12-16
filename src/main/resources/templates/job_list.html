@@ -3,24 +3,33 @@
 
 <head th:replace="@{/fragments/head} :: head"></head>
 
+
+
 <body id="page-top" class="bg-dark">
+    
     <nav th:replace="@{/fragments/navbar} :: nav"></nav>
-    <div class="container bg-dark text-white">
+    <div class="container bg-dark text-white pt-4" id="fondoJobList" >
+    
+    
+    <div >
         <div class="container dg">
             <div class="row">
                 <div class="col-md-4 mb-4" th:each="job : ${jobs}">
                     <div th:replace="@{/fragments/thmsg} :: div"></div>
                     <div class="card table-limit bg-dark border-card text-white">
                         <div class="card-body">
-                            <h5 class="card-title d-flex justify-content-center" th:text="${job.description.toUpperCase}"></h5>
-                            <div class="card-text block">Oficio requerido: <span th:text="${job.skill.name}"></span></div>
-                            <div class="card-text block" sec:authorize="hasRole('PROVEEDOR')">Cliente: <span th:text="${job.appUser.name}"></span></div>
-                            <div class="card-text block">Precio: USD $ <span th:text="${job.cost}"></span></div>
-                            <div class="card-text block" sec:authorize="hasRole('USUARIO')">Proveedor: <span th:text="${job.provider.name}"></span></div>
-                            <div class="card-text block" th:if="${job.comment != null}">Comentario: <span
+                            <h5 class="card-title d-flex justify-content-center " th:text="${job.description.toUpperCase}"></h5>
+                            <div class="card-text block mt-2">Oficio requerido: <span th:text="${job.skill.name}"></span></div>
+                            <div class="card-text block mt-2" sec:authorize="hasRole('PROVEEDOR')">Cliente: <span th:text="${job.appUser.name}"></span></div>
+                            <div class="card-text block mt-2">Precio: USD $ <span th:text="${job.cost}"></span></div>
+                            <div class="card-text block mt-2" sec:authorize="hasRole('USUARIO')">Proveedor: <span th:text="${job.provider.name}"></span></div>
+                            <div class="card-text block mt-2" sec:authorize="hasRole('USUARIO')">WhatsApp: <span th:text="${job.provider.whatsApp}"></span></div>
+                            <div class="card-text block mt-2" sec:authorize="hasRole('PROVEEDOR')">WhatsApp: <span th:text="${job.appUser.whatsApp}"></span></div>
+                            <div class="card-text block mt-2" >Fecha de alta <span th:text="${job.startDate}"></span></div>
+                            <div class="card-text block mt-2" th:if="${job.comment != null}">Comentario: <span
                                     th:text="${#strings.length(job.comment)> 40 ? #strings.substring(job.comment, 0, 40) + '...' : job.comment}"></span></div>
-                            <div class="card-text block">Calificación: <span th:text="${job.callification}"></span></div>
-                            <div class="card-text block">Estado: <span th:if="${job.jobStatus.name() == 'BUDGETED'}">Presupuestado</span>
+                            <div class="card-text block mt-2">Calificación: <span th:text="${job.callification}"></span></div>
+                            <div class="card-text block mt-2">Estado: <span th:if="${job.jobStatus.name() == 'BUDGETED'}">Presupuestado</span>
                                 <span th:if="${job.jobStatus.name() == 'PENDING'}">Pendiente</span>
                                 <span th:if="${job.jobStatus.name() == 'ACCEPTED'}">Aceptado</span>
                                 <span th:if="${job.jobStatus.name() == 'REFUSED'}">Rechazado</span>
@@ -65,29 +74,37 @@
                             </form>
                             <form th:if="${job.jobStatus.name() == 'END' and job.callification == null}" th:action="@{/job/rating/{id}(id=${job.id})}"
                                   method="get" sec:authorize="hasRole('USUARIO')">
-                                <button type="submit" class="btn btn-primary">Calificar</button>
+                                <button type="submit" class="btn btn-primary ">Calificar</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <section class="text-center container mt-5 mb-5">
-        <div class="row ">
-            <div class="divVolver">
-                <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
-            </div>
+        
+         <section class="text-center container mt-5 mb-5">
+    <div class="row ">
+        <div class="divVolver">
+            <a th:href="@{/}" class="btnOrigin btn text-white btn-lg mt-2" style="margin-top: -50px;">Volver</a>
         </div>
-    </section>
-    <footer th:replace="@{/fragments/footer} :: footer"></footer>
+    </div>
+</section>
+        
+    </div>
+         
+      </div>
+      
+    
 
-    <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+</body>
+    <div class="mt-1">
+
+ <footer th:replace="@{/fragments/footer} :: footer"></footer>
+
+  </div>
+ <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
         </script>
-</body>
 
-
-</body>
 
 </html>

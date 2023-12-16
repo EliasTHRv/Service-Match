@@ -28,6 +28,8 @@ import com.ServiceMatch.SM.services.ServiceJob;
 import com.ServiceMatch.SM.services.ServiceProvider;
 import com.ServiceMatch.SM.services.ServiceSkill;
 import com.ServiceMatch.SM.services.UserService;
+import java.util.Collections;
+import java.util.Comparator;
 
 @Controller
 @RequestMapping("/job")
@@ -77,21 +79,48 @@ public class JobControler {
 
     // SERGIO METODO MODIFICADO Y FUNCIONANDO
     // LISTAR JOBS DE UN USUARIO LOGUEADO CLIENT O PROVIDER
-    @PreAuthorize("hasAnyRole('ROLE_PROVEEDOR', 'ROLE_USUARIO')")
-    @GetMapping("/list/provider/{id}")
-    public String jobListPrueba(@PathVariable Long id, HttpSession session, Model model) {
-        AppUser client = (AppUser) session.getAttribute("usuariosession");
-        model.addAttribute(session);
-        if (client.getRol() == RolEnum.USUARIO) {
-            List<Job> jobs = serviceJob.listByIdClient(client.getId());
-            model.addAttribute("jobs", jobs);
-        } else {
-            List<Job> jobs = serviceJob.listByIdProvider(id);
-            model.addAttribute("jobs", jobs);
-        }
-        return "job_list.html";
+//    @PreAuthorize("hasAnyRole('ROLE_PROVEEDOR', 'ROLE_USUARIO')")
+//    @GetMapping("/list/provider/{id}")
+//    public String jobListPrueba(@PathVariable Long id, HttpSession session, Model model) {
+//        AppUser client = (AppUser) session.getAttribute("usuariosession");
+//        model.addAttribute(session);
+//        if (client.getRol() == RolEnum.USUARIO) {
+//            List<Job> jobs = serviceJob.listByIdClient(client.getId());
+//            model.addAttribute("jobs", jobs);
+//        } else {
+//            List<Job> jobs = serviceJob.listByIdProvider(id);
+//            model.addAttribute("jobs", jobs);
+//        }
+//        return "job_list.html";
+//
+//    }
+    
+ 
 
+
+@GetMapping("/list/provider/{id}")
+public String jobListPrueba(@PathVariable Long id, HttpSession session, Model model) {
+    AppUser client = (AppUser) session.getAttribute("usuariosession");
+    model.addAttribute(session);
+
+    List<Job> jobs;
+
+    if (client.getRol() == RolEnum.USUARIO) {
+        jobs = serviceJob.listByIdClient(client.getId());
+    } else {
+        jobs = serviceJob.listByIdProvider(id);
     }
+
+    // Define un Comparator para comparar por fecha en orden descendente (más reciente a más antiguo)
+    Comparator<Job> comparator = Comparator.comparing(Job::getStartDate).reversed();
+
+    // Ordena la lista de trabajos usando el Comparator
+    Collections.sort(jobs, comparator);
+
+    model.addAttribute("jobs", jobs);
+    return "job_list.html";
+}
+
 
     // MÉTODO GET Y POST PARA MODIFICAR JOB
     @GetMapping("/modify/{id}") // http://localhost:8080/job/modify/id

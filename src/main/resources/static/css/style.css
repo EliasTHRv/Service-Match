@@ -101,6 +101,16 @@ select::placeholder {
     background-size: cover;
     background-attachment: fixed;
 }
+#fondoJobList {
+    position: relative;
+    background: linear-gradient(rgba(9, 9, 10, 0.6), rgba(19, 20, 22, 0.6)), url(/img/trabajador7.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100%; 
+    margin: 10  ; 
+}
 
 .bg-califf {
     background: linear-gradient(90deg,
