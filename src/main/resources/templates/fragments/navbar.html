@@ -23,6 +23,10 @@
         <li class="nav-item" th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('USUARIO', 'PROVEEDOR')">
           <a th:href="@{'/job/list/provider/'+${session.usuariosession.id}}" name="id" class="nav-link custom-link fs-5">Trabajos</a>
         </li>
+
+        <li th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('PROVEEDOR')">
+          <a th:href="@{'/user/providers/calification/'+${session.usuariosession.id}}" class="nav-link custom-link fs-5">Desempeño</a>
+        </li>
         <!-- SI EL USUARIO ESTA LOGUEADO Y ES UN ADMIN SE MUESTRAN LOS USUARIOS -->
         <li class="nav-item" th:if="${session.usuariosession != null}" sec:authorize="hasRole('ADMINISTRADOR')">
           <a th:href="@{/user/list}" class="nav-link custom-link fs-5">Usuarios</a>
@@ -50,7 +54,7 @@
         </li>
         <!-- SI EL USUARIO  NO ESTÁ LOGUEADO PUEDE REGISTRARSE -->
         <li class="nav-item">
-          <a class="nav-link custom-link nanraja fs-5" th:if="${session.usuariosession == null}" th:href="@{/user/registration}">Registrarse</a>
+          <a class="nav-link custom-link naranja fs-5" th:if="${session.usuariosession == null}" th:href="@{/user/registration}">Registrarse</a>
         </li>
       </ul>
     </div>

@@ -32,7 +32,7 @@
                             <td th:text="${user.rol}"></td>
                             <td class="text-center">
                                 <a th:if="${#strings.equals(user.rol, T(com.ServiceMatch.SM.enums.RolEnum).PROVEEDOR.name())}"
-                                    class="btn btn-success btn-sm" th:href="@{/mostrar-imagen/__${user.id}__}"
+                                    class="btn btn-success btn-sm" th:href="@{/imagen/mostrar-imagen/__${user.id}__}"
                                     target="_blank">Ver</a>
                             </td>
                             <td class="text-center">
@@ -41,8 +41,8 @@
                                         th:href="@{/user/restore/__${user.id}__}">Restaurar</a>
                                     <a th:if="${user.active}" class="btn btn-success btn-sm mb-2 mb-sm-0"
                                         th:href="@{/user/modify/__${user.id}__}">Editar</a>
-                                    <a class="ms-3 btn btn-danger btn-sm"
-                                        th:href="@{/user/delete/__${user.id}__}">Eliminar</a>
+                                    <!-- <a class="ms-3 btn btn-danger btn-sm"
+                                        th:href="@{/user/delete/__${user.id}__}">Eliminar</a> -->
                                 </div>
                             </td>
                             <td th:if="${user.active}">
